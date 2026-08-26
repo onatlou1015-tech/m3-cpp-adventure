@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>🚀 C++ Coding Adventure - Grade 9</title>
+    <style>
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0b0e1a;
+            color: #e8edf5;
+            line-height: 1.6;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: #141a2b;
+            padding: 2.5rem 2rem;
+            border-radius: 2rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+            border: 1px solid #2a3457;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            text-align: center;
+            padding-bottom: 2rem;
+            border-bottom: 2px dashed #3b4780;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            background: linear-gradient(135deg, #f7b731, #f5a623);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 1px;
+        }
+
+        .header .sub {
+            font-size: 1.3rem;
+            color: #9aa8d9;
+            margin-top: 0.3rem;
+        }
+
+        .header .badge {
+            display: inline-block;
+            background: #1f2a4a;
+            color: #7b93d6;
+            padding: 0.3rem 1.2rem;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            border: 1px solid #3b4780;
+        }
+
+        /* ===== WELCOME ===== */
+        .welcome {
+            background: #1b2339;
+            border-left: 6px solid #f5a623;
+            padding: 1.8rem 2rem;
+            border-radius: 1.2rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .welcome p {
+            font-size: 1.15rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .welcome .quote {
+            font-style: italic;
+            color: #f7d88a;
+            font-size: 1.3rem;
+        }
+
+        .welcome .uses {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .welcome .uses span {
+            background: #293559;
+            padding: 0.2rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            border: 1px solid #3f4d7a;
+        }
+
+        /* ===== OBJECTIVES ===== */
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 2rem 0 1rem 0;
+            color: #f5c542;
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+        }
+
+        .objectives-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .obj-card {
+            background: #1b2339;
+            padding: 1.2rem 1.5rem;
+            border-radius: 1rem;
+            border-left: 5px solid #f5a623;
+            transition: transform 0.15s ease;
+        }
+
+        .obj-card:hover {
+            transform: scale(1.01);
+            background: #212b44;
+        }
+
+        .obj-card h3 {
+            color: #f7d88a;
+            font-size: 1.1rem;
+        }
+
+        .obj-card ul {
+            list-style: none;
+            margin-top: 0.3rem;
+        }
+
+        .obj-card ul li {
+            padding: 0.15rem 0;
+            font-size: 0.98rem;
+            color: #c8d2f0;
+        }
+
+        .obj-card ul li::before {
+            content: "▹ ";
+            color: #f5a623;
+        }
+
+        /* ===== TOPICS TABLE ===== */
+        .topics-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0 2.5rem 0;
+            font-size: 0.98rem;
+        }
+
+        .topics-table th {
+            background: #1f2a4a;
+            color: #f5c542;
+            text-align: left;
+            padding: 0.8rem 1rem;
+            border-bottom: 2px solid #3b4780;
+        }
+
+        .topics-table td {
+            padding: 0.8rem 1rem;
+            border-bottom: 1px solid #28315a;
+            vertical-align: top;
+        }
+
+        .topics-table tr:hover td {
+            background: #1b2339;
+        }
+
+        .week-badge {
+            background: #293559;
+            color: #b3c4f0;
+            padding: 0.15rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        /* ===== TOOLS + FINAL PROJECT ===== */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .tools-box, .project-box {
+            background: #1b2339;
+            padding: 1.5rem 2rem;
+            border-radius: 1.2rem;
+        }
+
+        .tools-box h3, .project-box h3 {
+            color: #f5c542;
+            margin-bottom: 0.5rem;
+            font-size: 1.4rem;
+        }
+
+        .tools-box ul, .project-box ul {
+            list-style: none;
+        }
+
+        .tools-box ul li, .project-box ul li {
+            padding: 0.25rem 0;
+            color: #c8d2f0;
+        }
+
+        .tools-box ul li::before {
+            content: "🛠️ ";
+        }
+
+        .project-box ul li::before {
+            content: "🎮 ";
+        }
+
+        /* ===== SUCCESS LEVELS ===== */
+        .success-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1.2rem;
+            margin: 1.5rem 0 2.5rem 0;
+        }
+
+        .success-card {
+            background: #1b2339;
+            padding: 1.2rem 1.5rem;
+            border-radius: 1rem;
+            text-align: center;
+            border: 1px solid #2a3457;
+        }
+
+        .success-card .emoji {
+            font-size: 2.2rem;
+        }
+
+        .success-card h4 {
+            color: #f7d88a;
+            margin: 0.3rem 0 0.2rem 0;
+        }
+
+        .success-card p {
+            font-size: 0.95rem;
+            color: #b3c4f0;
+        }
+
+        /* ===== RULES ===== */
+        .rules {
+            background: #1b2339;
+            padding: 1.5rem 2rem;
+            border-radius: 1.2rem;
+            margin: 2rem 0;
+            border: 1px solid #3b4780;
+        }
+
+        .rules h3 {
+            color: #f5c542;
+            font-size: 1.5rem;
+        }
+
+        .rules-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem 2rem;
+            margin-top: 0.5rem;
+        }
+
+        .rules-grid li {
+            list-style: none;
+            padding: 0.2rem 0;
+            color: #c8d2f0;
+        }
+
+        .rules-grid li::before {
+            content: "✨ ";
+            color: #f5a623;
+        }
+
+        /* ===== COMMITMENT ===== */
+        .commitment {
+            background: #1a2238;
+            border: 2px dashed #f5a623;
+            padding: 1.8rem 2rem;
+            border-radius: 1.2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .commitment p {
+            font-size: 1.1rem;
+            color: #d4defa;
+        }
+
+        .commitment .sign-line {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+            font-size: 1rem;
+            color: #b3c4f0;
+        }
+
+        .commitment .sign-line span {
+            border-bottom: 2px solid #3b4780;
+            padding: 0 2rem 0.3rem 2rem;
+            min-width: 150px;
+            display: inline-block;
+        }
+
+        /* ===== FIRST TASK ===== */
+        .first-task {
+            background: #0f1629;
+            border: 1px solid #3b4780;
+            padding: 1.8rem 2rem;
+            border-radius: 1.2rem;
+            margin: 2rem 0;
+        }
+
+        .first-task h3 {
+            color: #f5c542;
+            font-size: 1.5rem;
+        }
+
+        .first-task code {
+            display: block;
+            background: #0b0e1a;
+            padding: 1.2rem;
+            border-radius: 0.8rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+            color: #c8d2f0;
+            border: 1px solid #2a3457;
+            margin: 0.8rem 0;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .first-task .btn {
+            display: inline-block;
+            background: #f5a623;
+            color: #0b0e1a;
+            font-weight: 700;
+            padding: 0.7rem 2rem;
+            border-radius: 40px;
+            text-decoration: none;
+            margin-top: 0.5rem;
+            transition: 0.2s;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .first-task .btn:hover {
+            background: #f7b731;
+            transform: scale(1.02);
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            text-align: center;
+            margin-top: 2.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #28315a;
+            color: #6b7db3;
+            font-size: 0.95rem;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 750px) {
+            .container {
+                padding: 1.5rem 1rem;
+            }
+
+            .header h1 {
+                font-size: 2.2rem;
+            }
+
+            .objectives-grid,
+            .two-col,
+            .success-grid,
+            .rules-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .topics-table {
+                font-size: 0.85rem;
+            }
+
+            .topics-table th,
+            .topics-table td {
+                padding: 0.5rem 0.6rem;
+            }
+
+            .commitment .sign-line {
+                flex-direction: column;
+                gap: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- ===== HEADER ===== -->
+    <div class="header">
+        <h1>🚀 C++ Coding Adventure</h1>
+        <div class="sub">Grade 9 · Introduction to Programming</div>
+        <div class="badge">📅 12 Weeks · No Experience Needed</div>
+    </div>
+
+    <!-- ===== WELCOME ===== -->
+    <div class="welcome">
+        <p class="quote">“Coding is the closest thing we have to magic. You type some words, and suddenly—a computer does exactly what you tell it to!”</p>
+        <p>Welcome to your first programming course! Over the next 12 weeks, you'll learn how to <strong>talk to computers</strong> using C++ — one of the most powerful and widely-used languages in the world.</p>
+        <div class="uses">
+            <span>🎮 Video Games</span>
+            <span>🚀 Spacecraft Software</span>
+            <span>🎬 Movie Effects</span>
+            <span>📱 Apps</span>
+        </div>
+        <p style="margin-top:0.8rem;">No prior experience needed. Just bring your <strong>curiosity, creativity, and a willingness to try</strong>!</p>
+    </div>
+
+    <!-- ===== OBJECTIVES ===== -->
+    <h2 class="section-title">🎯 Course Objectives</h2>
+    <div class="objectives-grid">
+        <div class="obj-card">
+            <h3>🧠 Think Like a Programmer</h3>
+            <ul>
+                <li>Break big problems into small steps</li>
+                <li>Use logic and reasoning to solve puzzles</li>
+                <li>Debug (fix) code when things go wrong</li>
+            </ul>
+        </div>
+        <div class="obj-card">
+            <h3>✍️ Write Your Own Programs</h3>
+            <ul>
+                <li>Interactive text-based programs</li>
+                <li>Calculators, games, and quizzes</li>
+                <li>Store and manipulate data</li>
+            </ul>
+        </div>
+        <div class="obj-card">
+            <h3>📦 Core Programming Concepts</h3>
+            <ul>
+                <li>Variables, input/output, decisions</li>
+                <li>Loops, arrays, and functions</li>
+                <li>File I/O and debugging</li>
+            </ul>
+        </div>
+        <div class="obj-card">
+            <h3>🏆 Build a Final Project</h3>
+            <ul>
+                <li>Design your own text adventure game</li>
+                <li>Showcase your work to the class</li>
+                <li>Gain confidence to keep coding</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ===== TOPICS ===== -->
+    <h2 class="section-title">📚 What You'll Learn</h2>
+    <table class="topics-table">
+        <thead>
+            <tr>
+                <th>Week</th>
+                <th>Topic</th>
+                <th>What You'll Make</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td><span class="week-badge">1</span></td><td>Hello World &amp; Variables</td><td>Print your name, age, and favorite things</td></tr>
+            <tr><td><span class="week-badge">2</span></td><td>User Input &amp; Math</td><td>BMI calculator or tip calculator</td></tr>
+            <tr><td><span class="week-badge">3</span></td><td>If/Else Decisions</td><td>Fortune Teller or personality quiz</td></tr>
+            <tr><td><span class="week-badge">4</span></td><td>Loops – While</td><td>Countdown Timer</td></tr>
+            <tr><td><span class="week-badge">5</span></td><td>Loops – For</td><td>Times tables and patterns</td></tr>
+            <tr><td><span class="week-badge">6</span></td><td>Arrays / Lists</td><td>Track scores for a game</td></tr>
+            <tr><td><span class="week-badge">7</span></td><td>Functions</td><td>Organize code into reusable blocks</td></tr>
+            <tr><td><span class="week-badge">8</span></td><td>Strings (Text)</td><td>Password strength checker</td></tr>
+            <tr><td><span class="week-badge">9</span></td><td>File I/O</td><td>Save and load high scores</td></tr>
+            <tr><td><span class="week-badge">10</span></td><td>Debugging</td><td>Hunt down and fix bugs</td></tr>
+            <tr><td><span class="week-badge">11</span></td><td>Project Planning</td><td>Design your own text adventure</td></tr>
+            <tr><td><span class="week-badge">12</span></td><td>Final Project</td><td>Build and present your game!</td></tr>
+        </tbody>
+    </table>
+
+    <!-- ===== TOOLS + FINAL PROJECT ===== -->
+    <div class="two-col">
+        <div class="tools-box">
+            <h3>🛠️ Tools We'll Use</h3>
+            <ul>
+                <li>Online Compiler (Replit or similar) – no install needed!</li>
+                <li>Cheat Sheets for quick reference</li>
+                <li>Code Templates (fill-in-the-blank)</li>
+                <li>Pair Programming – work with a buddy</li>
+            </ul>
+        </div>
+        <div class="project-box">
+            <h3>🎮 Final Project</h3>
+            <ul>
+                <li>Build your own <strong>text-based adventure game</strong></li>
+                <li>Design the story, rules, and code it all</li>
+                <li>Showcase to the class</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ===== SUCCESS LEVELS ===== -->
+    <h2 class="section-title">✅ What Success Looks Like</h2>
+    <div class="success-grid">
+        <div class="success-card">
+            <div class="emoji">🌟</div>
+            <h4>Exceeds Expectations</h4>
+            <p>Help others, build creative projects, and experiment with extra features</p>
+        </div>
+        <div class="success-card">
+            <div class="emoji">✅</div>
+            <h4>Meets Expectations</h4>
+            <p>Complete all assignments and understand core concepts</p>
+        </div>
+        <div class="success-card">
+            <div class="emoji">📈</div>
+            <h4>Making Progress</h4>
+            <p>Try your best, ask questions, and improve every week</p>
+        </div>
+    </div>
+
+    <!-- ===== RULES ===== -->
+    <div class="rules">
+        <h3>📋 Class Rules (Fun Edition)</h3>
+        <ul class="rules-grid">
+            <li>🖥️ <strong>Type it yourself</strong> – copy-paste doesn't teach</li>
+            <li>🤝 <strong>Ask for help</strong> – “I'm stuck!” is a superpower</li>
+            <li>🐛 <strong>Celebrate bugs</strong> – every error is a lesson</li>
+            <li>🎮 <strong>Make it fun</strong> – add something silly to your code</li>
+            <li>🏆 <strong>Help others</strong> – teaching is the best way to learn</li>
+        </ul>
+    </div>
+
+    <!-- ===== COMMITMENT ===== -->
+    <div class="commitment">
+        <p><strong>📝 Student Commitment</strong></p>
+        <p style="font-size:1rem; color:#b3c4f0;">
+            I understand that I will try my best, ask questions, help classmates, and celebrate my progress.
+        </p>
+        <div class="sign-line">
+            <span>Student Name: _______________</span>
+            <span>Date: _______________</span>
+        </div>
+    </div>
+
+    <!-- ===== FIRST TASK ===== -->
+    <div class="first-task">
+        <h3>🚀 Ready to Start? Your First Task</h3>
+        <ol style="color:#c8d2f0; margin:0.5rem 0 0.8rem 1.5rem;">
+            <li>Open your online compiler (Replit or similar)</li>
+            <li>Type this code exactly:</li>
+        </ol>
+        <code>
+#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    cout &lt;&lt; "Hello, World!" &lt;&lt; endl;
+    cout &lt;&lt; "My name is [Your Name]" &lt;&lt; endl;
+    cout &lt;&lt; "I am ready to code!" &lt;&lt; endl;
+    return 0;
+}
+        </code>
+        <p style="color:#b3c4f0;">3. Click <strong>Run</strong> and watch the magic happen!</p>
+        <button class="btn" onclick="alert('🚀 You\'re on your way! Happy coding!')">✨ I'm ready!</button>
+    </div>
+
+    <!-- ===== FOOTER ===== -->
+    <div class="footer">
+        <p>💻 <strong>C++ Coding Adventure</strong> · Grade 9</p>
+        <p style="font-size:0.85rem; color:#4f6199;">See you in Week 1! Let's code! 🔥</p>
+    </div>
+
+</div>
+
+</body>
+</html>
