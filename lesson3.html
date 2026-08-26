@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Lesson 3 - If/Else Decisions 🤔</title>
+    <style>
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0b0e1a;
+            color: #e8edf5;
+            line-height: 1.7;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #141a2b;
+            padding: 2.5rem 2.5rem;
+            border-radius: 2rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+            border: 1px solid #2a3457;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            text-align: center;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px dashed #3b4780;
+            margin-bottom: 2rem;
+        }
+
+        .header .lesson-badge {
+            display: inline-block;
+            background: #f5a623;
+            color: #0b0e1a;
+            font-weight: 700;
+            padding: 0.3rem 1.5rem;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .header h1 {
+            font-size: 2.8rem;
+            background: linear-gradient(135deg, #f7b731, #f5a623);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header .sub {
+            font-size: 1.1rem;
+            color: #9aa8d9;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #7b93d6;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: 0.2s;
+        }
+
+        .back-link:hover {
+            color: #f5c542;
+        }
+
+        .back-link::before {
+            content: "⬅️ ";
+        }
+
+        /* ===== LEARNING OBJECTIVES ===== */
+        .objectives-box {
+            background: #1b2339;
+            border-left: 6px solid #f5a623;
+            padding: 1.5rem 2rem;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .objectives-box h2 {
+            color: #f5c542;
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .objectives-box ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .objectives-box ul li {
+            padding: 0.2rem 0;
+            color: #c8d2f0;
+        }
+
+        .objectives-box ul li::before {
+            content: "🎯 ";
+        }
+
+        /* ===== SECTION TITLES ===== */
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 2.5rem 0 1rem 0;
+            color: #f5c542;
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+        }
+
+        .section-title .emoji {
+            font-size: 1.8rem;
+        }
+
+        /* ===== EXPLANATION ===== */
+        .explanation {
+            background: #0f1629;
+            padding: 1.5rem 2rem;
+            border-radius: 1rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #2a3457;
+        }
+
+        .explanation p {
+            color: #c8d2f0;
+            margin-bottom: 0.8rem;
+        }
+
+        .explanation strong {
+            color: #f7d88a;
+        }
+
+        .highlight {
+            background: #1f2a4a;
+            padding: 0.1rem 0.5rem;
+            border-radius: 6px;
+            color: #f5c542;
+            font-family: 'Courier New', monospace;
+        }
+
+        /* ===== COMPARISON OPERATORS BOX ===== */
+        .operators-box {
+            background: #1a2238;
+            border-radius: 1rem;
+            padding: 1.5rem 2rem;
+            margin: 1rem 0 1.5rem 0;
+            border: 1px solid #3b4780;
+        }
+
+        .operators-box h4 {
+            color: #f5c542;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .operators-box table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 0.5rem;
+        }
+
+        .operators-box td {
+            padding: 0.3rem 0.8rem;
+            border-bottom: 1px solid #28315a;
+            color: #c8d2f0;
+            font-size: 0.92rem;
+        }
+
+        .operators-box td:first-child {
+            font-family: 'Courier New', monospace;
+            color: #f5a623;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .operators-box td:last-child {
+            color: #9aa8d9;
+        }
+
+        /* ===== CODE BLOCKS ===== */
+        .code-block {
+            background: #0b0e1a;
+            padding: 1.2rem 1.5rem;
+            border-radius: 0.8rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.92rem;
+            color: #c8d2f0;
+            border: 1px solid #2a3457;
+            margin: 0.8rem 0 1.2rem 0;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-break: break-word;
+            position: relative;
+        }
+
+        .code-block .comment {
+            color: #6b8a7a;
+        }
+
+        .code-block .keyword {
+            color: #f5a623;
+        }
+
+        .code-block .string {
+            color: #7bcfa6;
+        }
+
+        .code-block .function {
+            color: #7b93d6;
+        }
+
+        .code-block .number {
+            color: #f7b731;
+        }
+
+        .code-block .variable {
+            color: #7bcfa6;
+        }
+
+        .code-label {
+            display: inline-block;
+            background: #1f2a4a;
+            color: #7b93d6;
+            font-size: 0.7rem;
+            padding: 0.1rem 0.8rem;
+            border-radius: 20px;
+            margin-bottom: 0.3rem;
+            font-family: 'Segoe UI', sans-serif;
+            letter-spacing: 0.5px;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #1f2a4a;
+            color: #7b93d6;
+            border: none;
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .copy-btn:hover {
+            background: #f5a623;
+            color: #0b0e1a;
+        }
+
+        /* ===== EXAMPLE BOXES ===== */
+        .example-box {
+            background: #1b2339;
+            border-radius: 1rem;
+            padding: 1.5rem 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid #2a3457;
+        }
+
+        .example-box .example-title {
+            color: #f7d88a;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .example-box .example-title .num {
+            background: #f5a623;
+            color: #0b0e1a;
+            padding: 0.1rem 0.7rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            margin-right: 0.5rem;
+        }
+
+        .example-box .output {
+            background: #0b0e1a;
+            padding: 0.8rem 1.2rem;
+            border-radius: 0.6rem;
+            color: #7bcfa6;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            border-left: 3px solid #f5a623;
+        }
+
+        .example-box .output-label {
+            font-size: 0.7rem;
+            color: #6b7db3;
+            font-family: 'Segoe UI', sans-serif;
+            margin-top: 0.5rem;
+        }
+
+        .example-box .input-demo {
+            background: #0b0e1a;
+            padding: 0.8rem 1.2rem;
+            border-radius: 0.6rem;
+            color: #f7b731;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            border-left: 3px solid #7b93d6;
+        }
+
+        .example-box .input-demo-label {
+            font-size: 0.7rem;
+            color: #6b7db3;
+            font-family: 'Segoe UI', sans-serif;
+            margin-top: 0.5rem;
+        }
+
+        /* ===== FLOWCHART ===== */
+        .flowchart {
+            background: #0f1629;
+            border-radius: 1rem;
+            padding: 1.5rem 2rem;
+            margin: 1rem 0;
+            text-align: center;
+            border: 1px solid #2a3457;
+        }
+
+        .flowchart .flow-step {
+            display: inline-block;
+            background: #1f2a4a;
+            padding: 0.5rem 1.5rem;
+            border-radius: 0.5rem;
+            margin: 0.2rem;
+            font-size: 0.9rem;
+            border: 1px solid #3b4780;
+        }
+
+        .flowchart .flow-arrow {
+            color: #f5a623;
+            font-size: 1.5rem;
+            padding: 0 0.3rem;
+        }
+
+        .flowchart .flow-diamond {
+            display: inline-block;
+            background: #1a2238;
+            padding: 0.5rem 2rem;
+            border-radius: 0.5rem;
+            margin: 0.2rem;
+            font-size: 0.9rem;
+            border: 2px solid #f5a623;
+            transform: rotate(0deg);
+        }
+
+        /* ===== TIPS ===== */
+        .tip-box {
+            background: #1a2238;
+            border-left: 4px solid #7b93d6;
+            padding: 1rem 1.5rem;
+            border-radius: 0.8rem;
+            margin: 1rem 0;
+        }
+
+        .tip-box strong {
+            color: #7b93d6;
+        }
+
+        .tip-box.warning {
+            border-left-color: #f5a623;
+        }
+
+        .tip-box.warning strong {
+            color: #f5a623;
+        }
+
+        .tip-box.success {
+            border-left-color: #7bcfa6;
+        }
+
+        .tip-box.success strong {
+            color: #7bcfa6;
+        }
+
+        /* ===== ACTIVITIES ===== */
+        .activity-box {
+            background: #1b2339;
+            border-radius: 1rem;
+            padding: 1.8rem 2rem;
+            margin-bottom: 2rem;
+            border: 2px solid #f5a623;
+        }
+
+        .activity-box .activity-title {
+            color: #f5c542;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .activity-box .activity-title .badge {
+            background: #f5a623;
+            color: #0b0e1a;
+            padding: 0.1rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            margin-left: 0.5rem;
+            font-weight: 700;
+        }
+
+        .activity-box .challenge {
+            color: #c8d2f0;
+            margin: 0.5rem 0;
+        }
+
+        .activity-box .hint {
+            background: #0f1629;
+            padding: 0.8rem 1.2rem;
+            border-radius: 0.6rem;
+            color: #7b93d6;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        .activity-box .hint strong {
+            color: #f7d88a;
+        }
+
+        /* ===== SUMMARY ===== */
+        .summary-box {
+            background: #0f1629;
+            border-radius: 1rem;
+            padding: 1.5rem 2rem;
+            margin: 2rem 0;
+            border: 1px solid #2a3457;
+        }
+
+        .summary-box h3 {
+            color: #f5c542;
+            margin-bottom: 0.5rem;
+        }
+
+        .summary-box ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .summary-box ul li {
+            padding: 0.2rem 0;
+            color: #c8d2f0;
+        }
+
+        .summary-box ul li::before {
+            content: "✅ ";
+        }
+
+        /* ===== KEYWORDS ===== */
+        .keywords {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 0.5rem 0;
+        }
+
+        .keywords span {
+            background: #1f2a4a;
+            padding: 0.2rem 1rem;
+            border-radius: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            color: #7b93d6;
+            border: 1px solid #2a3457;
+        }
+
+        /* ===== CHEAT SHEET ===== */
+        .cheat-sheet {
+            background: #1a2238;
+            border-radius: 1rem;
+            padding: 1.5rem 2rem;
+            margin: 1.5rem 0;
+            border: 1px solid #3b4780;
+        }
+
+        .cheat-sheet h3 {
+            color: #f5c542;
+        }
+
+        .cheat-sheet table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 0.5rem;
+        }
+
+        .cheat-sheet td {
+            padding: 0.4rem 0.8rem;
+            border-bottom: 1px solid #28315a;
+            color: #c8d2f0;
+            font-size: 0.92rem;
+        }
+
+        .cheat-sheet td:first-child {
+            font-family: 'Courier New', monospace;
+            color: #f5a623;
+            font-weight: 600;
+        }
+
+        .cheat-sheet td:last-child {
+            color: #9aa8d9;
+        }
+
+        /* ===== BUTTONS ===== */
+        .btn {
+            display: inline-block;
+            background: #f5a623;
+            color: #0b0e1a;
+            font-weight: 700;
+            padding: 0.7rem 2rem;
+            border-radius: 40px;
+            text-decoration: none;
+            transition: 0.2s;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: #f7b731;
+            transform: scale(1.02);
+        }
+
+        .btn-secondary {
+            background: #1f2a4a;
+            color: #7b93d6;
+        }
+
+        .btn-secondary:hover {
+            background: #2a3457;
+            color: #f5c542;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+            justify-content: center;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            text-align: center;
+            margin-top: 2.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #28315a;
+            color: #6b7db3;
+            font-size: 0.9rem;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 750px) {
+            .container {
+                padding: 1.5rem 1rem;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.4rem;
+            }
+
+            .code-block {
+                font-size: 0.8rem;
+                padding: 0.8rem 1rem;
+            }
+
+            .example-box {
+                padding: 1rem 1.2rem;
+            }
+
+            .activity-box {
+                padding: 1.2rem 1.2rem;
+            }
+
+            .cheat-sheet {
+                padding: 1rem 1.2rem;
+            }
+
+            .btn-group {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .operators-box {
+                padding: 1rem 1.2rem;
+            }
+
+            .flowchart .flow-step,
+            .flowchart .flow-diamond {
+                display: block;
+                margin: 0.3rem auto;
+            }
+
+            .flowchart .flow-arrow {
+                display: block;
+                transform: rotate(90deg);
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- ===== HEADER ===== -->
+    <div class="header">
+        <div class="lesson-badge">📘 LESSON 3</div>
+        <h1>If/Else Decisions</h1>
+        <div class="sub">Make your programs think and make choices!</div>
+        <a href="index.html" class="back-link">Back to Homepage</a>
+    </div>
+
+    <!-- ===== LEARNING OBJECTIVES ===== -->
+    <div class="objectives-box">
+        <h2>🎯 What You'll Learn Today</h2>
+        <ul>
+            <li>How to make decisions in your code using <span class="highlight">if</span> statements</li>
+            <li>How to handle two choices with <span class="highlight">if-else</span></li>
+            <li>How to handle multiple choices with <span class="highlight">else-if</span></li>
+            <li>What <strong>comparison operators</strong> are and how to use them</li>
+            <li>How to use <strong>logical operators</strong> (<span class="highlight">&&</span>, <span class="highlight">||</span>, <span class="highlight">!</span>)</li>
+        </ul>
+    </div>
+
+    <!-- ===== INTRODUCTION ===== -->
+    <div class="section-title">
+        <span class="emoji">💡</span> Making Decisions in Code
+    </div>
+
+    <div class="explanation">
+        <p>Life is full of decisions! <strong>If it's raining, bring an umbrella. Otherwise, wear sunglasses.</strong></p>
+        <p>In programming, we use <span class="highlight">if</span>, <span class="highlight">else if</span>, and <span class="highlight">else</span> to make decisions. This is called <strong>conditional logic</strong>.</p>
+        <p>The computer checks a <strong>condition</strong> (like "is it raining?") and then decides what to do next.</p>
+        <div class="keywords">
+            <span>if</span>
+            <span>else</span>
+            <span>else if</span>
+            <span>&gt;</span>
+            <span>&lt;</span>
+            <span>==</span>
+            <span>!=</span>
+            <span>&gt;=</span>
+            <span>&lt;=</span>
+            <span>&&</span>
+            <span>||</span>
+            <span>!</span>
+        </div>
+    </div>
+
+    <!-- ===== COMPARISON OPERATORS ===== -->
+    <div class="section-title">
+        <span class="emoji">🔍</span> Comparison Operators
+    </div>
+
+    <div class="explanation">
+        <p>Before we can make decisions, we need to <strong>compare</strong> things. Here are the comparison operators in C++:</p>
+    </div>
+
+    <div class="operators-box">
+        <h4>📊 Comparison Operators</h4>
+        <table>
+            <tr>
+                <td>==</td>
+                <td>Equal to</td>
+                <td style="color:#7bcfa6;">5 == 5 → true</td>
+            </tr>
+            <tr>
+                <td>!=</td>
+                <td>Not equal to</td>
+                <td style="color:#7bcfa6;">5 != 3 → true</td>
+            </tr>
+            <tr>
+                <td>&gt;</td>
+                <td>Greater than</td>
+                <td style="color:#7bcfa6;">10 &gt; 5 → true</td>
+            </tr>
+            <tr>
+                <td>&lt;</td>
+                <td>Less than</td>
+                <td style="color:#7bcfa6;">3 &lt; 7 → true</td>
+            </tr>
+            <tr>
+                <td>&gt;=</td>
+                <td>Greater than or equal to</td>
+                <td style="color:#7bcfa6;">10 &gt;= 10 → true</td>
+            </tr>
+            <tr>
+                <td>&lt;=</td>
+                <td>Less than or equal to</td>
+                <td style="color:#7bcfa6;">5 &lt;= 8 → true</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- ===== LOGICAL OPERATORS ===== -->
+    <div class="operators-box" style="border-color: #7b93d6;">
+        <h4 style="color: #7b93d6;">🔗 Logical Operators</h4>
+        <table>
+            <tr>
+                <td>&&</td>
+                <td>AND — both conditions must be true</td>
+                <td style="color:#7bcfa6;">(age &gt; 18 && hasLicense) → true if BOTH</td>
+            </tr>
+            <tr>
+                <td>||</td>
+                <td>OR — at least one condition must be true</td>
+                <td style="color:#7bcfa6;">(isWeekend || isHoliday) → true if EITHER</td>
+            </tr>
+            <tr>
+                <td>!</td>
+                <td>NOT — reverses the condition</td>
+                <td style="color:#7bcfa6;">!isRaining → true if NOT raining</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- ===== FLOWCHART ===== -->
+    <div class="section-title">
+        <span class="emoji">🗺️</span> How If/Else Works
+    </div>
+
+    <div class="flowchart">
+        <div class="flow-step">Start</div>
+        <span class="flow-arrow">⬇️</span>
+        <div class="flow-diamond">❓ Condition?</div>
+        <span class="flow-arrow">⬇️</span>
+        <div style="display:flex; justify-content:center; gap:2rem; flex-wrap:wrap; margin:0.5rem 0;">
+            <div>
+                <div style="color:#7bcfa6;">✅ TRUE</div>
+                <div class="flow-step" style="border-color:#7bcfa6;">Run IF block</div>
+            </div>
+            <div>
+                <div style="color:#f5a623;">❌ FALSE</div>
+                <div class="flow-step" style="border-color:#f5a623;">Run ELSE block</div>
+            </div>
+        </div>
+        <span class="flow-arrow">⬇️</span>
+        <div class="flow-step">Continue</div>
+    </div>
+
+    <!-- ===== EXAMPLE 1: SIMPLE IF ===== -->
+    <div class="section-title">
+        <span class="emoji">📝</span> Example 1: Simple If Statement
+    </div>
+
+    <div class="example-box">
+        <div class="example-title">
+            <span class="num">1</span> Checking Your Age
+        </div>
+        <p style="color:#c8d2f0; margin-bottom:0.5rem;">This program checks if you're old enough to vote!</p>
+
+        <div class="code-label">📄 lesson3.cpp</div>
+        <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            <span class="keyword">#include</span> &lt;iostream&gt;
+            <span class="keyword">using namespace</span> std;
+
+            <span class="keyword">int</span> <span class="function">main</span>() {
+                <span class="keyword">int</span> <span class="variable">age</span>;
+
+                cout &lt;&lt; <span class="string">"How old are you? "</span>;
+                cin &gt;&gt; age;
+
+                <span class="comment">// Check if age is 18 or older</span>
+                <span class="keyword">if</span> (age &gt;= <span class="number">18</span>) {
+                    cout &lt;&lt; <span class="string">"🎉 You are old enough to vote!"</span> &lt;&lt; endl;
+                    cout &lt;&lt; <span class="string">"🗳️ Go make your voice heard!"</span> &lt;&lt; endl;
+                }
+
+                <span class="keyword">return</span> <span class="number">0</span>;
+            }
+        </div>
+
+        <div class="input-demo-label">💬 User Types:</div>
+        <div class="input-demo">18</div>
+
+        <div class="output-label">▶️ Output:</div>
+        <div class="output">
+            How old are you? 18<br />
+            🎉 You are old enough to vote!<br />
+            🗳️ Go make your voice heard!
+        </div>
+
+        <div class="tip-box success">
+            <strong>💡 Note:</strong> <span style="color:#c8d2f0;">If the condition is <strong>false</strong> (age &lt; 18), the program just skips the if block and does nothing.</span>
+        </div>
+    </div>
+
+    <!-- ===== EXAMPLE 2: IF-ELSE ===== -->
+    <div class="section-title">
+        <span class="emoji">📝</span> Example 2: If-Else Statement
+    </div>
+
+    <div class="example-box">
+        <div class="example-title">
+            <span class="num">2</span> Two Choices — If or Else
+        </div>
+        <p style="color:#c8d2f0; margin-bottom:0.5rem;">This program tells you if a number is even or odd.</p>
+
+        <div class="code-label">📄 lesson3.cpp</div>
+        <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            <span class="keyword">#include</span> &lt;iostream&gt;
+            <span class="keyword">using namespace</span> std;
+
+            <span class="keyword">int</span> <span class="function">main</span>() {
+                <span class="keyword">int</span> <span class="variable">number</span>;
+
+                cout &lt;&lt; <span class="string">"Enter a number: "</span>;
+                cin &gt;&gt; number;
+
+                <span class="comment">// Check if the number is even</span>
+                <span class="keyword">if</span> (number % <span class="number">2</span> == <span class="number">0</span>) {
+                    cout &lt;&lt; number &lt;&lt; <span class="string">" is even! ✅"</span> &lt;&lt; endl;
+                } <span class="keyword">else</span> {
+                    cout &lt;&lt; number &lt;&lt; <span class="string">" is odd! ❌"</span> &lt;&lt; endl;
+                }
+
+                <span class="keyword">return</span> <span class="number">0</span>;
+            }
+        </div>
+
+        <div class="input-demo-label">💬 User Types:</div>
+        <div class="input-demo">7</div>
+
+        <div class="output-label">▶️ Output:</div>
+        <div class="output">
+            Enter a number: 7<br />
+            7 is odd! ❌
+        </div>
+
+        <div class="tip-box">
+            <strong>💡 Tip:</strong> <span style="color:#c8d2f0;"><span class="highlight">%</span> is the modulo operator — it gives you the remainder after division. If a number % 2 == 0, it's even!</span>
+        </div>
+    </div>
+
+    <!-- ===== EXAMPLE 3: ELSE-IF CHAIN ===== -->
+    <div class="section-title">
+        <span class="emoji">📝</span> Example 3: Else-If Chain
+    </div>
+
+    <div class="example-box">
+        <div class="example-title">
+            <span class="num">3</span> Multiple Choices
+        </div>
+        <p style="color:#c8d2f0; margin-bottom:0.5rem;">This program gives a grade based on your score.</p>
+
+        <div class="code-label">📄 lesson3.cpp</div>
+        <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            <span class="keyword">#include</span> &lt;iostream&gt;
+            <span class="keyword">using namespace</span> std;
+
+            <span class="keyword">int</span> <span class="function">main</span>() {
+                <span class="keyword">int</span> <span class="variable">score</span>;
+
+                cout &lt;&lt; <span class="string">"Enter your test score (0-100): "</span>;
+                cin &gt;&gt; score;
+
+                <span class="keyword">if</span> (score &gt;= <span class="number">90</span>) {
+                    cout &lt;&lt; <span class="string">"Grade: A 🌟"</span> &lt;&lt; endl;
+                    cout &lt;&lt; <span class="string">"Excellent work!"</span> &lt;&lt; endl;
+                } <span class="keyword">else if</span> (score &gt;= <span class="number">80</span>) {
+                    cout &lt;&lt; <span class="string">"Grade: B 👍"</span> &lt;&lt; endl;
+                    cout &lt;&lt; <span class="string">"Good job!"</span> &lt;&lt; endl;
+                } <span class="keyword">else if</span> (score &gt;= <span class="number">70</span>) {
+                    cout &lt;&lt; <span class="string">"Grade: C 📚"</span> &lt;&lt; endl;
+                    cout &lt;&lt; <span class="string">"Keep practicing!"</span> &lt;&lt; endl;
+                } <span class="keyword">else if</span> (score &gt;= <span class="number">60</span>) {
+                    cout &lt;&lt; <span class="string">"Grade: D 📖"</span> &lt;&lt; endl;
+                    cout &lt;&lt; <span class="string">"You can do better!"</span> &lt;&lt; endl;
+                } <span class="keyword">else</span> {
+                    cout &lt;&lt; <span class="string">"Grade: F 😢"</span> &lt;&lt; endl;
+                    cout &lt;&lt; <span class="string">"Don't give up! Study harder!"</span> &lt;&lt; endl;
+                }
+
+                <span class="keyword">return</span> <span class="number">0</span>;
+            }
+        </div>
+
+        <div class="input-demo-label">💬 User Types:</div>
+        <div class="input-demo">85</div>
+
+        <div class="output-label">▶️ Output:</div>
+        <div class="output">
+            Enter your test score (0-100): 85<br />
+            Grade: B 👍<br />
+            Good job!
+        </div>
+
+        <div class="tip-box warning">
+            <strong>⚠️ Important:</strong> <span style="color:#c8d2f0;">The computer checks conditions <strong>in order</strong> from top to bottom. Once one condition is true, it stops checking the rest!</span>
+        </div>
+    </div>
+
+    <!-- ===== LOGICAL OPERATORS EXAMPLE ===== -->
+    <div class="section-title">
+        <span class="emoji">🔗</span> Using Logical Operators
+    </div>
+
+    <div class="explanation">
+        <p>You can combine multiple conditions using <strong>logical operators</strong>:</p>
+    </div>
+
+    <div class="example-box">
+        <div class="example-title">
+            <span class="num">📌</span> AND (&&) and OR (||) Examples
+        </div>
+
+        <div class="code-label">📄 lesson3.cpp</div>
+        <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            <span class="comment">// AND (&&) — BOTH conditions must be true</span>
+            <span class="keyword">int</span> <span class="variable">age</span> = <span class="number">16</span>;
+            <span class="keyword">bool</span> <span class="variable">hasPermission</span> = <span class="keyword">true</span>;
+
+            <span class="keyword">if</span> (age &gt;= <span class="number">16</span> && hasPermission) {
+                cout &lt;&lt; <span class="string">"✅ You can drive!"</span> &lt;&lt; endl;
+            }
+
+            <span class="comment">// OR (||) — AT LEAST ONE condition must be true</span>
+            <span class="keyword">bool</span> <span class="variable">isWeekend</span> = <span class="keyword">true</span>;
+            <span class="keyword">bool</span> <span class="variable">isHoliday</span> = <span class="keyword">false</span>;
+
+            <span class="keyword">if</span> (isWeekend || isHoliday) {
+                cout &lt;&lt; <span class="string">"🎉 No school today!"</span> &lt;&lt; endl;
+            }
+
+            <span class="comment">// NOT (!) — REVERSES the condition</span>
+            <span class="keyword">bool</span> <span class="variable">isRaining</span> = <span class="keyword">false</span>;
+
+            <span class="keyword">if</span> (!isRaining) {
+                cout &lt;&lt; <span class="string">"☀️ Let's go outside!"</span> &lt;&lt; endl;
+            }
+        </div>
+
+        <div class="output-label">▶️ Output:</div>
+        <div class="output">
+            ✅ You can drive!<br />
+            🎉 No school today!<br />
+            ☀️ Let's go outside!
+        </div>
+
+        <div class="tip-box success">
+            <strong>💡 Remember:</strong> <span style="color:#c8d2f0;"><span class="highlight">&&</span> = AND (both true), <span class="highlight">||</span> = OR (at least one true), <span class="highlight">!</span> = NOT (reverses)</span>
+        </div>
+    </div>
+
+    <!-- ===== CHEAT SHEET ===== -->
+    <div class="section-title">
+        <span class="emoji">📋</span> Quick Reference
+    </div>
+
+    <div class="cheat-sheet">
+        <h3>🔑 Key Code You Just Learned</h3>
+        <table>
+            <tr>
+                <td>if (condition) { }</td>
+                <td>Runs code if condition is true</td>
+            </tr>
+            <tr>
+                <td>if (condition) { } else { }</td>
+                <td>Runs one block if true, another if false</td>
+            </tr>
+            <tr>
+                <td>if (cond1) { } else if (cond2) { }</td>
+                <td>Checks multiple conditions in order</td>
+            </tr>
+            <tr>
+                <td>==</td>
+                <td>Checks if two values are equal</td>
+            </tr>
+            <tr>
+                <td>!=</td>
+                <td>Checks if two values are NOT equal</td>
+            </tr>
+            <tr>
+                <td>&gt;, &lt;, &gt;=, &lt;=</td>
+                <td>Comparison operators</td>
+            </tr>
+            <tr>
+                <td>&&</td>
+                <td>AND — both conditions must be true</td>
+            </tr>
+            <tr>
+                <td>||</td>
+                <td>OR — at least one condition must be true</td>
+            </tr>
+            <tr>
+                <td>!</td>
+                <td>NOT — reverses a condition</td>
+            </tr>
+            <tr>
+                <td>%</td>
+                <td>Modulo — gives the remainder</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- ===== ACTIVITY 1 ===== -->
+    <div class="section-title">
+        <span class="emoji">🏋️</span> Practice Time!
+    </div>
+
+    <div class="activity-box">
+        <div class="activity-title">
+            🎯 Activity 1: Fortune Teller
+            <span class="badge">⭐ BEGINNER</span>
+        </div>
+        <div class="challenge">
+            <p><strong>Your Task:</strong> Create a program that gives different fortunes based on a number!</p>
+            <ul style="color:#c8d2f0; margin-left:1.5rem; margin-top:0.5rem;">
+                <li>Ask the user for their <strong>favorite number</strong></li>
+                <li>Use <span class="highlight">if-else</span> to give different fortunes:</li>
+                <ul style="color:#c8d2f0; margin-left:1.5rem;">
+                    <li>If number &lt; 5 → "You will have a great day! 🌞"</li>
+                    <li>If number == 7 → "Lucky you! Something amazing is coming! 🍀"</li>
+                    <li>If number &gt; 10 → "You are destined for greatness! 🌟"</li>
+                    <li>Otherwise → "You will meet someone interesting today! 🤝"</li>
+                </ul>
+            </ul>
+            <div class="output" style="margin-top:0.5rem;">
+                Enter your favorite number: 7<br />
+                Lucky you! Something amazing is coming! 🍀
+            </div>
+        </div>
+        <div class="hint">
+            <strong>💡 Hint:</strong> Use <span class="highlight">if</span> for the first condition, <span class="highlight">else if</span> for the next ones, and <span class="highlight">else</span> for the final fallback.
+        </div>
+    </div>
+
+    <!-- ===== ACTIVITY 2 ===== -->
+    <div class="activity-box">
+        <div class="activity-title">
+            🚀 Activity 2: Temperature Checker
+            <span class="badge">⭐⭐ CHALLENGE</span>
+        </div>
+        <div class="challenge">
+            <p><strong>Your Task:</strong> Create a program that gives advice based on the temperature!</p>
+            <ul style="color:#c8d2f0; margin-left:1.5rem; margin-top:0.5rem;">
+                <li>Ask the user for the <strong>temperature</strong> in Celsius</li>
+                <li>Use <span class="highlight">if-else if-else</span> to give advice:</li>
+                <ul style="color:#c8d2f0; margin-left:1.5rem;">
+                    <li>temp &lt; 0 → "❄️ Freezing! Stay inside!"</li>
+                    <li>temp &lt; 10 → "🧥 Cold! Wear a jacket!"</li>
+                    <li>temp &lt; 20 → "🌤️ Nice weather! Go outside!"</li>
+                    <li>temp &lt; 30 → "☀️ Warm! Don't forget sunscreen!"</li>
+                    <li>temp &gt;= 30 → "🔥 Hot! Stay hydrated and find shade!"</li>
+                </ul>
+            </ul>
+            <div class="output" style="margin-top:0.5rem;">
+                Enter the temperature (°C): 25<br />
+                ☀️ Warm! Don't forget sunscreen!
+            </div>
+        </div>
+        <div class="hint">
+            <strong>💡 Hint:</strong> Use <span class="highlight">else if</span> for each temperature range. The computer checks them in order!
+        </div>
+    </div>
+
+    <!-- ===== BONUS CHALLENGE ===== -->
+    <div class="activity-box" style="border-color: #7b93d6;">
+        <div class="activity-title" style="color: #7b93d6;">
+            🌟 Bonus Challenge: Password Checker
+            <span class="badge" style="background:#7b93d6;">⭐⭐⭐ ADVANCED</span>
+        </div>
+        <div class="challenge">
+            <p><strong>Your Task:</strong> Create a program that checks a password!</p>
+            <ul style="color:#c8d2f0; margin-left:1.5rem; margin-top:0.5rem;">
+                <li>Ask the user to enter a <strong>password</strong></li>
+                <li>Check the password with <span class="highlight">if-else</span>:</li>
+                <ul style="color:#c8d2f0; margin-left:1.5rem;">
+                    <li>If password is <span class="highlight">"secret123"</span> → "✅ Access granted! Welcome!"</li>
+                    <li>If password is <span class="highlight">"admin"</span> → "🔑 Admin access granted!"</li>
+                    <li>If password is <span class="highlight">"password"</span> → "⚠️ Too easy! Try a stronger password!"</li>
+                    <li>Otherwise → "❌ Access denied! Incorrect password."</li>
+                </ul>
+            </ul>
+            <div class="output" style="margin-top:0.5rem;">
+                Enter password: secret123<br />
+                ✅ Access granted! Welcome!
+            </div>
+            <p style="color:#c8d2f0; margin-top:0.5rem;"><strong>Extra challenge:</strong> Add a condition to check if the password is at least 8 characters long!</p>
+        </div>
+        <div class="hint">
+            <strong>💡 Hint:</strong> Use <span class="highlight">string</span> for the password variable. Check password length with <span class="highlight">password.length()</span>!
+        </div>
+    </div>
+
+    <!-- ===== SUMMARY ===== -->
+    <div class="section-title">
+        <span class="emoji">🎓</span> Lesson Summary
+    </div>
+
+    <div class="summary-box">
+        <h3>✅ What You Learned Today</h3>
+        <ul>
+            <li>How to use <span class="highlight">if</span> statements to make decisions in your code</li>
+            <li>How to use <span class="highlight">if-else</span> to handle two choices</li>
+            <li>How to use <span class="highlight">else-if</span> chains for multiple choices</li>
+            <li>Comparison operators: <span class="highlight">==</span>, <span class="highlight">!=</span>, <span class="highlight">&gt;</span>, <span class="highlight">&lt;</span>, <span class="highlight">&gt;=</span>, <span class="highlight">&lt;=</span></li>
+            <li>Logical operators: <span class="highlight">&&</span> (AND), <span class="highlight">||</span> (OR), <span class="highlight">!</span> (NOT)</li>
+            <li>How to check if a number is even using <span class="highlight">%</span> (modulo)</li>
+        </ul>
+    </div>
+
+    <!-- ===== WHAT'S NEXT ===== -->
+    <div class="section-title">
+        <span class="emoji">🔜</span> What's Next?
+    </div>
+
+    <div class="explanation">
+        <p>In <strong>Lesson 4</strong>, you'll learn how to:</p>
+        <ul style="color:#c8d2f0; margin-left:1.5rem;">
+            <li>🔄 <strong>Repeat code</strong> using <strong>while loops</strong></li>
+            <li>🔢 Create a <strong>countdown timer</strong></li>
+            <li>🎲 Build a <strong>number guessing game</strong></li>
+        </ul>
+        <p style="margin-top:0.8rem; color:#9aa8d9;">👉 <a href="lesson4.html" style="color:#f5c542;">Click here to go to Lesson 4 →</a></p>
+    </div>
+
+    <!-- ===== NAVIGATION BUTTONS ===== -->
+    <div class="btn-group">
+        <a href="index.html" class="btn btn-secondary">🏠 Homepage</a>
+        <a href="lesson2.html" class="btn btn-secondary">⬅️ Previous Lesson</a>
+        <a href="lesson4.html" class="btn">➡️ Next Lesson</a>
+    </div>
+
+    <!-- ===== FOOTER ===== -->
+    <div class="footer">
+        <p>💻 <strong>C++ Coding Adventure</strong> · Grade 9 · Lesson 3</p>
+        <p style="font-size:0.8rem; color:#4f6199;">Keep coding, keep learning! 🚀</p>
+    </div>
+
+</div>
+
+<!-- ===== COPY FUNCTION ===== -->
+<script>
+    function copyCode(button) {
+        const codeBlock = button.parentElement;
+        const codeText = codeBlock.innerText.replace('📋 Copy', '').trim();
+        navigator.clipboard.writeText(codeText).then(() => {
+            const original = button.textContent;
+            button.textContent = '✅ Copied!';
+            setTimeout(() => {
+                button.textContent = original;
+            }, 2000);
+        }).catch(() => {
+            alert('Please select and copy the code manually.');
+        });
+    }
+</script>
+
+</body>
+</html>

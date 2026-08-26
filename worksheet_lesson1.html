@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>🔑 Answer Key - Lesson 1</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0b0e1a;
+            color: #e8edf5;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #141a2b;
+            padding: 2.5rem 2.5rem;
+            border-radius: 2rem;
+            border: 1px solid #2a3457;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #f5c542;
+            border-bottom: 2px dashed #3b4780;
+            padding-bottom: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        h2 {
+            color: #f5c542;
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 0.8rem;
+            border-left: 5px solid #f5a623;
+            padding-left: 1rem;
+        }
+
+        h3 {
+            color: #f7d88a;
+            font-size: 1.1rem;
+            margin-top: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .answer-box {
+            background: #1b2339;
+            border-radius: 1rem;
+            padding: 1.2rem 1.8rem;
+            margin-bottom: 1.2rem;
+            border-left: 4px solid #7bcfa6;
+        }
+
+        .answer-box .question {
+            color: #9aa8d9;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .answer-box .answer {
+            color: #7bcfa6;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+            background: #0f1629;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            margin-top: 0.3rem;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .answer-box .answer .hl {
+            color: #f5a623;
+        }
+
+        .answer-box .answer .cmt {
+            color: #6b8a7a;
+        }
+
+        .answer-box .answer .str {
+            color: #7bcfa6;
+        }
+
+        .tip-box {
+            background: #1a2238;
+            border-left: 4px solid #7b93d6;
+            padding: 0.8rem 1.2rem;
+            border-radius: 0.6rem;
+            margin: 0.5rem 0;
+        }
+
+        .tip-box strong {
+            color: #7b93d6;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #f5a623;
+            color: #0b0e1a;
+            font-weight: 700;
+            padding: 0.7rem 2rem;
+            border-radius: 40px;
+            text-decoration: none;
+            transition: 0.2s;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: #f7b731;
+            transform: scale(1.02);
+        }
+
+        .btn-secondary {
+            background: #1f2a4a;
+            color: #7b93d6;
+        }
+
+        .btn-secondary:hover {
+            background: #2a3457;
+            color: #f5c542;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 2.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #28315a;
+            color: #6b7db3;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 750px) {
+            .container {
+                padding: 1.2rem;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .answer-box {
+                padding: 0.8rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <h1>🔑 Answer Key</h1>
+    <p style="text-align:center; color:#9aa8d9; margin-bottom:2rem;">Lesson 1: Hello World &amp; Variables · For Teachers Only</p>
+
+    <!-- ===== ACTIVITY 1 ===== -->
+    <h2>🎯 Activity 1: About Me</h2>
+
+    <div class="answer-box">
+        <div class="question">📝 Solution Code:</div>
+        <div class="answer">
+<span class="hl">#include</span> &lt;iostream&gt;
+<span class="hl">#include</span> &lt;string&gt;
+<span class="hl">using namespace</span> <span class="hl">std</span>;
+
+<span class="hl">int</span> main() {
+    <span class="cmt">// Creating variables with student's own information</span>
+    <span class="hl">string</span> name = <span class="str">"Sarah"</span>;
+    <span class="hl">int</span> age = <span class="hl">14</span>;
+    <span class="hl">string</span> subject = <span class="str">"Science"</span>;
+    <span class="hl">int</span> favNum = <span class="hl">7</span>;
+
+    <span class="cmt">// Printing the information in a formatted way</span>
+    cout &lt;&lt; <span class="str">"===== ABOUT ME ====="</span> &lt;&lt; endl;
+    cout &lt;&lt; <span class="str">"Name: "</span> &lt;&lt; name &lt;&lt; endl;
+    cout &lt;&lt; <span class="str">"Age: "</span> &lt;&lt; age &lt;&lt; endl;
+    cout &lt;&lt; <span class="str">"Favorite Subject: "</span> &lt;&lt; subject &lt;&lt; endl;
+    cout &lt;&lt; <span class="str">"Favorite Number: "</span> &lt;&lt; favNum &lt;&lt; endl;
+    cout &lt;&lt; <span class="str">"===================="</span> &lt;&lt; endl;
+
+    <span class="hl">return</span> <span class="hl">0</span>;
+}
+        </div>
+    </div>
+
+    <div class="tip-box">
+        <strong>💡 Expected Output:</strong> The program should print all variables in a formatted "About Me" section. Student names and values will vary.
+    </div>
+
+    <!-- ===== ACTIVITY 2 ===== -->
+    <h2>🚀 Activity 2: Simple Calculator</h2>
+
+    <div class="answer-box">
+        <div class="question">📝 Solution Code:</div>
+        <div class="answer">
+<span class="hl">#include</span> &lt;iostream&gt;
+<span class="hl">using namespace</span> <span class="hl">std</span>;
+
+<span class="hl">int</span> main() {
+    <span class="cmt">// Variables with chosen numbers</span>
+    <span class="hl">int</span> num1 = <span class="hl">15</span>;
+    <span class="hl">int</span> num2 = <span class="hl">4</span>;
+
+    <span class="cmt">// Calculations</span>
+    <span class="hl">int</span> sum = num1 + num2;
+    <span class="hl">int</span> difference = num1 - num2;
+    <span class="hl">int</span> product = num1 * num2;
+    <span class="hl">int</span> quotient = num1 / num2;
+    <span class="hl">int</span> remainder = num1 % num2;       <span class="cmt">// Bonus: remainder</span>
+    <span class="hl">double</span> average = (num1 + num2) / <span class="hl">2.0</span>;  <span class="cmt">// Bonus: average</span>
+
+    <span class="cmt">// Print results</span>
+    cout &lt;&lt; <span class="str">"Numbers: "</span> &lt;&lt; num1 &lt;&lt; <span class="str">" and "</span> &lt;&lt; num2 &lt;&lt; endl;
+    cout &lt;&lt; <span class="str">"Sum: "</span> &lt;&lt; sum &lt;&lt; endl;
+    cout &lt;&lt; <span class="str">"Difference: "</span> &lt;&lt; difference &lt;&lt; endl;
+    cout &lt;&lt; <span class="str">"Product: "</span> &lt;&lt; product &lt;&lt; endl;
+    cout &lt;&lt; <span class="str">"Quotient: "</span> &lt;&lt; quotient &lt;&lt; endl;
+    cout &lt;&lt; <span class="str">"Remainder: "</span> &lt;&lt; remainder &lt;&lt; endl;
+    cout &lt;&lt; <span class="str">"Average: "</span> &lt;&lt; average &lt;&lt; endl;
+
+    <span class="hl">return</span> <span class="hl">0</span>;
+}
+        </div>
+    </div>
+
+    <div class="tip-box">
+        <strong>💡 Expected Output:</strong> Numbers: 15 and 4<br />
+        Sum: 19<br />
+        Difference: 11<br />
+        Product: 60<br />
+        Quotient: 3<br />
+        Remainder: 3<br />
+        Average: 9.5
+    </div>
+
+    <!-- ===== BONUS CHALLENGE ===== -->
+    <h2>🌟 Bonus Challenge: Custom Greeting</h2>
+
+    <div class="answer-box">
+        <div class="question">📝 Solution Code:</div>
+        <div class="answer">
+<span class="hl">#include</span> &lt;iostream&gt;
+<span class="hl">#include</span> &lt;string&gt;
+<span class="hl">using namespace</span> <span class="hl">std</span>;
+
+<span class="hl">int</span> main() {
+    <span class="cmt">// Variables with student's information</span>
+    <span class="hl">string</span> firstName = <span class="str">"Alex"</span>;
+    <span class="hl">string</span> lastName = <span class="str">"Johnson"</span>;
+    <span class="hl">int</span> birthYear = <span class="hl">2009</span>;
+    <span class="hl">string</span> hobby = <span class="str">"gaming"</span>;
+
+    <span class="cmt">// Calculate age (assuming current year is 2025)</span>
+    <span class="hl">int</span> age = <span class="hl">2025</span> - birthYear;
+
+    <span class="cmt">// Print custom greeting</span>
+    cout &lt;&lt; <span class="str">"===== WELCOME ====="</span> &lt;&lt; endl;
+    cout &lt;&lt; <span class="str">"Hello, "</span> &lt;&lt; firstName &lt;&lt; <span class="str">" "</span> &lt;&lt; lastName &lt;&lt; <span class="str">"!"</span> &lt;&lt; endl;
+    cout &lt;&lt; <span class="str">"You were born in "</span> &lt;&lt; birthYear &lt;&lt; <span class="str">"."</span> &lt;&lt; endl;
+    cout &lt;&lt; <span class="str">"You are "</span> &lt;&lt; age &lt;&lt; <span class="str">" years old."</span> &lt;&lt; endl;
+    cout &lt;&lt; <span class="str">"Your favorite hobby is "</span> &lt;&lt; hobby &lt;&lt; <span class="str">"."</span> &lt;&lt; endl;
+    cout &lt;&lt; <span class="str">"Keep coding! 🚀"</span> &lt;&lt; endl;
+
+    <span class="hl">return</span> <span class="hl">0</span>;
+}
+        </div>
+    </div>
+
+    <div class="tip-box">
+        <strong>💡 Expected Output:</strong> ===== WELCOME =====<br />
+        Hello, Alex Johnson!<br />
+        You were born in 2009.<br />
+        You are 16 years old.<br />
+        Your favorite hobby is gaming.<br />
+        Keep coding! 🚀
+    </div>
+
+    <!-- ===== WORKSHEET ANSWER KEY ===== -->
+    <h2>📝 Worksheet Answer Key</h2>
+
+    <div class="answer-box">
+        <div class="question">Part 1: Fill in the Blanks</div>
+        <div class="answer" style="color:#7bcfa6;">
+            1. <span style="color:#f5a623;">cout</span><br />
+            2. <span style="color:#f5a623;">cin</span><br />
+            3. <span style="color:#f5a623;">variable</span><br />
+            4. <span style="color:#f5a623;">int</span><br />
+            5. <span style="color:#f5a623;">string</span><br />
+            6. <span style="color:#f5a623;">endl</span><br />
+            7. <span style="color:#f5a623;">main()</span>
+        </div>
+    </div>
+
+    <div class="answer-box">
+        <div class="question">Part 2: Read the Code</div>
+        <div class="answer" style="color:#7bcfa6;">
+            8. <span style="color:#f5a623;">"Maya"</span><br />
+            9. <span style="color:#f5a623;">int</span><br />
+            10. Name: Maya<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;Age: 16<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;Height: 5.6 feet
+        </div>
+    </div>
+
+    <div class="answer-box">
+        <div class="question">Part 4: True or False</div>
+        <div class="answer" style="color:#7bcfa6;">
+            13. <span style="color:#f5a623;">F</span> (cout prints, cin gets input)<br />
+            14. <span style="color:#f5a623;">F</span> (int is for whole numbers, double is for decimals)<br />
+            15. <span style="color:#f5a623;">T</span><br />
+            16. <span style="color:#f5a623;">F</span> (bool is for true/false, string is for text)<br />
+            17. <span style="color:#f5a623;">T</span>
+        </div>
+    </div>
+
+    <div class="answer-box">
+        <div class="question">Part 3 &amp; 5: Code Writing (Example Solutions)</div>
+        <div class="answer" style="color:#7bcfa6;">
+            <span style="color:#f5a623;">Question 11 - City &amp; Population:</span><br />
+            <span class="hl">#include</span> &lt;iostream&gt;<br />
+            <span class="hl">#include</span> &lt;string&gt;<br />
+            <span class="hl">using namespace</span> <span class="hl">std</span>;<br /><br />
+            <span class="hl">int</span> main() {<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="hl">string</span> city = <span class="str">"Toronto"</span>;<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="hl">int</span> population = <span class="hl">3000000</span>;<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;cout &lt;&lt; <span class="str">"City: "</span> &lt;&lt; city &lt;&lt; endl;<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;cout &lt;&lt; <span class="str">"Population: "</span> &lt;&lt; population &lt;&lt; endl;<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="hl">return</span> <span class="hl">0</span>;<br />
+            }<br /><br />
+
+            <span style="color:#f5a623;">Question 12 - Area &amp; Perimeter:</span><br />
+            <span class="hl">#include</span> &lt;iostream&gt;<br />
+            <span class="hl">using namespace</span> <span class="hl">std</span>;<br /><br />
+            <span class="hl">int</span> main() {<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="hl">int</span> length = <span class="hl">5</span>;<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="hl">int</span> width = <span class="hl">3</span>;<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="hl">int</span> area = length * width;<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="hl">int</span> perimeter = <span class="hl">2</span> * length + <span class="hl">2</span> * width;<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;cout &lt;&lt; <span class="str">"Length: "</span> &lt;&lt; length &lt;&lt; endl;<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;cout &lt;&lt; <span class="str">"Width: "</span> &lt;&lt; width &lt;&lt; endl;<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;cout &lt;&lt; <span class="str">"Area: "</span> &lt;&lt; area &lt;&lt; endl;<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;cout &lt;&lt; <span class="str">"Perimeter: "</span> &lt;&lt; perimeter &lt;&lt; endl;<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="hl">return</span> <span class="hl">0</span>;<br />
+            }<br /><br />
+
+            <span style="color:#f5a623;">Question 18 - Temperature Converter:</span><br />
+            <span class="hl">#include</span> &lt;iostream&gt;<br />
+            <span class="hl">using namespace</span> <span class="hl">std</span>;<br /><br />
+            <span class="hl">int</span> main() {<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="hl">double</span> celsius = <span class="hl">25.0</span>;<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="hl">double</span> fahrenheit = (celsius * <span class="hl">9.0</span>/<span class="hl">5.0</span>) + <span class="hl">32.0</span>;<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;cout &lt;&lt; <span class="str">"Celsius: "</span> &lt;&lt; celsius &lt;&lt; <span class="str">"°C"</span> &lt;&lt; endl;<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;cout &lt;&lt; <span class="str">"Fahrenheit: "</span> &lt;&lt; fahrenheit &lt;&lt; <span class="str">"°F"</span> &lt;&lt; endl;<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="hl">return</span> <span class="hl">0</span>;<br />
+            }
+        </div>
+    </div>
+
+    <!-- ===== NAVIGATION ===== -->
+    <div class="btn-group">
+        <a href="index.html" class="btn btn-secondary">🏠 Homepage</a>
+        <a href="lesson1.html" class="btn btn-secondary">📘 Back to Lesson</a>
+        <a href="worksheet_lesson1.html" class="btn">📝 View Worksheet</a>
+    </div>
+
+    <div class="footer">
+        <p>💻 <strong>C++ Coding Adventure</strong> · Grade 9 · Lesson 1 Answer Key</p>
+        <p style="font-size:0.8rem; color:#4f6199;">For teacher use only</p>
+    </div>
+
+</div>
+
+</body>
+</html>

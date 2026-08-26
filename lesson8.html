@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Lesson 8 - Strings 📝</title>
+    <style>
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0b0e1a;
+            color: #e8edf5;
+            line-height: 1.7;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #141a2b;
+            padding: 2.5rem 2.5rem;
+            border-radius: 2rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+            border: 1px solid #2a3457;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            text-align: center;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px dashed #3b4780;
+            margin-bottom: 2rem;
+        }
+
+        .header .lesson-badge {
+            display: inline-block;
+            background: #f5a623;
+            color: #0b0e1a;
+            font-weight: 700;
+            padding: 0.3rem 1.5rem;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .header h1 {
+            font-size: 2.8rem;
+            background: linear-gradient(135deg, #f7b731, #f5a623);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header .sub {
+            font-size: 1.1rem;
+            color: #9aa8d9;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #7b93d6;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: 0.2s;
+        }
+
+        .back-link:hover {
+            color: #f5c542;
+        }
+
+        .back-link::before {
+            content: "⬅️ ";
+        }
+
+        /* ===== LEARNING OBJECTIVES ===== */
+        .objectives-box {
+            background: #1b2339;
+            border-left: 6px solid #f5a623;
+            padding: 1.5rem 2rem;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .objectives-box h2 {
+            color: #f5c542;
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .objectives-box ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .objectives-box ul li {
+            padding: 0.2rem 0;
+            color: #c8d2f0;
+        }
+
+        .objectives-box ul li::before {
+            content: "🎯 ";
+        }
+
+        /* ===== SECTION TITLES ===== */
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 2.5rem 0 1rem 0;
+            color: #f5c542;
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+        }
+
+        .section-title .emoji {
+            font-size: 1.8rem;
+        }
+
+        /* ===== EXPLANATION ===== */
+        .explanation {
+            background: #0f1629;
+            padding: 1.5rem 2rem;
+            border-radius: 1rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #2a3457;
+        }
+
+        .explanation p {
+            color: #c8d2f0;
+            margin-bottom: 0.8rem;
+        }
+
+        .explanation strong {
+            color: #f7d88a;
+        }
+
+        .highlight {
+            background: #1f2a4a;
+            padding: 0.1rem 0.5rem;
+            border-radius: 6px;
+            color: #f5c542;
+            font-family: 'Courier New', monospace;
+        }
+
+        /* ===== STRING METHODS TABLE ===== */
+        .methods-box {
+            background: #1a2238;
+            border-radius: 1rem;
+            padding: 1.5rem 2rem;
+            margin: 1rem 0 1.5rem 0;
+            border: 1px solid #3b4780;
+        }
+
+        .methods-box h4 {
+            color: #f5c542;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .methods-box table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 0.5rem;
+        }
+
+        .methods-box td {
+            padding: 0.4rem 0.8rem;
+            border-bottom: 1px solid #28315a;
+            color: #c8d2f0;
+            font-size: 0.92rem;
+        }
+
+        .methods-box td:first-child {
+            font-family: 'Courier New', monospace;
+            color: #f5a623;
+            font-weight: 600;
+        }
+
+        .methods-box td:last-child {
+            color: #9aa8d9;
+        }
+
+        /* ===== CODE BLOCKS ===== */
+        .code-block {
+            background: #0b0e1a;
+            padding: 1.2rem 1.5rem;
+            border-radius: 0.8rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.92rem;
+            color: #c8d2f0;
+            border: 1px solid #2a3457;
+            margin: 0.8rem 0 1.2rem 0;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-break: break-word;
+            position: relative;
+        }
+
+        .code-block .comment {
+            color: #6b8a7a;
+        }
+
+        .code-block .keyword {
+            color: #f5a623;
+        }
+
+        .code-block .string {
+            color: #7bcfa6;
+        }
+
+        .code-block .function {
+            color: #7b93d6;
+        }
+
+        .code-block .number {
+            color: #f7b731;
+        }
+
+        .code-block .variable {
+            color: #7bcfa6;
+        }
+
+        .code-label {
+            display: inline-block;
+            background: #1f2a4a;
+            color: #7b93d6;
+            font-size: 0.7rem;
+            padding: 0.1rem 0.8rem;
+            border-radius: 20px;
+            margin-bottom: 0.3rem;
+            font-family: 'Segoe UI', sans-serif;
+            letter-spacing: 0.5px;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #1f2a4a;
+            color: #7b93d6;
+            border: none;
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .copy-btn:hover {
+            background: #f5a623;
+            color: #0b0e1a;
+        }
+
+        /* ===== EXAMPLE BOXES ===== */
+        .example-box {
+            background: #1b2339;
+            border-radius: 1rem;
+            padding: 1.5rem 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid #2a3457;
+        }
+
+        .example-box .example-title {
+            color: #f7d88a;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .example-box .example-title .num {
+            background: #f5a623;
+            color: #0b0e1a;
+            padding: 0.1rem 0.7rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            margin-right: 0.5rem;
+        }
+
+        .example-box .output {
+            background: #0b0e1a;
+            padding: 0.8rem 1.2rem;
+            border-radius: 0.6rem;
+            color: #7bcfa6;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            border-left: 3px solid #f5a623;
+        }
+
+        .example-box .output-label {
+            font-size: 0.7rem;
+            color: #6b7db3;
+            font-family: 'Segoe UI', sans-serif;
+            margin-top: 0.5rem;
+        }
+
+        .example-box .input-demo {
+            background: #0b0e1a;
+            padding: 0.8rem 1.2rem;
+            border-radius: 0.6rem;
+            color: #f7b731;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            border-left: 3px solid #7b93d6;
+        }
+
+        .example-box .input-demo-label {
+            font-size: 0.7rem;
+            color: #6b7db3;
+            font-family: 'Segoe UI', sans-serif;
+            margin-top: 0.5rem;
+        }
+
+        /* ===== TIPS ===== */
+        .tip-box {
+            background: #1a2238;
+            border-left: 4px solid #7b93d6;
+            padding: 1rem 1.5rem;
+            border-radius: 0.8rem;
+            margin: 1rem 0;
+        }
+
+        .tip-box strong {
+            color: #7b93d6;
+        }
+
+        .tip-box.warning {
+            border-left-color: #f5a623;
+        }
+
+        .tip-box.warning strong {
+            color: #f5a623;
+        }
+
+        .tip-box.success {
+            border-left-color: #7bcfa6;
+        }
+
+        .tip-box.success strong {
+            color: #7bcfa6;
+        }
+
+        /* ===== ACTIVITIES ===== */
+        .activity-box {
+            background: #1b2339;
+            border-radius: 1rem;
+            padding: 1.8rem 2rem;
+            margin-bottom: 2rem;
+            border: 2px solid #f5a623;
+        }
+
+        .activity-box .activity-title {
+            color: #f5c542;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .activity-box .activity-title .badge {
+            background: #f5a623;
+            color: #0b0e1a;
+            padding: 0.1rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            margin-left: 0.5rem;
+            font-weight: 700;
+        }
+
+        .activity-box .challenge {
+            color: #c8d2f0;
+            margin: 0.5rem 0;
+        }
+
+        .activity-box .hint {
+            background: #0f1629;
+            padding: 0.8rem 1.2rem;
+            border-radius: 0.6rem;
+            color: #7b93d6;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        .activity-box .hint strong {
+            color: #f7d88a;
+        }
+
+        /* ===== SUMMARY ===== */
+        .summary-box {
+            background: #0f1629;
+            border-radius: 1rem;
+            padding: 1.5rem 2rem;
+            margin: 2rem 0;
+            border: 1px solid #2a3457;
+        }
+
+        .summary-box h3 {
+            color: #f5c542;
+            margin-bottom: 0.5rem;
+        }
+
+        .summary-box ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .summary-box ul li {
+            padding: 0.2rem 0;
+            color: #c8d2f0;
+        }
+
+        .summary-box ul li::before {
+            content: "✅ ";
+        }
+
+        /* ===== KEYWORDS ===== */
+        .keywords {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 0.5rem 0;
+        }
+
+        .keywords span {
+            background: #1f2a4a;
+            padding: 0.2rem 1rem;
+            border-radius: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            color: #7b93d6;
+            border: 1px solid #2a3457;
+        }
+
+        /* ===== CHEAT SHEET ===== */
+        .cheat-sheet {
+            background: #1a2238;
+            border-radius: 1rem;
+            padding: 1.5rem 2rem;
+            margin: 1.5rem 0;
+            border: 1px solid #3b4780;
+        }
+
+        .cheat-sheet h3 {
+            color: #f5c542;
+        }
+
+        .cheat-sheet table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 0.5rem;
+        }
+
+        .cheat-sheet td {
+            padding: 0.4rem 0.8rem;
+            border-bottom: 1px solid #28315a;
+            color: #c8d2f0;
+            font-size: 0.92rem;
+        }
+
+        .cheat-sheet td:first-child {
+            font-family: 'Courier New', monospace;
+            color: #f5a623;
+            font-weight: 600;
+        }
+
+        .cheat-sheet td:last-child {
+            color: #9aa8d9;
+        }
+
+        /* ===== BUTTONS ===== */
+        .btn {
+            display: inline-block;
+            background: #f5a623;
+            color: #0b0e1a;
+            font-weight: 700;
+            padding: 0.7rem 2rem;
+            border-radius: 40px;
+            text-decoration: none;
+            transition: 0.2s;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: #f7b731;
+            transform: scale(1.02);
+        }
+
+        .btn-secondary {
+            background: #1f2a4a;
+            color: #7b93d6;
+        }
+
+        .btn-secondary:hover {
+            background: #2a3457;
+            color: #f5c542;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+            justify-content: center;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            text-align: center;
+            margin-top: 2.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #28315a;
+            color: #6b7db3;
+            font-size: 0.9rem;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 750px) {
+            .container {
+                padding: 1.5rem 1rem;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.4rem;
+            }
+
+            .code-block {
+                font-size: 0.8rem;
+                padding: 0.8rem 1rem;
+            }
+
+            .example-box {
+                padding: 1rem 1.2rem;
+            }
+
+            .activity-box {
+                padding: 1.2rem 1.2rem;
+            }
+
+            .cheat-sheet {
+                padding: 1rem 1.2rem;
+            }
+
+            .btn-group {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .methods-box {
+                padding: 1rem 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- ===== HEADER ===== -->
+    <div class="header">
+        <div class="lesson-badge">📘 LESSON 8</div>
+        <h1>Strings</h1>
+        <div class="sub">Manipulate text like a pro!</div>
+        <a href="index.html" class="back-link">Back to Homepage</a>
+    </div>
+
+    <!-- ===== LEARNING OBJECTIVES ===== -->
+    <div class="objectives-box">
+        <h2>🎯 What You'll Learn Today</h2>
+        <ul>
+            <li>What <span class="highlight">strings</span> are and why they're important</li>
+            <li>How to <strong>combine</strong> (concatenate) strings</li>
+            <li>How to find the <strong>length</strong> of a string</li>
+            <li>How to <strong>access individual characters</strong> in a string</li>
+            <li>How to <strong>search</strong> for text inside a string</li>
+            <li>How to <strong>change case</strong> (upper/lower) and <strong>modify</strong> strings</li>
+        </ul>
+    </div>
+
+    <!-- ===== INTRODUCTION ===== -->
+    <div class="section-title">
+        <span class="emoji">💡</span> What are Strings?
+    </div>
+
+    <div class="explanation">
+        <p>A <span class="highlight">string</span> is a sequence of characters (letters, numbers, symbols) used to represent text.</p>
+        <p>You've already used strings in earlier lessons! Now we'll learn all the cool things you can do with them.</p>
+        <p>Think of a string like a <strong>train</strong> — each character is a <strong>carriage</strong> on the train. You can count the carriages, find specific ones, add new ones, or change them.</p>
+        <div class="keywords">
+            <span>string</span>
+            <span>length</span>
+            <span>concatenation</span>
+            <span>substring</span>
+            <span>find</span>
+            <span>replace</span>
+            <span>upper/lower</span>
+        </div>
+    </div>
+
+    <!-- ===== STRING METHODS ===== -->
+    <div class="section-title">
+        <span class="emoji">📋</span> Common String Methods
+    </div>
+
+    <div class="methods-box">
+        <h4>🔧 Useful String Tools</h4>
+        <table>
+            <tr>
+                <td>str.length()</td>
+                <td>Returns the length (number of characters)</td>
+            </tr>
+            <tr>
+                <td>str[0]</td>
+                <td>Access the character at index 0 (first character)</td>
+            </tr>
+            <tr>
+                <td>str.find("text")</td>
+                <td>Finds where "text" appears in the string</td>
+            </tr>
+            <tr>
+                <td>str.substr(start, length)</td>
+                <td>Extracts a piece of the string</td>
+            </tr>
+            <tr>
+                <td>str1 + str2</td>
+                <td>Combines (concatenates) two strings</td>
+            </tr>
+            <tr>
+                <td>str.append("text")</td>
+                <td>Adds text to the end of the string</td>
+            </tr>
+            <tr>
+                <td>str.insert(pos, "text")</td>
+                <td>Inserts text at a specific position</td>
+            </tr>
+            <tr>
+                <td>str.erase(pos, length)</td>
+                <td>Removes a portion of the string</td>
+            </tr>
+            <tr>
+                <td>str.replace(pos, len, "new")</td>
+                <td>Replaces a portion with new text</td>
+            </tr>
+        </table>
+        <div class="tip-box success" style="margin-top:0.8rem;">
+            <strong>💡 Important:</strong> <span style="color:#c8d2f0;">Strings, like arrays, start at index <span class="highlight">0</span>! So <span class="highlight">str[0]</span> is the first character.</span>
+        </div>
+    </div>
+
+    <!-- ===== EXAMPLE 1 ===== -->
+    <div class="section-title">
+        <span class="emoji">📝</span> Example 1: String Basics
+    </div>
+
+    <div class="example-box">
+        <div class="example-title">
+            <span class="num">1</span> Creating, Combining, and Getting Length
+        </div>
+        <p style="color:#c8d2f0; margin-bottom:0.5rem;">This program shows how to create strings, combine them, and find their length.</p>
+
+        <div class="code-label">📄 lesson8.cpp</div>
+        <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            <span class="keyword">#include</span> &lt;iostream&gt;
+            <span class="keyword">#include</span> &lt;string&gt;
+            <span class="keyword">using namespace</span> std;
+
+            <span class="keyword">int</span> <span class="function">main</span>() {
+                <span class="comment">// Creating strings</span>
+                <span class="keyword">string</span> <span class="variable">firstName</span> = <span class="string">"Alex"</span>;
+                <span class="keyword">string</span> <span class="variable">lastName</span> = <span class="string">"Johnson"</span>;
+
+                <span class="comment">// Combining strings (concatenation)</span>
+                <span class="keyword">string</span> <span class="variable">fullName</span> = firstName + <span class="string">" "</span> + lastName;
+                cout &lt;&lt; <span class="string">"Full name: "</span> &lt;&lt; fullName &lt;&lt; endl;
+
+                <span class="comment">// Getting length</span>
+                cout &lt;&lt; <span class="string">"First name length: "</span> &lt;&lt; firstName.length() &lt;&lt; endl;
+                cout &lt;&lt; <span class="string">"Last name length: "</span> &lt;&lt; lastName.length() &lt;&lt; endl;
+                cout &lt;&lt; <span class="string">"Full name length: "</span> &lt;&lt; fullName.length() &lt;&lt; endl;
+
+                <span class="comment">// Accessing characters</span>
+                cout &lt;&lt; <span class="string">"First character: "</span> &lt;&lt; fullName[<span class="number">0</span>] &lt;&lt; endl;
+                cout &lt;&lt; <span class="string">"Last character: "</span> &lt;&lt; fullName[fullName.length() - <span class="number">1</span>] &lt;&lt; endl;
+
+                <span class="keyword">return</span> <span class="number">0</span>;
+            }
+        </div>
+
+        <div class="output-label">▶️ Output:</div>
+        <div class="output">
+            Full name: Alex Johnson<br />
+            First name length: 4<br />
+            Last name length: 7<br />
+            Full name length: 12<br />
+            First character: A<br />
+            Last character: n
+        </div>
+
+        <div class="tip-box">
+            <strong>💡 Tip:</strong> <span style="color:#c8d2f0;"><span class="highlight">str.length()</span> gives you the number of characters. <span class="highlight">str[0]</span> gives you the first character, and <span class="highlight">str[str.length() - 1]</span> gives you the last!</span>
+        </div>
+    </div>
+
+    <!-- ===== EXAMPLE 2 ===== -->
+    <div class="section-title">
+        <span class="emoji">📝</span> Example 2: Searching and Extracting
+    </div>
+
+    <div class="example-box">
+        <div class="example-title">
+            <span class="num">2</span> Finding and Extracting Text
+        </div>
+        <p style="color:#c8d2f0; margin-bottom:0.5rem;">This program shows how to search for text and extract parts of a string.</p>
+
+        <div class="code-label">📄 lesson8.cpp</div>
+        <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            <span class="keyword">#include</span> &lt;iostream&gt;
+            <span class="keyword">#include</span> &lt;string&gt;
+            <span class="keyword">using namespace</span> std;
+
+            <span class="keyword">int</span> <span class="function">main</span>() {
+                <span class="keyword">string</span> <span class="variable">sentence</span> = <span class="string">"I love programming in C++!"</span>;
+
+                <span class="comment">// Finding text</span>
+                <span class="keyword">int</span> <span class="variable">pos</span> = sentence.find(<span class="string">"programming"</span>);
+                cout &lt;&lt; <span class="string">"'programming' found at position: "</span> &lt;&lt; pos &lt;&lt; endl;
+
+                <span class="comment">// Finding text that doesn't exist</span>
+                <span class="keyword">int</span> <span class="variable">notFound</span> = sentence.find(<span class="string">"Python"</span>);
+                <span class="keyword">if</span> (notFound == <span class="keyword">string</span>::npos) {
+                    cout &lt;&lt; <span class="string">"'Python' not found! ❌"</span> &lt;&lt; endl;
+                }
+
+                <span class="comment">// Extracting a substring</span>
+                <span class="keyword">string</span> <span class="variable">sub</span> = sentence.substr(<span class="number">7</span>, <span class="number">11</span>); <span class="comment">// Start at 7, take 11 characters</span>
+                cout &lt;&lt; <span class="string">"Substring: '"</span> &lt;&lt; sub &lt;&lt; <span class="string">"'"</span> &lt;&lt; endl;
+
+                <span class="keyword">return</span> <span class="number">0</span>;
+            }
+        </div>
+
+        <div class="output-label">▶️ Output:</div>
+        <div class="output">
+            'programming' found at position: 7<br />
+            'Python' not found! ❌<br />
+            Substring: 'programming'
+        </div>
+
+        <div class="tip-box warning">
+            <strong>⚠️ Important:</strong> <span style="color:#c8d2f0;"><span class="highlight">find()</span> returns <span class="highlight">string::npos</span> if the text isn't found. Always check for this!</span>
+        </div>
+    </div>
+
+    <!-- ===== EXAMPLE 3 ===== -->
+    <div class="section-title">
+        <span class="emoji">📝</span> Example 3: Modifying Strings
+    </div>
+
+    <div class="example-box">
+        <div class="example-title">
+            <span class="num">3</span> Changing Case and Modifying Text
+        </div>
+        <p style="color:#c8d2f0; margin-bottom:0.5rem;">This program shows how to change case, replace text, and modify strings.</p>
+
+        <div class="code-label">📄 lesson8.cpp</div>
+        <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            <span class="keyword">#include</span> &lt;iostream&gt;
+            <span class="keyword">#include</span> &lt;string&gt;
+            <span class="keyword">#include</span> &lt;cctype&gt; <span class="comment">// For toupper() and tolower()</span>
+            <span class="keyword">using namespace</span> std;
+
+            <span class="keyword">int</span> <span class="function">main</span>() {
+                <span class="keyword">string</span> <span class="variable">text</span> = <span class="string">"Hello World!"</span>;
+
+                <span class="comment">// Convert to uppercase (character by character)</span>
+                <span class="keyword">string</span> <span class="variable">upperText</span> = <span class="string">""</span>;
+                <span class="keyword">for</span> (<span class="keyword">char</span> <span class="variable">c</span> : text) {
+                    upperText += toupper(c);
+                }
+                cout &lt;&lt; <span class="string">"Uppercase: "</span> &lt;&lt; upperText &lt;&lt; endl;
+
+                <span class="comment">// Convert to lowercase (character by character)</span>
+                <span class="keyword">string</span> <span class="variable">lowerText</span> = <span class="string">""</span>;
+                <span class="keyword">for</span> (<span class="keyword">char</span> <span class="variable">c</span> : text) {
+                    lowerText += tolower(c);
+                }
+                cout &lt;&lt; <span class="string">"Lowercase: "</span> &lt;&lt; lowerText &lt;&lt; endl;
+
+                <span class="comment">// Replacing text</span>
+                <span class="keyword">string</span> <span class="variable">message</span> = <span class="string">"I like cats!"</span>;
+                cout &lt;&lt; <span class="string">"Original: "</span> &lt;&lt; message &lt;&lt; endl;
+
+                <span class="keyword">int</span> <span class="variable">catPos</span> = message.find(<span class="string">"cats"</span>);
+                message.replace(catPos, <span class="number">4</span>, <span class="string">"dogs"</span>);
+                cout &lt;&lt; <span class="string">"Replaced: "</span> &lt;&lt; message &lt;&lt; endl;
+
+                <span class="comment">// Inserting text</span>
+                message.insert(<span class="number">0</span>, <span class="string">"Actually, "</span>);
+                cout &lt;&lt; <span class="string">"Inserted: "</span> &lt;&lt; message &lt;&lt; endl;
+
+                <span class="keyword">return</span> <span class="number">0</span>;
+            }
+        </div>
+
+        <div class="output-label">▶️ Output:</div>
+        <div class="output">
+            Uppercase: HELLO WORLD!<br />
+            Lowercase: hello world!<br />
+            Original: I like cats!<br />
+            Replaced: I like dogs!<br />
+            Inserted: Actually, I like dogs!
+        </div>
+
+        <div class="tip-box success">
+            <strong>💡 Pro Tip:</strong> <span style="color:#c8d2f0;">C++17 and later have <span class="highlight">std::transform</span> for easier case conversion, but this manual method works everywhere!</span>
+        </div>
+    </div>
+
+    <!-- ===== PASSWORD CHECKER EXAMPLE ===== -->
+    <div class="section-title">
+        <span class="emoji">🔐</span> Real-World Example: Password Checker
+    </div>
+
+    <div class="example-box">
+        <div class="example-title">
+            <span class="num">📌</span> Password Strength Checker
+        </div>
+        <p style="color:#c8d2f0; margin-bottom:0.5rem;">This program checks if a password is strong enough!</p>
+
+        <div class="code-label">📄 lesson8.cpp</div>
+        <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            <span class="keyword">#include</span> &lt;iostream&gt;
+            <span class="keyword">#include</span> &lt;string&gt;
+            <span class="keyword">using namespace</span> std;
+
+            <span class="keyword">int</span> <span class="function">main</span>() {
+                <span class="keyword">string</span> <span class="variable">password</span>;
+
+                cout &lt;&lt; <span class="string">"🔐 Password Strength Checker"</span> &lt;&lt; endl;
+                cout &lt;&lt; <span class="string">"Enter your password: "</span>;
+                cin &gt;&gt; password;
+
+                <span class="comment">// Check length</span>
+                <span class="keyword">int</span> <span class="variable">len</span> = password.length();
+                <span class="keyword">bool</span> <span class="variable">hasUpper</span> = <span class="keyword">false</span>;
+                <span class="keyword">bool</span> <span class="variable">hasLower</span> = <span class="keyword">false</span>;
+                <span class="keyword">bool</span> <span class="variable">hasDigit</span> = <span class="keyword">false</span>;
+                <span class="keyword">bool</span> <span class="variable">hasSpecial</span> = <span class="keyword">false</span>;
+
+                <span class="comment">// Check each character</span>
+                <span class="keyword">for</span> (<span class="keyword">char</span> <span class="variable">c</span> : password) {
+                    <span class="keyword">if</span> (isupper(c)) hasUpper = <span class="keyword">true</span>;
+                    <span class="keyword">if</span> (islower(c)) hasLower = <span class="keyword">true</span>;
+                    <span class="keyword">if</span> (isdigit(c)) hasDigit = <span class="keyword">true</span>;
+                    <span class="keyword">if</span> (!isalnum(c)) hasSpecial = <span class="keyword">true</span>;
+                }
+
+                <span class="comment">// Rate the password</span>
+                cout &lt;&lt; <span class="string">"\n📊 Password Analysis:"</span> &lt;&lt; endl;
+                cout &lt;&lt; <span class="string">"Length: "</span> &lt;&lt; len &lt;&lt; <span class="string">" characters"</span> &lt;&lt; endl;
+
+                <span class="keyword">int</span> <span class="variable">score</span> = <span class="number">0</span>;
+                <span class="keyword">if</span> (len &gt;= <span class="number">8</span>) score++;
+                <span class="keyword">if</span> (hasUpper) score++;
+                <span class="keyword">if</span> (hasLower) score++;
+                <span class="keyword">if</span> (hasDigit) score++;
+                <span class="keyword">if</span> (hasSpecial) score++;
+
+                cout &lt;&lt; <span class="string">"Strength: "</span>;
+                <span class="keyword">if</span> (score &lt;= <span class="number">2</span>) {
+                    cout &lt;&lt; <span class="string">"❌ Weak"</span> &lt;&lt; endl;
+                    cout &lt;&lt; <span class="string">"Add more characters, numbers, and symbols!"</span> &lt;&lt; endl;
+                } <span class="keyword">else if</span> (score &lt;= <span class="number">3</span>) {
+                    cout &lt;&lt; <span class="string">"⚠️ Medium"</span> &lt;&lt; endl;
+                    cout &lt;&lt; <span class="string">"Add a symbol for extra security!"</span> &lt;&lt; endl;
+                } <span class="keyword">else</span> {
+                    cout &lt;&lt; <span class="string">"✅ Strong"</span> &lt;&lt; endl;
+                    cout &lt;&lt; <span class="string">"Great password! 🔒"</span> &lt;&lt; endl;
+                }
+
+                <span class="keyword">return</span> <span class="number">0</span>;
+            }
+        </div>
+
+        <div class="input-demo-label">💬 User Types:</div>
+        <div class="input-demo">MySecurePass123!</div>
+
+        <div class="output-label">▶️ Output:</div>
+        <div class="output">
+            🔐 Password Strength Checker<br />
+            Enter your password: MySecurePass123!<br />
+            <br />
+            📊 Password Analysis:<br />
+            Length: 16 characters<br />
+            Strength: ✅ Strong<br />
+            Great password! 🔒
+        </div>
+
+        <div class="tip-box">
+            <strong>💡 Fun Fact:</strong> <span style="color:#c8d2f0;">Real password checkers use the same techniques! They check length, uppercase, lowercase, numbers, and special characters.</span>
+        </div>
+    </div>
+
+    <!-- ===== CHEAT SHEET ===== -->
+    <div class="section-title">
+        <span class="emoji">📋</span> Quick Reference
+    </div>
+
+    <div class="cheat-sheet">
+        <h3>🔑 Key Code You Just Learned</h3>
+        <table>
+            <tr>
+                <td>string str = "Hello";</td>
+                <td>Creates a string</td>
+            </tr>
+            <tr>
+                <td>str.length()</td>
+                <td>Gets the length of the string</td>
+            </tr>
+            <tr>
+                <td>str[0]</td>
+                <td>Accesses the first character</td>
+            </tr>
+            <tr>
+                <td>str.find("text")</td>
+                <td>Finds where "text" appears</td>
+            </tr>
+            <tr>
+                <td>str.substr(start, len)</td>
+                <td>Extracts a portion of the string</td>
+            </tr>
+            <tr>
+                <td>str1 + str2</td>
+                <td>Combines (concatenates) strings</td>
+            </tr>
+            <tr>
+                <td>toupper(c)</td>
+                <td>Converts a character to uppercase</td>
+            </tr>
+            <tr>
+                <td>tolower(c)</td>
+                <td>Converts a character to lowercase</td>
+            </tr>
+            <tr>
+                <td>str.replace(pos, len, "new")</td>
+                <td>Replaces part of the string</td>
+            </tr>
+            <tr>
+                <td>string::npos</td>
+                <td>Value returned when find() doesn't find text</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- ===== ACTIVITY 1 ===== -->
+    <div class="section-title">
+        <span class="emoji">🏋️</span> Practice Time!
+    </div>
+
+    <div class="activity-box">
+        <div class="activity-title">
+            🎯 Activity 1: Name Analyzer
+            <span class="badge">⭐ BEGINNER</span>
+        </div>
+        <div class="challenge">
+            <p><strong>Your Task:</strong> Create a program that analyzes a person's name!</p>
+            <ul style="color:#c8d2f0; margin-left:1.5rem; margin-top:0.5rem;">
+                <li>Ask the user for their <strong>first name</strong> and <strong>last name</strong></li>
+                <li>Combine them into a full name</li>
+                <li>Print the <strong>length</strong> of the full name</li>
+                <li>Print the <strong>first letter</strong> and <strong>last letter</strong></li>
+                <li>Print the name in <strong>uppercase</strong> and <strong>lowercase</strong></li>
+            </ul>
+            <div class="output" style="margin-top:0.5rem;">
+                Enter your first name: Sarah<br />
+                Enter your last name: Lee<br />
+                <br />
+                📋 Name Analysis:<br />
+                Full name: Sarah Lee<br />
+                Length: 8 characters<br />
+                First letter: S<br />
+                Last letter: e<br />
+                Uppercase: SARAH LEE<br />
+                Lowercase: sarah lee
+            </div>
+        </div>
+        <div class="hint">
+            <strong>💡 Hint:</strong> Use <span class="highlight">cin &gt;&gt;</span> for input, <span class="highlight">+</span> to combine, and loop through characters to convert case.
+        </div>
+    </div>
+
+    <!-- ===== ACTIVITY 2 ===== -->
+    <div class="activity-box">
+        <div class="activity-title">
+            🚀 Activity 2: Word Counter
+            <span class="badge">⭐⭐ CHALLENGE</span>
+        </div>
+        <div class="challenge">
+            <p><strong>Your Task:</strong> Create a program that counts words in a sentence!</p>
+            <ul style="color:#c8d2f0; margin-left:1.5rem; margin-top:0.5rem;">
+                <li>Ask the user to enter a <strong>sentence</strong></li>
+                <li>Count how many <strong>words</strong> are in the sentence</li>
+                <li>Count how many <strong>characters</strong> (excluding spaces)</li>
+                <li>Find and print the <strong>longest word</strong></li>
+            </ul>
+            <div class="output" style="margin-top:0.5rem;">
+                Enter a sentence: I love learning C++<br />
+                <br />
+                📊 Sentence Analysis:<br />
+                Words: 4<br />
+                Characters (no spaces): 14<br />
+                Longest word: learning
+            </div>
+        </div>
+        <div class="hint">
+            <strong>💡 Hint:</strong> Use <span class="highlight">getline(cin, sentence);</span> to read the whole sentence. Loop through characters and count spaces + 1 for words.
+        </div>
+    </div>
+
+    <!-- ===== BONUS CHALLENGE ===== -->
+    <div class="activity-box" style="border-color: #7b93d6;">
+        <div class="activity-title" style="color: #7b93d6;">
+            🌟 Bonus Challenge: Palindrome Checker
+            <span class="badge" style="background:#7b93d6;">⭐⭐⭐ ADVANCED</span>
+        </div>
+        <div class="challenge">
+            <p><strong>Your Task:</strong> Check if a word is a palindrome (reads the same backwards)!</p>
+            <ul style="color:#c8d2f0; margin-left:1.5rem; margin-top:0.5rem;">
+                <li>Ask the user to enter a <strong>word</strong></li>
+                <li><strong>Convert it to lowercase</strong> (so "Race" and "race" are treated the same)</li>
+                <li>Check if it reads the same <strong>forwards and backwards</strong></li>
+                <li>Print whether it's a palindrome or not</li>
+            </ul>
+            <div class="output" style="margin-top:0.5rem;">
+                Enter a word: Racecar<br />
+                <br />
+                🔄 Palindrome Checker:<br />
+                "racecar" IS a palindrome! 🎉
+            </div>
+            <div class="output" style="margin-top:0.5rem; border-left-color:#7b93d6;">
+                Enter a word: Hello<br />
+                <br />
+                🔄 Palindrome Checker:<br />
+                "hello" is NOT a palindrome. ❌
+            </div>
+        </div>
+        <div class="hint">
+            <strong>💡 Hint:</strong> Use a <span class="highlight">for</span> loop to compare <span class="highlight">word[i]</span> with <span class="highlight">word[word.length() - 1 - i]</span>. If all match, it's a palindrome!
+        </div>
+    </div>
+
+    <!-- ===== SUMMARY ===== -->
+    <div class="section-title">
+        <span class="emoji">🎓</span> Lesson Summary
+    </div>
+
+    <div class="summary-box">
+        <h3>✅ What You Learned Today</h3>
+        <ul>
+            <li>What <span class="highlight">strings</span> are and how to work with them</li>
+            <li>How to <strong>combine</strong> strings using <span class="highlight">+</span></li>
+            <li>How to find the <strong>length</strong> of a string with <span class="highlight">.length()</span></li>
+            <li>How to <strong>access characters</strong> using indexes like arrays</li>
+            <li>How to <strong>search</strong> for text with <span class="highlight">.find()</span></li>
+            <li>How to <strong>extract</strong> parts of a string with <span class="highlight">.substr()</span></li>
+            <li>How to <strong>convert case</strong> using <span class="highlight">toupper()</span> and <span class="highlight">tolower()</span></li>
+            <li>How to <strong>modify</strong> strings with <span class="highlight">.replace()</span> and <span class="highlight">.insert()</span></li>
+            <li>How to build a <strong>real-world password checker</strong></li>
+        </ul>
+    </div>
+
+    <!-- ===== WHAT'S NEXT ===== -->
+    <div class="section-title">
+        <span class="emoji">🔜</span> What's Next?
+    </div>
+
+    <div class="explanation">
+        <p>In <strong>Lesson 9</strong>, you'll learn how to:</p>
+        <ul style="color:#c8d2f0; margin-left:1.5rem;">
+            <li>💾 <strong>Save data</strong> to files and <strong>read</strong> from files</li>
+            <li>📁 Create a <strong>high score tracker</strong> that saves between games</li>
+            <li>📝 Build a <strong>note keeper</strong> or <strong>diary program</strong></li>
+        </ul>
+        <p style="margin-top:0.8rem; color:#9aa8d9;">👉 <a href="lesson9.html" style="color:#f5c542;">Click here to go to Lesson 9 →</a></p>
+    </div>
+
+    <!-- ===== NAVIGATION BUTTONS ===== -->
+    <div class="btn-group">
+        <a href="index.html" class="btn btn-secondary">🏠 Homepage</a>
+        <a href="lesson7.html" class="btn btn-secondary">⬅️ Previous Lesson</a>
+        <a href="lesson9.html" class="btn">➡️ Next Lesson</a>
+    </div>
+
+    <!-- ===== FOOTER ===== -->
+    <div class="footer">
+        <p>💻 <strong>C++ Coding Adventure</strong> · Grade 9 · Lesson 8</p>
+        <p style="font-size:0.8rem; color:#4f6199;">Keep coding, keep learning! 🚀</p>
+    </div>
+
+</div>
+
+<!-- ===== COPY FUNCTION ===== -->
+<script>
+    function copyCode(button) {
+        const codeBlock = button.parentElement;
+        const codeText = codeBlock.innerText.replace('📋 Copy', '').trim();
+        navigator.clipboard.writeText(codeText).then(() => {
+            const original = button.textContent;
+            button.textContent = '✅ Copied!';
+            setTimeout(() => {
+                button.textContent = original;
+            }, 2000);
+        }).catch(() => {
+            alert('Please select and copy the code manually.');
+        });
+    }
+</script>
+
+</body>
+</html>

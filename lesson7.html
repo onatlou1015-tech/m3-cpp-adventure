@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Lesson 7 - Functions 📦</title>
+    <style>
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0b0e1a;
+            color: #e8edf5;
+            line-height: 1.7;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #141a2b;
+            padding: 2.5rem 2.5rem;
+            border-radius: 2rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+            border: 1px solid #2a3457;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            text-align: center;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px dashed #3b4780;
+            margin-bottom: 2rem;
+        }
+
+        .header .lesson-badge {
+            display: inline-block;
+            background: #f5a623;
+            color: #0b0e1a;
+            font-weight: 700;
+            padding: 0.3rem 1.5rem;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .header h1 {
+            font-size: 2.8rem;
+            background: linear-gradient(135deg, #f7b731, #f5a623);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header .sub {
+            font-size: 1.1rem;
+            color: #9aa8d9;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #7b93d6;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: 0.2s;
+        }
+
+        .back-link:hover {
+            color: #f5c542;
+        }
+
+        .back-link::before {
+            content: "⬅️ ";
+        }
+
+        /* ===== LEARNING OBJECTIVES ===== */
+        .objectives-box {
+            background: #1b2339;
+            border-left: 6px solid #f5a623;
+            padding: 1.5rem 2rem;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .objectives-box h2 {
+            color: #f5c542;
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .objectives-box ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .objectives-box ul li {
+            padding: 0.2rem 0;
+            color: #c8d2f0;
+        }
+
+        .objectives-box ul li::before {
+            content: "🎯 ";
+        }
+
+        /* ===== SECTION TITLES ===== */
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 2.5rem 0 1rem 0;
+            color: #f5c542;
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+        }
+
+        .section-title .emoji {
+            font-size: 1.8rem;
+        }
+
+        /* ===== EXPLANATION ===== */
+        .explanation {
+            background: #0f1629;
+            padding: 1.5rem 2rem;
+            border-radius: 1rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #2a3457;
+        }
+
+        .explanation p {
+            color: #c8d2f0;
+            margin-bottom: 0.8rem;
+        }
+
+        .explanation strong {
+            color: #f7d88a;
+        }
+
+        .highlight {
+            background: #1f2a4a;
+            padding: 0.1rem 0.5rem;
+            border-radius: 6px;
+            color: #f5c542;
+            font-family: 'Courier New', monospace;
+        }
+
+        /* ===== FUNCTION STRUCTURE ===== */
+        .structure-box {
+            background: #1a2238;
+            border-radius: 1rem;
+            padding: 1.5rem 2rem;
+            margin: 1rem 0 1.5rem 0;
+            border: 1px solid #3b4780;
+        }
+
+        .structure-box h4 {
+            color: #f5c542;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .structure-box .code-block {
+            margin: 0.5rem 0;
+        }
+
+        /* ===== CODE BLOCKS ===== */
+        .code-block {
+            background: #0b0e1a;
+            padding: 1.2rem 1.5rem;
+            border-radius: 0.8rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.92rem;
+            color: #c8d2f0;
+            border: 1px solid #2a3457;
+            margin: 0.8rem 0 1.2rem 0;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-break: break-word;
+            position: relative;
+        }
+
+        .code-block .comment {
+            color: #6b8a7a;
+        }
+
+        .code-block .keyword {
+            color: #f5a623;
+        }
+
+        .code-block .string {
+            color: #7bcfa6;
+        }
+
+        .code-block .function {
+            color: #7b93d6;
+        }
+
+        .code-block .number {
+            color: #f7b731;
+        }
+
+        .code-block .variable {
+            color: #7bcfa6;
+        }
+
+        .code-block .return {
+            color: #f5a623;
+        }
+
+        .code-label {
+            display: inline-block;
+            background: #1f2a4a;
+            color: #7b93d6;
+            font-size: 0.7rem;
+            padding: 0.1rem 0.8rem;
+            border-radius: 20px;
+            margin-bottom: 0.3rem;
+            font-family: 'Segoe UI', sans-serif;
+            letter-spacing: 0.5px;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #1f2a4a;
+            color: #7b93d6;
+            border: none;
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .copy-btn:hover {
+            background: #f5a623;
+            color: #0b0e1a;
+        }
+
+        /* ===== EXAMPLE BOXES ===== */
+        .example-box {
+            background: #1b2339;
+            border-radius: 1rem;
+            padding: 1.5rem 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid #2a3457;
+        }
+
+        .example-box .example-title {
+            color: #f7d88a;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .example-box .example-title .num {
+            background: #f5a623;
+            color: #0b0e1a;
+            padding: 0.1rem 0.7rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            margin-right: 0.5rem;
+        }
+
+        .example-box .output {
+            background: #0b0e1a;
+            padding: 0.8rem 1.2rem;
+            border-radius: 0.6rem;
+            color: #7bcfa6;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            border-left: 3px solid #f5a623;
+        }
+
+        .example-box .output-label {
+            font-size: 0.7rem;
+            color: #6b7db3;
+            font-family: 'Segoe UI', sans-serif;
+            margin-top: 0.5rem;
+        }
+
+        .example-box .input-demo {
+            background: #0b0e1a;
+            padding: 0.8rem 1.2rem;
+            border-radius: 0.6rem;
+            color: #f7b731;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            border-left: 3px solid #7b93d6;
+        }
+
+        .example-box .input-demo-label {
+            font-size: 0.7rem;
+            color: #6b7db3;
+            font-family: 'Segoe UI', sans-serif;
+            margin-top: 0.5rem;
+        }
+
+        /* ===== TIPS ===== */
+        .tip-box {
+            background: #1a2238;
+            border-left: 4px solid #7b93d6;
+            padding: 1rem 1.5rem;
+            border-radius: 0.8rem;
+            margin: 1rem 0;
+        }
+
+        .tip-box strong {
+            color: #7b93d6;
+        }
+
+        .tip-box.warning {
+            border-left-color: #f5a623;
+        }
+
+        .tip-box.warning strong {
+            color: #f5a623;
+        }
+
+        .tip-box.success {
+            border-left-color: #7bcfa6;
+        }
+
+        .tip-box.success strong {
+            color: #7bcfa6;
+        }
+
+        /* ===== ACTIVITIES ===== */
+        .activity-box {
+            background: #1b2339;
+            border-radius: 1rem;
+            padding: 1.8rem 2rem;
+            margin-bottom: 2rem;
+            border: 2px solid #f5a623;
+        }
+
+        .activity-box .activity-title {
+            color: #f5c542;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .activity-box .activity-title .badge {
+            background: #f5a623;
+            color: #0b0e1a;
+            padding: 0.1rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            margin-left: 0.5rem;
+            font-weight: 700;
+        }
+
+        .activity-box .challenge {
+            color: #c8d2f0;
+            margin: 0.5rem 0;
+        }
+
+        .activity-box .hint {
+            background: #0f1629;
+            padding: 0.8rem 1.2rem;
+            border-radius: 0.6rem;
+            color: #7b93d6;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        .activity-box .hint strong {
+            color: #f7d88a;
+        }
+
+        /* ===== SUMMARY ===== */
+        .summary-box {
+            background: #0f1629;
+            border-radius: 1rem;
+            padding: 1.5rem 2rem;
+            margin: 2rem 0;
+            border: 1px solid #2a3457;
+        }
+
+        .summary-box h3 {
+            color: #f5c542;
+            margin-bottom: 0.5rem;
+        }
+
+        .summary-box ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .summary-box ul li {
+            padding: 0.2rem 0;
+            color: #c8d2f0;
+        }
+
+        .summary-box ul li::before {
+            content: "✅ ";
+        }
+
+        /* ===== KEYWORDS ===== */
+        .keywords {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 0.5rem 0;
+        }
+
+        .keywords span {
+            background: #1f2a4a;
+            padding: 0.2rem 1rem;
+            border-radius: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            color: #7b93d6;
+            border: 1px solid #2a3457;
+        }
+
+        /* ===== CHEAT SHEET ===== */
+        .cheat-sheet {
+            background: #1a2238;
+            border-radius: 1rem;
+            padding: 1.5rem 2rem;
+            margin: 1.5rem 0;
+            border: 1px solid #3b4780;
+        }
+
+        .cheat-sheet h3 {
+            color: #f5c542;
+        }
+
+        .cheat-sheet table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 0.5rem;
+        }
+
+        .cheat-sheet td {
+            padding: 0.4rem 0.8rem;
+            border-bottom: 1px solid #28315a;
+            color: #c8d2f0;
+            font-size: 0.92rem;
+        }
+
+        .cheat-sheet td:first-child {
+            font-family: 'Courier New', monospace;
+            color: #f5a623;
+            font-weight: 600;
+        }
+
+        .cheat-sheet td:last-child {
+            color: #9aa8d9;
+        }
+
+        /* ===== BUTTONS ===== */
+        .btn {
+            display: inline-block;
+            background: #f5a623;
+            color: #0b0e1a;
+            font-weight: 700;
+            padding: 0.7rem 2rem;
+            border-radius: 40px;
+            text-decoration: none;
+            transition: 0.2s;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: #f7b731;
+            transform: scale(1.02);
+        }
+
+        .btn-secondary {
+            background: #1f2a4a;
+            color: #7b93d6;
+        }
+
+        .btn-secondary:hover {
+            background: #2a3457;
+            color: #f5c542;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+            justify-content: center;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            text-align: center;
+            margin-top: 2.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #28315a;
+            color: #6b7db3;
+            font-size: 0.9rem;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 750px) {
+            .container {
+                padding: 1.5rem 1rem;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.4rem;
+            }
+
+            .code-block {
+                font-size: 0.8rem;
+                padding: 0.8rem 1rem;
+            }
+
+            .example-box {
+                padding: 1rem 1.2rem;
+            }
+
+            .activity-box {
+                padding: 1.2rem 1.2rem;
+            }
+
+            .cheat-sheet {
+                padding: 1rem 1.2rem;
+            }
+
+            .btn-group {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .structure-box {
+                padding: 1rem 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- ===== HEADER ===== -->
+    <div class="header">
+        <div class="lesson-badge">📘 LESSON 7</div>
+        <h1>Functions</h1>
+        <div class="sub">Organize your code and reuse it like a pro!</div>
+        <a href="index.html" class="back-link">Back to Homepage</a>
+    </div>
+
+    <!-- ===== LEARNING OBJECTIVES ===== -->
+    <div class="objectives-box">
+        <h2>🎯 What You'll Learn Today</h2>
+        <ul>
+            <li>What <span class="highlight">functions</span> are and why they're important</li>
+            <li>How to <strong>create</strong> your own functions</li>
+            <li>How to <strong>call</strong> (use) a function</li>
+            <li>What <strong>parameters</strong> are and how to use them</li>
+            <li>What <strong>return values</strong> are and how to use them</li>
+            <li>The difference between <strong>void</strong> and <strong>return</strong> functions</li>
+        </ul>
+    </div>
+
+    <!-- ===== INTRODUCTION ===== -->
+    <div class="section-title">
+        <span class="emoji">💡</span> What is a Function?
+    </div>
+
+    <div class="explanation">
+        <p>Think of a <span class="highlight">function</span> as a <strong>recipe</strong> or a <strong>machine</strong>. You give it some ingredients (called <strong>parameters</strong>), it does something, and sometimes it gives you back a result (called a <strong>return value</strong>).</p>
+        <p>Functions help you:</p>
+        <ul style="color:#c8d2f0; margin-left:1.5rem; margin-bottom:0.8rem;">
+            <li>✅ <strong>Organize</strong> your code into smaller, manageable pieces</li>
+            <li>✅ <strong>Reuse</strong> code without copying and pasting</li>
+            <li>✅ <strong>Debug</strong> easier because each function does one thing</li>
+            <li>✅ <strong>Share</strong> code with others more easily</li>
+        </ul>
+        <p>You've already been using functions! <span class="highlight">main()</span> is a function. <span class="highlight">cout</span> and <span class="highlight">cin</span> use functions too!</p>
+        <div class="keywords">
+            <span>function</span>
+            <span>parameters</span>
+            <span>arguments</span>
+            <span>return</span>
+            <span>void</span>
+            <span>call</span>
+            <span>define</span>
+        </div>
+    </div>
+
+    <!-- ===== FUNCTION STRUCTURE ===== -->
+    <div class="section-title">
+        <span class="emoji">🏗️</span> Function Structure
+    </div>
+
+    <div class="structure-box">
+        <h4>📐 Parts of a Function</h4>
+        <div class="code-block" style="margin:0.5rem 0;">
+            <span class="comment">// Function structure:</span>
+            <span class="keyword">returnType</span> <span class="function">functionName</span>(<span class="variable">parameterType parameterName</span>) {
+                <span class="comment">// Code to execute</span>
+                <span class="keyword">return</span> <span class="variable">value</span>; <span class="comment">// (if returnType is not void)</span>
+            }
+
+            <span class="comment">// Example:</span>
+            <span class="keyword">int</span> <span class="function">addNumbers</span>(<span class="keyword">int</span> <span class="variable">a</span>, <span class="keyword">int</span> <span class="variable">b</span>) {
+                <span class="keyword">int</span> <span class="variable">sum</span> = a + b;
+                <span class="keyword">return</span> sum;
+            }
+        </div>
+        <ul style="color:#c8d2f0; margin-left:1.5rem;">
+            <li><strong>returnType:</strong> What kind of data does it give back? (<span class="highlight">int</span>, <span class="highlight">double</span>, <span class="highlight">string</span>, <span class="highlight">void</span>, etc.)</li>
+            <li><strong>functionName:</strong> What do you want to call it? (Use descriptive names!)</li>
+            <li><strong>parameters:</strong> What information does it need to do its job?</li>
+            <li><strong>return:</strong> What does it give back? (Only if not <span class="highlight">void</span>)</li>
+        </ul>
+    </div>
+
+    <!-- ===== EXAMPLE 1 ===== -->
+    <div class="section-title">
+        <span class="emoji">📝</span> Example 1: Void Function (No Return)
+    </div>
+
+    <div class="example-box">
+        <div class="example-title">
+            <span class="num">1</span> Printing a Welcome Message
+        </div>
+        <p style="color:#c8d2f0; margin-bottom:0.5rem;">A <span class="highlight">void</span> function does something but doesn't return a value.</p>
+
+        <div class="code-label">📄 lesson7.cpp</div>
+        <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            <span class="keyword">#include</span> &lt;iostream&gt;
+            <span class="keyword">#include</span> &lt;string&gt;
+            <span class="keyword">using namespace</span> std;
+
+            <span class="comment">// Function that prints a welcome message</span>
+            <span class="keyword">void</span> <span class="function">printWelcome</span>(<span class="keyword">string</span> <span class="variable">name</span>) {
+                cout &lt;&lt; <span class="string">"Welcome, "</span> &lt;&lt; name &lt;&lt; <span class="string">"!"</span> &lt;&lt; endl;
+                cout &lt;&lt; <span class="string">"Let's learn C++ together! 🚀"</span> &lt;&lt; endl;
+            }
+
+            <span class="keyword">int</span> <span class="function">main</span>() {
+                <span class="comment">// Call the function</span>
+                printWelcome(<span class="string">"Alex"</span>);
+                printWelcome(<span class="string">"Sarah"</span>);
+
+                <span class="keyword">return</span> <span class="number">0</span>;
+            }
+        </div>
+
+        <div class="output-label">▶️ Output:</div>
+        <div class="output">
+            Welcome, Alex!<br />
+            Let's learn C++ together! 🚀<br />
+            Welcome, Sarah!<br />
+            Let's learn C++ together! 🚀
+        </div>
+
+        <div class="tip-box success">
+            <strong>💡 Notice:</strong> <span style="color:#c8d2f0;">We called the same function <strong>twice</strong> with different names! This is the power of functions — write once, use many times!</span>
+        </div>
+    </div>
+
+    <!-- ===== EXAMPLE 2 ===== -->
+    <div class="section-title">
+        <span class="emoji">📝</span> Example 2: Return Function (With Return)
+    </div>
+
+    <div class="example-box">
+        <div class="example-title">
+            <span class="num">2</span> Calculator Functions
+        </div>
+        <p style="color:#c8d2f0; margin-bottom:0.5rem;">A function with a <span class="highlight">return</span> value gives back a result that you can use.</p>
+
+        <div class="code-label">📄 lesson7.cpp</div>
+        <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            <span class="keyword">#include</span> &lt;iostream&gt;
+            <span class="keyword">using namespace</span> std;
+
+            <span class="comment">// Function to add two numbers</span>
+            <span class="keyword">int</span> <span class="function">add</span>(<span class="keyword">int</span> <span class="variable">a</span>, <span class="keyword">int</span> <span class="variable">b</span>) {
+                <span class="keyword">return</span> a + b;
+            }
+
+            <span class="comment">// Function to multiply two numbers</span>
+            <span class="keyword">int</span> <span class="function">multiply</span>(<span class="keyword">int</span> <span class="variable">a</span>, <span class="keyword">int</span> <span class="variable">b</span>) {
+                <span class="keyword">return</span> a * b;
+            }
+
+            <span class="comment">// Function to calculate the square of a number</span>
+            <span class="keyword">int</span> <span class="function">square</span>(<span class="keyword">int</span> <span class="variable">num</span>) {
+                <span class="keyword">return</span> num * num;
+            }
+
+            <span class="keyword">int</span> <span class="function">main</span>() {
+                <span class="keyword">int</span> <span class="variable">x</span> = <span class="number">5</span>;
+                <span class="keyword">int</span> <span class="variable">y</span> = <span class="number">3</span>;
+
+                <span class="comment">// Call functions and store the results</span>
+                <span class="keyword">int</span> <span class="variable">sumResult</span> = add(x, y);
+                <span class="keyword">int</span> <span class="variable">multResult</span> = multiply(x, y);
+                <span class="keyword">int</span> <span class="variable">squareResult</span> = square(x);
+
+                cout &lt;&lt; <span class="string">"Numbers: "</span> &lt;&lt; x &lt;&lt; <span class="string">" and "</span> &lt;&lt; y &lt;&lt; endl;
+                cout &lt;&lt; <span class="string">"Sum: "</span> &lt;&lt; sumResult &lt;&lt; endl;
+                cout &lt;&lt; <span class="string">"Product: "</span> &lt;&lt; multResult &lt;&lt; endl;
+                cout &lt;&lt; <span class="string">"Square of "</span> &lt;&lt; x &lt;&lt; <span class="string">": "</span> &lt;&lt; squareResult &lt;&lt; endl;
+
+                <span class="keyword">return</span> <span class="number">0</span>;
+            }
+        </div>
+
+        <div class="output-label">▶️ Output:</div>
+        <div class="output">
+            Numbers: 5 and 3<br />
+            Sum: 8<br />
+            Product: 15<br />
+            Square of 5: 25
+        </div>
+
+        <div class="tip-box">
+            <strong>💡 Tip:</strong> <span style="color:#c8d2f0;">You can also use the return value directly: <span class="highlight">cout &lt;&lt; add(5, 3);</span></span>
+        </div>
+    </div>
+
+    <!-- ===== EXAMPLE 3 ===== -->
+    <div class="section-title">
+        <span class="emoji">📝</span> Example 3: Functions with User Input
+    </div>
+
+    <div class="example-box">
+        <div class="example-title">
+            <span class="num">3</span> Grade Calculator Program
+        </div>
+        <p style="color:#c8d2f0; margin-bottom:0.5rem;">This program uses functions to calculate grades and determine letter grades.</p>
+
+        <div class="code-label">📄 lesson7.cpp</div>
+        <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            <span class="keyword">#include</span> &lt;iostream&gt;
+            <span class="keyword">using namespace</span> std;
+
+            <span class="comment">// Function to get the letter grade</span>
+            <span class="keyword">char</span> <span class="function">getLetterGrade</span>(<span class="keyword">int</span> <span class="variable">score</span>) {
+                <span class="keyword">if</span> (score &gt;= <span class="number">90</span>) <span class="keyword">return</span> <span class="string">'A'</span>;
+                <span class="keyword">else if</span> (score &gt;= <span class="number">80</span>) <span class="keyword">return</span> <span class="string">'B'</span>;
+                <span class="keyword">else if</span> (score &gt;= <span class="number">70</span>) <span class="keyword">return</span> <span class="string">'C'</span>;
+                <span class="keyword">else if</span> (score &gt;= <span class="number">60</span>) <span class="keyword">return</span> <span class="string">'D'</span>;
+                <span class="keyword">else</span> <span class="keyword">return</span> <span class="string">'F'</span>;
+            }
+
+            <span class="comment">// Function to get a message based on grade</span>
+            <span class="keyword">string</span> <span class="function">getMessage</span>(<span class="keyword">char</span> <span class="variable">grade</span>) {
+                <span class="keyword">if</span> (grade == <span class="string">'A'</span>) <span class="keyword">return</span> <span class="string">"🌟 Excellent work!"</span>;
+                <span class="keyword">else if</span> (grade == <span class="string">'B'</span>) <span class="keyword">return</span> <span class="string">"👍 Good job!"</span>;
+                <span class="keyword">else if</span> (grade == <span class="string">'C'</span>) <span class="keyword">return</span> <span class="string">"📚 Keep practicing!"</span>;
+                <span class="keyword">else if</span> (grade == <span class="string">'D'</span>) <span class="keyword">return</span> <span class="string">"📖 You can do better!"</span>;
+                <span class="keyword">else</span> <span class="keyword">return</span> <span class="string">"😢 Don't give up! Study harder!"</span>;
+            }
+
+            <span class="keyword">int</span> <span class="function">main</span>() {
+                <span class="keyword">int</span> <span class="variable">score</span>;
+
+                cout &lt;&lt; <span class="string">"Enter your test score (0-100): "</span>;
+                cin &gt;&gt; score;
+
+                <span class="comment">// Call functions</span>
+                <span class="keyword">char</span> <span class="variable">grade</span> = getLetterGrade(score);
+                <span class="keyword">string</span> <span class="variable">message</span> = getMessage(grade);
+
+                cout &lt;&lt; <span class="string">"\n📊 Grade Report:"</span> &lt;&lt; endl;
+                cout &lt;&lt; <span class="string">"Score: "</span> &lt;&lt; score &lt;&lt; endl;
+                cout &lt;&lt; <span class="string">"Grade: "</span> &lt;&lt; grade &lt;&lt; endl;
+                cout &lt;&lt; <span class="string">"Message: "</span> &lt;&lt; message &lt;&lt; endl;
+
+                <span class="keyword">return</span> <span class="number">0</span>;
+            }
+        </div>
+
+        <div class="input-demo-label">💬 User Types:</div>
+        <div class="input-demo">85</div>
+
+        <div class="output-label">▶️ Output:</div>
+        <div class="output">
+            Enter your test score (0-100): 85<br />
+            <br />
+            📊 Grade Report:<br />
+            Score: 85<br />
+            Grade: B<br />
+            Message: 👍 Good job!
+        </div>
+
+        <div class="tip-box success">
+            <strong>💡 Notice:</strong> <span style="color:#c8d2f0;">Each function does <strong>one specific job</strong> — <span class="highlight">getLetterGrade</span> calculates the grade, <span class="highlight">getMessage</span> gives feedback. This makes the code easy to read and change!</span>
+        </div>
+    </div>
+
+    <!-- ===== FUNCTION VS NO FUNCTION ===== -->
+    <div class="section-title">
+        <span class="emoji">⚖️</span> With vs Without Functions
+    </div>
+
+    <div class="comparison-box">
+        <h4>📊 Why Functions Make Life Easier</h4>
+        <table>
+            <tr>
+                <td>❌ <strong>Without Functions</strong></td>
+                <td>✅ <strong>With Functions</strong></td>
+            </tr>
+            <tr>
+                <td style="color:#f5a623;">Copy-paste code everywhere</td>
+                <td style="color:#7bcfa6;">Write code once, use many times</td>
+            </tr>
+            <tr>
+                <td style="color:#f5a623;">Hard to fix bugs (change in many places)</td>
+                <td style="color:#7bcfa6;">Fix in one place, all calls updated</td>
+            </tr>
+            <tr>
+                <td style="color:#f5a623;">Long, messy code</td>
+                <td style="color:#7bcfa6;">Clean, organized, easy to read</td>
+            </tr>
+            <tr>
+                <td style="color:#f5a623;">Hard to test and debug</td>
+                <td style="color:#7bcfa6;">Each function can be tested separately</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- ===== CHEAT SHEET ===== -->
+    <div class="section-title">
+        <span class="emoji">📋</span> Quick Reference
+    </div>
+
+    <div class="cheat-sheet">
+        <h3>🔑 Key Code You Just Learned</h3>
+        <table>
+            <tr>
+                <td>void functionName(parameters)</td>
+                <td>Creates a function that doesn't return anything</td>
+            </tr>
+            <tr>
+                <td>int functionName(parameters)</td>
+                <td>Creates a function that returns an integer</td>
+            </tr>
+            <tr>
+                <td>return value;</td>
+                <td>Returns a value from a function</td>
+            </tr>
+            <tr>
+                <td>functionName(arguments);</td>
+                <td>Calls (uses) a function</td>
+            </tr>
+            <tr>
+                <td>int result = functionName(args);</td>
+                <td>Stores the return value in a variable</td>
+            </tr>
+            <tr>
+                <td>void</td>
+                <td>Means "returns nothing"</td>
+            </tr>
+            <tr>
+                <td>parameters</td>
+                <td>Variables that receive data from the caller</td>
+            </tr>
+            <tr>
+                <td>arguments</td>
+                <td>Actual values passed to a function</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- ===== ACTIVITY 1 ===== -->
+    <div class="section-title">
+        <span class="emoji">🏋️</span> Practice Time!
+    </div>
+
+    <div class="activity-box">
+        <div class="activity-title">
+            🎯 Activity 1: Greeting Function
+            <span class="badge">⭐ BEGINNER</span>
+        </div>
+        <div class="challenge">
+            <p><strong>Your Task:</strong> Create a function that prints a personalized greeting!</p>
+            <ul style="color:#c8d2f0; margin-left:1.5rem; margin-top:0.5rem;">
+                <li>Create a <span class="highlight">void</span> function called <strong>greetUser</strong></li>
+                <li>It should take <span class="highlight">string name</span> and <span class="highlight">int age</span> as parameters</li>
+                <li>Print a greeting like: <span class="highlight">"Hello, [name]! You are [age] years old. Welcome!"</span></li>
+                <li>Call the function with different names and ages</li>
+            </ul>
+            <div class="output" style="margin-top:0.5rem;">
+                Hello, Maya! You are 14 years old. Welcome!<br />
+                Hello, Leo! You are 15 years old. Welcome!<br />
+                Hello, Emma! You are 13 years old. Welcome!
+            </div>
+        </div>
+        <div class="hint">
+            <strong>💡 Hint:</strong> <span class="highlight">void greetUser(string name, int age) { cout &lt;&lt; "Hello, " &lt;&lt; name &lt;&lt; "! You are " &lt;&lt; age &lt;&lt; " years old. Welcome!" &lt;&lt; endl; }</span>
+        </div>
+    </div>
+
+    <!-- ===== ACTIVITY 2 ===== -->
+    <div class="activity-box">
+        <div class="activity-title">
+            🚀 Activity 2: Area Calculator Functions
+            <span class="badge">⭐⭐ CHALLENGE</span>
+        </div>
+        <div class="challenge">
+            <p><strong>Your Task:</strong> Create functions to calculate the area of different shapes!</p>
+            <ul style="color:#c8d2f0; margin-left:1.5rem; margin-top:0.5rem;">
+                <li>Create a function <span class="highlight">rectangleArea</span> that takes length and width</li>
+                <li>Create a function <span class="highlight">circleArea</span> that takes radius (use 3.14 for pi)</li>
+                <li>Create a function <span class="highlight">triangleArea</span> that takes base and height</li>
+                <li>Call all three functions and print the results</li>
+            </ul>
+            <div class="output" style="margin-top:0.5rem;">
+                📐 Area Calculator:<br />
+                Rectangle (5 x 3): 15<br />
+                Circle (radius 4): 50.24<br />
+                Triangle (base 6, height 8): 24
+            </div>
+        </div>
+        <div class="hint">
+            <strong>💡 Hint:</strong> Rectangle: <span class="highlight">length * width</span>, Circle: <span class="highlight">3.14 * radius * radius</span>, Triangle: <span class="highlight">(base * height) / 2</span>
+        </div>
+    </div>
+
+    <!-- ===== BONUS CHALLENGE ===== -->
+    <div class="activity-box" style="border-color: #7b93d6;">
+        <div class="activity-title" style="color: #7b93d6;">
+            🌟 Bonus Challenge: Temperature Converter
+            <span class="badge" style="background:#7b93d6;">⭐⭐⭐ ADVANCED</span>
+        </div>
+        <div class="challenge">
+            <p><strong>Your Task:</strong> Create a temperature conversion program with functions!</p>
+            <ul style="color:#c8d2f0; margin-left:1.5rem; margin-top:0.5rem;">
+                <li>Create a function <span class="highlight">celsiusToFahrenheit</span> that takes celsius</li>
+                <li>Create a function <span class="highlight">fahrenheitToCelsius</span> that takes fahrenheit</li>
+                <li>Ask the user which conversion they want (1 or 2)</li>
+                <li>Ask for the temperature and convert it</li>
+                <li>Print the result with both units</li>
+            </ul>
+            <div class="output" style="margin-top:0.5rem;">
+                🌡️ Temperature Converter<br />
+                1. Celsius to Fahrenheit<br />
+                2. Fahrenheit to Celsius<br />
+                Choose (1 or 2): 1<br />
+                Enter temperature in Celsius: 25<br />
+                25°C = 77°F
+            </div>
+        </div>
+        <div class="hint">
+            <strong>💡 Hint:</strong> Fahrenheit = (Celsius × 9/5) + 32, Celsius = (Fahrenheit - 32) × 5/9. Use <span class="highlight">double</span> for temperatures!
+        </div>
+    </div>
+
+    <!-- ===== SUMMARY ===== -->
+    <div class="section-title">
+        <span class="emoji">🎓</span> Lesson Summary
+    </div>
+
+    <div class="summary-box">
+        <h3>✅ What You Learned Today</h3>
+        <ul>
+            <li>What <span class="highlight">functions</span> are and why they're important for organizing code</li>
+            <li>How to <strong>create</strong> functions with the correct syntax</li>
+            <li>How to <strong>call</strong> functions and pass data to them</li>
+            <li>The difference between <span class="highlight">void</span> functions (no return) and <span class="highlight">return</span> functions (returns a value)</li>
+            <li>How to use <strong>parameters</strong> to pass data to functions</li>
+            <li>How to use <strong>return values</strong> to get results back</li>
+            <li>Why functions make code <strong>cleaner, reusable, and easier to debug</strong></li>
+        </ul>
+    </div>
+
+    <!-- ===== WHAT'S NEXT ===== -->
+    <div class="section-title">
+        <span class="emoji">🔜</span> What's Next?
+    </div>
+
+    <div class="explanation">
+        <p>In <strong>Lesson 8</strong>, you'll learn how to:</p>
+        <ul style="color:#c8d2f0; margin-left:1.5rem;">
+            <li>📝 Work with <strong>strings</strong> (text) in more detail</li>
+            <li>🔍 <strong>Search</strong> and <strong>modify</strong> text</li>
+            <li>🔐 Create a <strong>password strength checker</strong></li>
+        </ul>
+        <p style="margin-top:0.8rem; color:#9aa8d9;">👉 <a href="lesson8.html" style="color:#f5c542;">Click here to go to Lesson 8 →</a></p>
+    </div>
+
+    <!-- ===== NAVIGATION BUTTONS ===== -->
+    <div class="btn-group">
+        <a href="index.html" class="btn btn-secondary">🏠 Homepage</a>
+        <a href="lesson6.html" class="btn btn-secondary">⬅️ Previous Lesson</a>
+        <a href="lesson8.html" class="btn">➡️ Next Lesson</a>
+    </div>
+
+    <!-- ===== FOOTER ===== -->
+    <div class="footer">
+        <p>💻 <strong>C++ Coding Adventure</strong> · Grade 9 · Lesson 7</p>
+        <p style="font-size:0.8rem; color:#4f6199;">Keep coding, keep learning! 🚀</p>
+    </div>
+
+</div>
+
+<!-- ===== COPY FUNCTION ===== -->
+<script>
+    function copyCode(button) {
+        const codeBlock = button.parentElement;
+        const codeText = codeBlock.innerText.replace('📋 Copy', '').trim();
+        navigator.clipboard.writeText(codeText).then(() => {
+            const original = button.textContent;
+            button.textContent = '✅ Copied!';
+            setTimeout(() => {
+                button.textContent = original;
+            }, 2000);
+        }).catch(() => {
+            alert('Please select and copy the code manually.');
+        });
+    }
+</script>
+
+</body>
+</html>

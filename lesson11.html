@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Lesson 11 - Project Planning 📋</title>
+    <style>
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0b0e1a;
+            color: #e8edf5;
+            line-height: 1.7;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #141a2b;
+            padding: 2.5rem 2.5rem;
+            border-radius: 2rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+            border: 1px solid #2a3457;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            text-align: center;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px dashed #3b4780;
+            margin-bottom: 2rem;
+        }
+
+        .header .lesson-badge {
+            display: inline-block;
+            background: #f5a623;
+            color: #0b0e1a;
+            font-weight: 700;
+            padding: 0.3rem 1.5rem;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .header h1 {
+            font-size: 2.8rem;
+            background: linear-gradient(135deg, #f7b731, #f5a623);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header .sub {
+            font-size: 1.1rem;
+            color: #9aa8d9;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #7b93d6;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: 0.2s;
+        }
+
+        .back-link:hover {
+            color: #f5c542;
+        }
+
+        .back-link::before {
+            content: "⬅️ ";
+        }
+
+        /* ===== LEARNING OBJECTIVES ===== */
+        .objectives-box {
+            background: #1b2339;
+            border-left: 6px solid #f5a623;
+            padding: 1.5rem 2rem;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .objectives-box h2 {
+            color: #f5c542;
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .objectives-box ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .objectives-box ul li {
+            padding: 0.2rem 0;
+            color: #c8d2f0;
+        }
+
+        .objectives-box ul li::before {
+            content: "🎯 ";
+        }
+
+        /* ===== SECTION TITLES ===== */
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 2.5rem 0 1rem 0;
+            color: #f5c542;
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+        }
+
+        .section-title .emoji {
+            font-size: 1.8rem;
+        }
+
+        /* ===== EXPLANATION ===== */
+        .explanation {
+            background: #0f1629;
+            padding: 1.5rem 2rem;
+            border-radius: 1rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #2a3457;
+        }
+
+        .explanation p {
+            color: #c8d2f0;
+            margin-bottom: 0.8rem;
+        }
+
+        .explanation strong {
+            color: #f7d88a;
+        }
+
+        .highlight {
+            background: #1f2a4a;
+            padding: 0.1rem 0.5rem;
+            border-radius: 6px;
+            color: #f5c542;
+            font-family: 'Courier New', monospace;
+        }
+
+        /* ===== PLANNING SECTIONS ===== */
+        .planning-box {
+            background: #1a2238;
+            border-radius: 1rem;
+            padding: 1.5rem 2rem;
+            margin: 1rem 0 1.5rem 0;
+            border: 1px solid #3b4780;
+        }
+
+        .planning-box h4 {
+            color: #f5c542;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .planning-box ul {
+            color: #c8d2f0;
+            margin-left: 1.5rem;
+        }
+
+        .planning-box ul li {
+            padding: 0.2rem 0;
+        }
+
+        .planning-box .example-text {
+            background: #0f1629;
+            border-radius: 0.6rem;
+            padding: 0.8rem 1.2rem;
+            margin: 0.5rem 0;
+            color: #7bcfa6;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            border-left: 3px solid #7b93d6;
+        }
+
+        /* ===== GAME EXAMPLE ===== */
+        .game-example {
+            background: #1b2339;
+            border-radius: 1rem;
+            padding: 1.5rem 2rem;
+            margin-bottom: 1.5rem;
+            border: 2px solid #f5a623;
+        }
+
+        .game-example .game-title {
+            color: #f7d88a;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .game-example .game-content {
+            color: #c8d2f0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.92rem;
+            background: #0b0e1a;
+            padding: 1rem 1.5rem;
+            border-radius: 0.6rem;
+            white-space: pre-wrap;
+            word-break: break-word;
+            border: 1px solid #2a3457;
+        }
+
+        /* ===== TEMPLATE ===== */
+        .template-box {
+            background: #0f1629;
+            border-radius: 1rem;
+            padding: 1.5rem 2rem;
+            margin: 1.5rem 0;
+            border: 2px dashed #f5a623;
+        }
+
+        .template-box h4 {
+            color: #f5c542;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .template-box .template-field {
+            color: #c8d2f0;
+            padding: 0.3rem 0;
+        }
+
+        .template-box .template-field .label {
+            color: #7b93d6;
+            font-weight: 600;
+        }
+
+        .template-box .template-field .answer-line {
+            display: inline-block;
+            border-bottom: 2px solid #3b4780;
+            min-width: 200px;
+            margin-left: 0.5rem;
+        }
+
+        .template-box .template-field .answer-line-long {
+            display: inline-block;
+            border-bottom: 2px solid #3b4780;
+            min-width: 400px;
+            margin-left: 0.5rem;
+        }
+
+        /* ===== CHECKLIST ===== */
+        .checklist-box {
+            background: #1a2238;
+            border-radius: 1rem;
+            padding: 1.5rem 2rem;
+            margin: 1rem 0 1.5rem 0;
+            border: 1px solid #3b4780;
+        }
+
+        .checklist-box h4 {
+            color: #f5c542;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .checklist-box .check-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.3rem 0;
+            color: #c8d2f0;
+        }
+
+        .checklist-box .check-item .box {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #3b4780;
+            border-radius: 4px;
+            flex-shrink: 0;
+            background: #0b0e1a;
+        }
+
+        /* ===== TIPS ===== */
+        .tip-box {
+            background: #1a2238;
+            border-left: 4px solid #7b93d6;
+            padding: 1rem 1.5rem;
+            border-radius: 0.8rem;
+            margin: 1rem 0;
+        }
+
+        .tip-box strong {
+            color: #7b93d6;
+        }
+
+        .tip-box.warning {
+            border-left-color: #f5a623;
+        }
+
+        .tip-box.warning strong {
+            color: #f5a623;
+        }
+
+        .tip-box.success {
+            border-left-color: #7bcfa6;
+        }
+
+        .tip-box.success strong {
+            color: #7bcfa6;
+        }
+
+        /* ===== ACTIVITIES ===== */
+        .activity-box {
+            background: #1b2339;
+            border-radius: 1rem;
+            padding: 1.8rem 2rem;
+            margin-bottom: 2rem;
+            border: 2px solid #f5a623;
+        }
+
+        .activity-box .activity-title {
+            color: #f5c542;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .activity-box .activity-title .badge {
+            background: #f5a623;
+            color: #0b0e1a;
+            padding: 0.1rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            margin-left: 0.5rem;
+            font-weight: 700;
+        }
+
+        .activity-box .challenge {
+            color: #c8d2f0;
+            margin: 0.5rem 0;
+        }
+
+        .activity-box .hint {
+            background: #0f1629;
+            padding: 0.8rem 1.2rem;
+            border-radius: 0.6rem;
+            color: #7b93d6;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        .activity-box .hint strong {
+            color: #f7d88a;
+        }
+
+        /* ===== SUMMARY ===== */
+        .summary-box {
+            background: #0f1629;
+            border-radius: 1rem;
+            padding: 1.5rem 2rem;
+            margin: 2rem 0;
+            border: 1px solid #2a3457;
+        }
+
+        .summary-box h3 {
+            color: #f5c542;
+            margin-bottom: 0.5rem;
+        }
+
+        .summary-box ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .summary-box ul li {
+            padding: 0.2rem 0;
+            color: #c8d2f0;
+        }
+
+        .summary-box ul li::before {
+            content: "✅ ";
+        }
+
+        /* ===== KEYWORDS ===== */
+        .keywords {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 0.5rem 0;
+        }
+
+        .keywords span {
+            background: #1f2a4a;
+            padding: 0.2rem 1rem;
+            border-radius: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            color: #7b93d6;
+            border: 1px solid #2a3457;
+        }
+
+        /* ===== BUTTONS ===== */
+        .btn {
+            display: inline-block;
+            background: #f5a623;
+            color: #0b0e1a;
+            font-weight: 700;
+            padding: 0.7rem 2rem;
+            border-radius: 40px;
+            text-decoration: none;
+            transition: 0.2s;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: #f7b731;
+            transform: scale(1.02);
+        }
+
+        .btn-secondary {
+            background: #1f2a4a;
+            color: #7b93d6;
+        }
+
+        .btn-secondary:hover {
+            background: #2a3457;
+            color: #f5c542;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+            justify-content: center;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            text-align: center;
+            margin-top: 2.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #28315a;
+            color: #6b7db3;
+            font-size: 0.9rem;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 750px) {
+            .container {
+                padding: 1.5rem 1rem;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.4rem;
+            }
+
+            .example-box {
+                padding: 1rem 1.2rem;
+            }
+
+            .activity-box {
+                padding: 1.2rem 1.2rem;
+            }
+
+            .btn-group {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .planning-box {
+                padding: 1rem 1.2rem;
+            }
+
+            .template-box {
+                padding: 1rem 1.2rem;
+            }
+
+            .checklist-box {
+                padding: 1rem 1.2rem;
+            }
+
+            .game-example {
+                padding: 1rem 1.2rem;
+            }
+
+            .template-box .template-field .answer-line-long {
+                min-width: 200px;
+                display: block;
+                margin-left: 0;
+                margin-top: 0.2rem;
+            }
+        }
+
+        @media print {
+            .btn-group,
+            .back-link,
+            .copy-btn {
+                display: none;
+            }
+
+            body {
+                background: white;
+                padding: 0.5rem;
+            }
+
+            .container {
+                box-shadow: none;
+                border: 1px solid #ccc;
+                padding: 1.5rem;
+            }
+
+            .header h1 {
+                -webkit-text-fill-color: #1a1a2e;
+                background: none;
+                color: #1a1a2e;
+            }
+
+            .section-title {
+                color: #1a1a2e;
+            }
+
+            .explanation p,
+            .planning-box ul li,
+            .checklist-box .check-item,
+            .template-box .template-field,
+            .game-example .game-content {
+                color: #333;
+            }
+
+            .planning-box,
+            .checklist-box,
+            .template-box {
+                background: #f5f5f5;
+                border-color: #ccc;
+            }
+
+            .game-example {
+                background: #f5f5f5;
+                border-color: #f5a623;
+            }
+
+            .game-example .game-content {
+                background: #eee;
+                color: #333;
+            }
+
+            .template-box .template-field .answer-line,
+            .template-box .template-field .answer-line-long {
+                border-bottom: 2px solid #999;
+            }
+
+            .checklist-box .check-item .box {
+                border-color: #999;
+                background: white;
+            }
+
+            .objectives-box {
+                background: #f5f5f5;
+                border-left-color: #f5a623;
+            }
+
+            .objectives-box ul li {
+                color: #333;
+            }
+
+            .tip-box {
+                background: #f5f5f5;
+                border-left-color: #7b93d6;
+            }
+
+            .tip-box strong {
+                color: #1a1a2e;
+            }
+
+            .tip-box.warning {
+                border-left-color: #f5a623;
+            }
+
+            .tip-box.success {
+                border-left-color: #7bcfa6;
+            }
+
+            .summary-box {
+                background: #f5f5f5;
+                border-color: #ccc;
+            }
+
+            .summary-box ul li {
+                color: #333;
+            }
+
+            .footer {
+                color: #999;
+            }
+
+            .highlight {
+                background: #e8e8e8;
+                color: #1a1a2e;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- ===== HEADER ===== -->
+    <div class="header">
+        <div class="lesson-badge">📘 LESSON 11</div>
+        <h1>Project Planning</h1>
+        <div class="sub">Design your own text adventure game!</div>
+        <a href="index.html" class="back-link">Back to Homepage</a>
+    </div>
+
+    <!-- ===== LEARNING OBJECTIVES ===== -->
+    <div class="objectives-box">
+        <h2>🎯 What You'll Learn Today</h2>
+        <ul>
+            <li>How to <strong>plan</strong> a programming project before coding</li>
+            <li>How to <strong>design</strong> a text adventure game</li>
+            <li>How to <strong>map out</strong> a game story with choices</li>
+            <li>How to create a <strong>project outline</strong> to guide your coding</li>
+            <li>How to break a big project into <strong>small, manageable steps</strong></li>
+        </ul>
+    </div>
+
+    <!-- ===== INTRODUCTION ===== -->
+    <div class="section-title">
+        <span class="emoji">💡</span> Why Plan Before Coding?
+    </div>
+
+    <div class="explanation">
+        <p>Imagine building a house without a blueprint. It would be a disaster! The same is true for programming.</p>
+        <p><span class="highlight">Planning</span> helps you:</p>
+        <ul style="color:#c8d2f0; margin-left:1.5rem; margin-bottom:0.8rem;">
+            <li>✅ <strong>Know what to build</strong> before you start typing code</li>
+            <li>✅ <strong>Stay organized</strong> and not get overwhelmed</li>
+            <li>✅ <strong>Save time</strong> by avoiding mistakes and rework</li>
+            <li>✅ <strong>Create a better game</strong> with a clear vision</li>
+        </ul>
+        <p>Today, you'll plan your <strong>final project</strong> — a text adventure game!</p>
+        <div class="keywords">
+            <span>planning</span>
+            <span>design</span>
+            <span>storyboard</span>
+            <span>flowchart</span>
+            <span>game design</span>
+            <span>project outline</span>
+        </div>
+    </div>
+
+    <!-- ===== GAME EXAMPLE ===== -->
+    <div class="section-title">
+        <span class="emoji">🎮</span> Example Text Adventure Game
+    </div>
+
+    <div class="game-example">
+        <div class="game-title">🏰 Dungeon Adventure</div>
+        <div class="game-content">
+            === DUNGEON ADVENTURE ===
+
+            You wake up in a dark dungeon cell.
+            You see a rusty key on the floor and a torch on the wall.
+
+            What do you do?
+            1. Pick up the key
+            2. Take the torch
+
+            > 1
+
+            You pick up the rusty key.
+            The cell door is locked, but the key fits!
+
+            You unlock the door and step into a dark hallway.
+            You hear a growling sound from the left.
+            To your right, you see a faint light.
+
+            Which way do you go?
+            1. Left (toward the growling sound)
+            2. Right (toward the light)
+
+            > 2
+
+            You walk toward the light.
+            You've found the treasure room!
+
+            🏆 YOU WIN!
+        </div>
+    </div>
+
+    <!-- ===== PLANNING STEPS ===== -->
+    <div class="section-title">
+        <span class="emoji">📋</span> Planning Your Game
+    </div>
+
+    <div class="planning-box">
+        <h4>📝 Step 1: Choose Your Theme</h4>
+        <p style="color:#c8d2f0;">Decide what kind of adventure you want to create:</p>
+        <ul>
+            <li>🏰 <strong>Fantasy</strong> — Dungeons, dragons, magic, treasure</li>
+            <li>🚀 <strong>Space</strong> — Aliens, spaceships, planets, exploration</li>
+            <li>🔍 <strong>Mystery</strong> — Detectives, clues, solving crimes</li>
+            <li>🏝️ <strong>Survival</strong> — Deserted island, wilderness, shelter</li>
+            <li>🏰 <strong>Castle</strong> — Kings, queens, knights, castles</li>
+            <li>🎃 <strong>Horror</strong> — Haunted house, monsters, escape</li>
+            <li>🏴‍☠️ <strong>Pirate</strong> — Treasure maps, ships, islands</li>
+            <li>🧙 <strong>School of Magic</strong> — Wizards, spells, potions</li>
+        </ul>
+        <div class="tip-box success" style="margin-top:0.8rem;">
+            <strong>💡 Choose something you're excited about!</strong> <span style="color:#c8d2f0;">You'll enjoy the project more and your creativity will flow.</span>
+        </div>
+    </div>
+
+    <div class="planning-box">
+        <h4>📝 Step 2: Design Your Story</h4>
+        <p style="color:#c8d2f0;">Think about the <strong>flow</strong> of your game:</p>
+        <ul>
+            <li>Where does the story <strong>start</strong>?</li>
+            <li>What <strong>choices</strong> does the player make?</li>
+            <li>Where does the story <strong>end</strong>? (How do you win?)</li>
+            <li>Are there <strong>multiple endings</strong>?</li>
+        </ul>
+        <div class="example-text">
+            Example: "You wake up in a dungeon. You find a key and a torch.<br />
+            Left → dark hallway with a monster (game over).<br />
+            Right → treasure room (win!)."
+        </div>
+    </div>
+
+    <div class="planning-box">
+        <h4>📝 Step 3: Map Your Decisions</h4>
+        <p style="color:#c8d2f0;">Draw a <strong>flowchart</strong> or <strong>decision tree</strong> of your game:</p>
+        <ul>
+            <li>Start → Scene 1 → Choice 1 → Scene 2 or Scene 3</li>
+            <li>Scene 2 → Choice 2 → Win or Lose</li>
+            <li>Scene 3 → Choice 3 → Win or Lose</li>
+        </ul>
+        <div style="text-align:center; margin:0.5rem 0; color:#6b7db3; font-size:0.9rem;">
+            ⬇️ &nbsp; Start &nbsp; ⬇️<br />
+            🏠 Scene 1<br />
+            ⬇️ &nbsp; Choice &nbsp; ⬇️<br />
+            🏠 Scene 2 &nbsp;&nbsp;&nbsp; 🏠 Scene 3<br />
+            ⬇️ &nbsp; Choice &nbsp; ⬇️<br />
+            🏆 Win &nbsp;&nbsp;&nbsp; 💀 Lose
+        </div>
+    </div>
+
+    <div class="planning-box">
+        <h4>📝 Step 4: Plan Your Variables</h4>
+        <p style="color:#c8d2f0;">What data will you need to track?</p>
+        <ul>
+            <li>💚 <strong>Health</strong> — Player health points (e.g., 100)</li>
+            <li>💰 <strong>Score</strong> — Points the player earns</li>
+            <li>📦 <strong>Inventory</strong> — Items the player collects (key, torch, sword)</li>
+            <li>🗺️ <strong>Location</strong> — Where the player is (dungeon, hallway, treasure room)</li>
+            <li>🎯 <strong>Game State</strong> — Is the game still running? (true/false)</li>
+        </ul>
+        <div class="example-text">
+            Example variables: <br />
+            int health = 100;<br />
+            int score = 0;<br />
+            bool hasKey = false;<br />
+            string location = "dungeon";<br />
+            bool gameRunning = true;
+        </div>
+    </div>
+
+    <div class="planning-box">
+        <h4>📝 Step 5: Code Structure</h4>
+        <p style="color:#c8d2f0;">How will you organize your code?</p>
+        <ul>
+            <li><strong>Functions</strong> — One function for each scene/room</li>
+            <li><strong>Loops</strong> — A while loop to keep the game running</li>
+            <li><strong>If/Else</strong> — To handle player choices</li>
+            <li><strong>Arrays</strong> — To store inventory items</li>
+            <li><strong>File I/O</strong> — To save high scores (bonus!)</li>
+        </ul>
+    </div>
+
+    <!-- ===== PROJECT TEMPLATE ===== -->
+    <div class="section-title">
+        <span class="emoji">📄</span> Your Game Design Document
+    </div>
+
+    <div class="template-box">
+        <h4>📝 Fill out this template to plan your game:</h4>
+
+        <div class="template-field">
+            <span class="label">🎮 Game Title:</span>
+            <span class="answer-line"></span>
+        </div>
+
+        <div class="template-field">
+            <span class="label">🏷️ Theme:</span>
+            <span class="answer-line"></span>
+        </div>
+
+        <div class="template-field">
+            <span class="label">📖 Story Summary (2-3 sentences):</span><br />
+            <span class="answer-line-long"></span><br />
+            <span class="answer-line-long"></span>
+        </div>
+
+        <div class="template-field">
+            <span class="label">🏁 How to Win:</span>
+            <span class="answer-line"></span>
+        </div>
+
+        <div class="template-field">
+            <span class="label">💀 How to Lose:</span>
+            <span class="answer-line"></span>
+        </div>
+
+        <div class="template-field">
+            <span class="label">📦 Inventory Items:</span>
+            <span class="answer-line-long"></span>
+        </div>
+
+        <div class="template-field">
+            <span class="label">💚 Health System? (yes/no):</span>
+            <span class="answer-line"></span>
+        </div>
+
+        <div class="template-field">
+            <span class="label">💰 Score System? (yes/no):</span>
+            <span class="answer-line"></span>
+        </div>
+
+        <div class="template-field">
+            <span class="label">🔢 Number of Rooms/Scenes:</span>
+            <span class="answer-line"></span>
+        </div>
+
+        <div class="template-field">
+            <span class="label">🏆 Multiple Endings? (yes/no):</span>
+            <span class="answer-line"></span>
+        </div>
+    </div>
+
+    <!-- ===== CHECKLIST ===== -->
+    <div class="section-title">
+        <span class="emoji">✅</span> Project Checklist
+    </div>
+
+    <div class="checklist-box">
+        <h4>📋 Before you start coding, make sure you have:</h4>
+        <div class="check-item">
+            <span class="box"></span>
+            <span>Game theme and title chosen</span>
+        </div>
+        <div class="check-item">
+            <span class="box"></span>
+            <span>Story outline written</span>
+        </div>
+        <div class="check-item">
+            <span class="box"></span>
+            <span>Decision flowchart drawn</span>
+        </div>
+        <div class="check-item">
+            <span class="box"></span>
+            <span>Win and lose conditions defined</span>
+        </div>
+        <div class="check-item">
+            <span class="box"></span>
+            <span>Variables list created</span>
+        </div>
+        <div class="check-item">
+            <span class="box"></span>
+            <span>Code structure planned (functions, loops, etc.)</span>
+        </div>
+        <div class="check-item">
+            <span class="box"></span>
+            <span>All scenes/rooms described</span>
+        </div>
+        <div class="check-item">
+            <span class="box"></span>
+            <span>Player choices mapped out</span>
+        </div>
+        <div class="tip-box success" style="margin-top:0.8rem;">
+            <strong>💡 Tip:</strong> <span style="color:#c8d2f0;">You can use a piece of paper to draw your flowchart and write your story!</span>
+        </div>
+    </div>
+
+    <!-- ===== STORY EXAMPLE ===== -->
+    <div class="section-title">
+        <span class="emoji">📝</span> Story Example: The Haunted Mansion
+    </div>
+
+    <div class="game-example">
+        <div class="game-title">🏚️ The Haunted Mansion</div>
+        <div class="game-content">
+            📖 STORY:<br />
+            You are a detective investigating a haunted mansion.
+            You must find the hidden treasure before the ghost catches you!
+
+            🗺️ ROOMS:<br />
+            1. Foyer (start) — You see a staircase and a dark hallway
+            2. Library — Books, a candle, and a secret door
+            3. Kitchen — A knife, a trapdoor, and a ghost!
+            4. Basement — The treasure room (WIN!)
+            5. Attic — The ghost's lair (LOSE!)
+
+            🎯 CHOICES:<br />
+            Foyer → Go to Library OR Go to Kitchen<br />
+            Library → Find a candle OR Read a book (clue)<br />
+            Kitchen → Use the knife OR Open the trapdoor<br />
+            Basement → Win! 🏆
+
+            📦 ITEMS:<br />
+            - Candle (lights up dark areas)<br />
+            - Knife (defends against ghost)<br />
+            - Clue (tells you where the treasure is)
+
+            💀 LOSE CONDITIONS:<br />
+            - Enter the attic (ghost catches you)<br />
+            - Open the trapdoor without the candle (fall)
+
+            🏆 WIN CONDITION:<br />
+            - Find the key in the library → open the basement door → get the treasure!
+        </div>
+    </div>
+
+    <!-- ===== ACTIVITY 1 ===== -->
+    <div class="section-title">
+        <span class="emoji">🏋️</span> Practice Time!
+    </div>
+
+    <div class="activity-box">
+        <div class="activity-title">
+            🎯 Activity 1: Plan Your Game
+            <span class="badge">⭐ BEGINNER</span>
+        </div>
+        <div class="challenge">
+            <p><strong>Your Task:</strong> Fill out the template below to plan your game!</p>
+            <p style="color:#c8d2f0; margin-top:0.5rem;">Take 15-20 minutes to plan your game. Use the template from above as your guide.</p>
+
+            <div class="template-box" style="border-color:#7b93d6; background:#1b2339; margin-top:0.8rem;">
+                <h4 style="color:#7b93d6;">📝 My Game Plan</h4>
+
+                <div class="template-field">
+                    <span class="label">🎮 Game Title:</span>
+                    <span class="answer-line"></span>
+                </div>
+
+                <div class="template-field">
+                    <span class="label">🏷️ Theme:</span>
+                    <span class="answer-line"></span>
+                </div>
+
+                <div class="template-field">
+                    <span class="label">📖 Story Summary:</span><br />
+                    <span class="answer-line-long"></span><br />
+                    <span class="answer-line-long"></span>
+                </div>
+
+                <div class="template-field">
+                    <span class="label">🏁 How to Win:</span>
+                    <span class="answer-line"></span>
+                </div>
+
+                <div class="template-field">
+                    <span class="label">💀 How to Lose:</span>
+                    <span class="answer-line"></span>
+                </div>
+
+                <div class="template-field">
+                    <span class="label">📦 Inventory Items:</span>
+                    <span class="answer-line-long"></span>
+                </div>
+
+                <div class="template-field">
+                    <span class="label">🔢 Number of Rooms:</span>
+                    <span class="answer-line"></span>
+                </div>
+
+                <div class="template-field">
+                    <span class="label">🗺️ List your rooms:</span><br />
+                    <span class="answer-line-long"></span><br />
+                    <span class="answer-line-long"></span><br />
+                    <span class="answer-line-long"></span>
+                </div>
+
+                <div class="template-field">
+                    <span class="label">🎯 Player Choices (list 3-5):</span><br />
+                    <span class="answer-line-long"></span><br />
+                    <span class="answer-line-long"></span><br />
+                    <span class="answer-line-long"></span>
+                </div>
+            </div>
+        </div>
+        <div class="hint">
+            <strong>💡 Hint:</strong> Draw your game on paper first! A simple flowchart can help you see the whole game at once. Start with a simple game — you can always add more later!
+        </div>
+    </div>
+
+    <!-- ===== ACTIVITY 2 ===== -->
+    <div class="activity-box">
+        <div class="activity-title">
+            🚀 Activity 2: Code Outline
+            <span class="badge">⭐⭐ CHALLENGE</span>
+        </div>
+        <div class="challenge">
+            <p><strong>Your Task:</strong> Based on your game plan, write a <strong>code outline</strong> for your game!</p>
+            <p style="color:#c8d2f0; margin-top:0.5rem;">Write the <strong>structure</strong> of your code — don't worry about all the details yet.</p>
+
+            <div class="code-block" style="min-height:200px; color:#7bcfa6; margin-top:0.8rem;">
+                <span class="comment">// My Game Code Outline</span>
+                <span class="comment">// Write your function names, variables, and rough structure here</span>
+                <br /><br /><br /><br /><br /><br /><br /><br />
+            </div>
+        </div>
+        <div class="hint">
+            <strong>💡 Hint:</strong> Start with:<br />
+            <span class="highlight">int main() { }</span><br />
+            <span class="highlight">void intro() { }</span><br />
+            <span class="highlight">void room1() { }</span><br />
+            <span class="highlight">void room2() { }</span><br />
+            <span class="highlight">void win() { }</span><br />
+            <span class="highlight">void lose() { }</span>
+        </div>
+    </div>
+
+    <!-- ===== BONUS CHALLENGE ===== -->
+    <div class="activity-box" style="border-color: #7b93d6;">
+        <div class="activity-title" style="color: #7b93d6;">
+            🌟 Bonus Challenge: Advanced Features
+            <span class="badge" style="background:#7b93d6;">⭐⭐⭐ ADVANCED</span>
+        </div>
+        <div class="challenge">
+            <p><strong>Your Task:</strong> Add advanced features to your game plan!</p>
+            <ul style="color:#c8d2f0; margin-left:1.5rem; margin-top:0.5rem;">
+                <li>💚 <strong>Health system</strong> — Player starts with 100 health, loses health in bad choices</li>
+                <li>💰 <strong>Score system</strong> — Earn points for finding items and making good choices</li>
+                <li>📦 <strong>Inventory system</strong> — Collect multiple items and use them in different rooms</li>
+                <li>🔄 <strong>Multiple playthroughs</strong> — Allow the player to restart after winning/losing</li>
+                <li>💾 <strong>Save/Load</strong> — Save progress to a file (bonus!)</li>
+                <li>🎯 <strong>Multiple endings</strong> — 2-3 different endings based on player choices</li>
+            </ul>
+            <p style="color:#c8d2f0; margin-top:0.5rem;">Update your game plan with these features:</p>
+            <div class="template-box" style="border-color:#7b93d6; background:#1b2339; margin-top:0.8rem;">
+                <h4 style="color:#7b93d6;">🌟 Advanced Features Plan</h4>
+
+                <div class="template-field">
+                    <span class="label">💚 Health System:</span>
+                    <span class="answer-line"></span>
+                </div>
+
+                <div class="template-field">
+                    <span class="label">💰 Score System:</span>
+                    <span class="answer-line"></span>
+                </div>
+
+                <div class="template-field">
+                    <span class="label">📦 Inventory Items (list):</span>
+                    <span class="answer-line-long"></span>
+                </div>
+
+                <div class="template-field">
+                    <span class="label">🎯 Multiple Endings (describe):</span><br />
+                    <span class="answer-line-long"></span><br />
+                    <span class="answer-line-long"></span>
+                </div>
+            </div>
+        </div>
+        <div class="hint">
+            <strong>💡 Hint:</strong> Start with a simple game first. Once the basic version works, add one advanced feature at a time! This way you won't get overwhelmed.
+        </div>
+    </div>
+
+    <!-- ===== SUMMARY ===== -->
+    <div class="section-title">
+        <span class="emoji">🎓</span> Lesson Summary
+    </div>
+
+    <div class="summary-box">
+        <h3>✅ What You Learned Today</h3>
+        <ul>
+            <li>Why <span class="highlight">planning</span> is important before coding</li>
+            <li>How to <strong>choose a theme</strong> and <strong>design a story</strong></li>
+            <li>How to <strong>map out</strong> player decisions with a flowchart</li>
+            <li>How to <strong>plan variables</strong> like health, score, and inventory</li>
+            <li>How to <strong>structure</strong> your code with functions</li>
+            <li>How to fill out a <strong>game design document</strong></li>
+            <li>How to plan <strong>advanced features</strong> for your game</li>
+        </ul>
+    </div>
+
+    <!-- ===== WHAT'S NEXT ===== -->
+    <div class="section-title">
+        <span class="emoji">🔜</span> What's Next?
+    </div>
+
+    <div class="explanation">
+        <p>In <strong>Lesson 12</strong>, you'll:</p>
+        <ul style="color:#c8d2f0; margin-left:1.5rem;">
+            <li>🎮 <strong>Build your final game</strong> from your plan</li>
+            <li>💻 <strong>Code everything</strong> — rooms, choices, win/lose conditions</li>
+            <li>🌟 <strong>Showcase</strong> your game to the class!</li>
+        </ul>
+        <p style="margin-top:0.8rem; color:#9aa8d9;">👉 <a href="lesson12.html" style="color:#f5c542;">Click here to go to Lesson 12 →</a></p>
+    </div>
+
+    <!-- ===== NAVIGATION BUTTONS ===== -->
+    <div class="btn-group">
+        <a href="index.html" class="btn btn-secondary">🏠 Homepage</a>
+        <a href="lesson10.html" class="btn btn-secondary">⬅️ Previous Lesson</a>
+        <a href="lesson12.html" class="btn">➡️ Next Lesson</a>
+    </div>
+
+    <!-- ===== FOOTER ===== -->
+    <div class="footer">
+        <p>💻 <strong>C++ Coding Adventure</strong> · Grade 9 · Lesson 11</p>
+        <p style="font-size:0.8rem; color:#4f6199;">Keep coding, keep learning! 🚀</p>
+    </div>
+
+</div>
+
+<!-- ===== COPY FUNCTION ===== -->
+<script>
+    function copyCode(button) {
+        const codeBlock = button.parentElement;
+        const codeText = codeBlock.innerText.replace('📋 Copy', '').trim();
+        navigator.clipboard.writeText(codeText).then(() => {
+            const original = button.textContent;
+            button.textContent = '✅ Copied!';
+            setTimeout(() => {
+                button.textContent = original;
+            }, 2000);
+        }).catch(() => {
+            alert('Please select and copy the code manually.');
+        });
+    }
+</script>
+
+</body>
+</html>

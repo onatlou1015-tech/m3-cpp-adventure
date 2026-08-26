@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Lesson 5 - For Loops 🔄</title>
+    <style>
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0b0e1a;
+            color: #e8edf5;
+            line-height: 1.7;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #141a2b;
+            padding: 2.5rem 2.5rem;
+            border-radius: 2rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+            border: 1px solid #2a3457;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            text-align: center;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px dashed #3b4780;
+            margin-bottom: 2rem;
+        }
+
+        .header .lesson-badge {
+            display: inline-block;
+            background: #f5a623;
+            color: #0b0e1a;
+            font-weight: 700;
+            padding: 0.3rem 1.5rem;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .header h1 {
+            font-size: 2.8rem;
+            background: linear-gradient(135deg, #f7b731, #f5a623);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header .sub {
+            font-size: 1.1rem;
+            color: #9aa8d9;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #7b93d6;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: 0.2s;
+        }
+
+        .back-link:hover {
+            color: #f5c542;
+        }
+
+        .back-link::before {
+            content: "⬅️ ";
+        }
+
+        /* ===== LEARNING OBJECTIVES ===== */
+        .objectives-box {
+            background: #1b2339;
+            border-left: 6px solid #f5a623;
+            padding: 1.5rem 2rem;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .objectives-box h2 {
+            color: #f5c542;
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .objectives-box ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .objectives-box ul li {
+            padding: 0.2rem 0;
+            color: #c8d2f0;
+        }
+
+        .objectives-box ul li::before {
+            content: "🎯 ";
+        }
+
+        /* ===== SECTION TITLES ===== */
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 2.5rem 0 1rem 0;
+            color: #f5c542;
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+        }
+
+        .section-title .emoji {
+            font-size: 1.8rem;
+        }
+
+        /* ===== EXPLANATION ===== */
+        .explanation {
+            background: #0f1629;
+            padding: 1.5rem 2rem;
+            border-radius: 1rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #2a3457;
+        }
+
+        .explanation p {
+            color: #c8d2f0;
+            margin-bottom: 0.8rem;
+        }
+
+        .explanation strong {
+            color: #f7d88a;
+        }
+
+        .highlight {
+            background: #1f2a4a;
+            padding: 0.1rem 0.5rem;
+            border-radius: 6px;
+            color: #f5c542;
+            font-family: 'Courier New', monospace;
+        }
+
+        /* ===== COMPARISON TABLE ===== */
+        .comparison-box {
+            background: #1a2238;
+            border-radius: 1rem;
+            padding: 1.5rem 2rem;
+            margin: 1rem 0 1.5rem 0;
+            border: 1px solid #3b4780;
+        }
+
+        .comparison-box h4 {
+            color: #f5c542;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .comparison-box table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 0.5rem;
+        }
+
+        .comparison-box td {
+            padding: 0.4rem 0.8rem;
+            border-bottom: 1px solid #28315a;
+            color: #c8d2f0;
+            font-size: 0.92rem;
+        }
+
+        .comparison-box td:first-child {
+            font-family: 'Courier New', monospace;
+            color: #f5a623;
+            font-weight: 600;
+        }
+
+        .comparison-box td:last-child {
+            color: #9aa8d9;
+        }
+
+        /* ===== CODE BLOCKS ===== */
+        .code-block {
+            background: #0b0e1a;
+            padding: 1.2rem 1.5rem;
+            border-radius: 0.8rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.92rem;
+            color: #c8d2f0;
+            border: 1px solid #2a3457;
+            margin: 0.8rem 0 1.2rem 0;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-break: break-word;
+            position: relative;
+        }
+
+        .code-block .comment {
+            color: #6b8a7a;
+        }
+
+        .code-block .keyword {
+            color: #f5a623;
+        }
+
+        .code-block .string {
+            color: #7bcfa6;
+        }
+
+        .code-block .function {
+            color: #7b93d6;
+        }
+
+        .code-block .number {
+            color: #f7b731;
+        }
+
+        .code-block .variable {
+            color: #7bcfa6;
+        }
+
+        .code-label {
+            display: inline-block;
+            background: #1f2a4a;
+            color: #7b93d6;
+            font-size: 0.7rem;
+            padding: 0.1rem 0.8rem;
+            border-radius: 20px;
+            margin-bottom: 0.3rem;
+            font-family: 'Segoe UI', sans-serif;
+            letter-spacing: 0.5px;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #1f2a4a;
+            color: #7b93d6;
+            border: none;
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .copy-btn:hover {
+            background: #f5a623;
+            color: #0b0e1a;
+        }
+
+        /* ===== EXAMPLE BOXES ===== */
+        .example-box {
+            background: #1b2339;
+            border-radius: 1rem;
+            padding: 1.5rem 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid #2a3457;
+        }
+
+        .example-box .example-title {
+            color: #f7d88a;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .example-box .example-title .num {
+            background: #f5a623;
+            color: #0b0e1a;
+            padding: 0.1rem 0.7rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            margin-right: 0.5rem;
+        }
+
+        .example-box .output {
+            background: #0b0e1a;
+            padding: 0.8rem 1.2rem;
+            border-radius: 0.6rem;
+            color: #7bcfa6;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            border-left: 3px solid #f5a623;
+        }
+
+        .example-box .output-label {
+            font-size: 0.7rem;
+            color: #6b7db3;
+            font-family: 'Segoe UI', sans-serif;
+            margin-top: 0.5rem;
+        }
+
+        .example-box .input-demo {
+            background: #0b0e1a;
+            padding: 0.8rem 1.2rem;
+            border-radius: 0.6rem;
+            color: #f7b731;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            border-left: 3px solid #7b93d6;
+        }
+
+        .example-box .input-demo-label {
+            font-size: 0.7rem;
+            color: #6b7db3;
+            font-family: 'Segoe UI', sans-serif;
+            margin-top: 0.5rem;
+        }
+
+        /* ===== PATTERN VISUALIZATION ===== */
+        .pattern-box {
+            background: #0f1629;
+            border-radius: 0.8rem;
+            padding: 1rem 1.5rem;
+            margin: 0.5rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: #7bcfa6;
+            border: 1px solid #2a3457;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        /* ===== TIPS ===== */
+        .tip-box {
+            background: #1a2238;
+            border-left: 4px solid #7b93d6;
+            padding: 1rem 1.5rem;
+            border-radius: 0.8rem;
+            margin: 1rem 0;
+        }
+
+        .tip-box strong {
+            color: #7b93d6;
+        }
+
+        .tip-box.warning {
+            border-left-color: #f5a623;
+        }
+
+        .tip-box.warning strong {
+            color: #f5a623;
+        }
+
+        .tip-box.success {
+            border-left-color: #7bcfa6;
+        }
+
+        .tip-box.success strong {
+            color: #7bcfa6;
+        }
+
+        /* ===== ACTIVITIES ===== */
+        .activity-box {
+            background: #1b2339;
+            border-radius: 1rem;
+            padding: 1.8rem 2rem;
+            margin-bottom: 2rem;
+            border: 2px solid #f5a623;
+        }
+
+        .activity-box .activity-title {
+            color: #f5c542;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .activity-box .activity-title .badge {
+            background: #f5a623;
+            color: #0b0e1a;
+            padding: 0.1rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            margin-left: 0.5rem;
+            font-weight: 700;
+        }
+
+        .activity-box .challenge {
+            color: #c8d2f0;
+            margin: 0.5rem 0;
+        }
+
+        .activity-box .hint {
+            background: #0f1629;
+            padding: 0.8rem 1.2rem;
+            border-radius: 0.6rem;
+            color: #7b93d6;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        .activity-box .hint strong {
+            color: #f7d88a;
+        }
+
+        /* ===== SUMMARY ===== */
+        .summary-box {
+            background: #0f1629;
+            border-radius: 1rem;
+            padding: 1.5rem 2rem;
+            margin: 2rem 0;
+            border: 1px solid #2a3457;
+        }
+
+        .summary-box h3 {
+            color: #f5c542;
+            margin-bottom: 0.5rem;
+        }
+
+        .summary-box ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .summary-box ul li {
+            padding: 0.2rem 0;
+            color: #c8d2f0;
+        }
+
+        .summary-box ul li::before {
+            content: "✅ ";
+        }
+
+        /* ===== KEYWORDS ===== */
+        .keywords {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 0.5rem 0;
+        }
+
+        .keywords span {
+            background: #1f2a4a;
+            padding: 0.2rem 1rem;
+            border-radius: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            color: #7b93d6;
+            border: 1px solid #2a3457;
+        }
+
+        /* ===== CHEAT SHEET ===== */
+        .cheat-sheet {
+            background: #1a2238;
+            border-radius: 1rem;
+            padding: 1.5rem 2rem;
+            margin: 1.5rem 0;
+            border: 1px solid #3b4780;
+        }
+
+        .cheat-sheet h3 {
+            color: #f5c542;
+        }
+
+        .cheat-sheet table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 0.5rem;
+        }
+
+        .cheat-sheet td {
+            padding: 0.4rem 0.8rem;
+            border-bottom: 1px solid #28315a;
+            color: #c8d2f0;
+            font-size: 0.92rem;
+        }
+
+        .cheat-sheet td:first-child {
+            font-family: 'Courier New', monospace;
+            color: #f5a623;
+            font-weight: 600;
+        }
+
+        .cheat-sheet td:last-child {
+            color: #9aa8d9;
+        }
+
+        /* ===== BUTTONS ===== */
+        .btn {
+            display: inline-block;
+            background: #f5a623;
+            color: #0b0e1a;
+            font-weight: 700;
+            padding: 0.7rem 2rem;
+            border-radius: 40px;
+            text-decoration: none;
+            transition: 0.2s;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: #f7b731;
+            transform: scale(1.02);
+        }
+
+        .btn-secondary {
+            background: #1f2a4a;
+            color: #7b93d6;
+        }
+
+        .btn-secondary:hover {
+            background: #2a3457;
+            color: #f5c542;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+            justify-content: center;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            text-align: center;
+            margin-top: 2.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #28315a;
+            color: #6b7db3;
+            font-size: 0.9rem;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 750px) {
+            .container {
+                padding: 1.5rem 1rem;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.4rem;
+            }
+
+            .code-block {
+                font-size: 0.8rem;
+                padding: 0.8rem 1rem;
+            }
+
+            .example-box {
+                padding: 1rem 1.2rem;
+            }
+
+            .activity-box {
+                padding: 1.2rem 1.2rem;
+            }
+
+            .cheat-sheet {
+                padding: 1rem 1.2rem;
+            }
+
+            .btn-group {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .comparison-box {
+                padding: 1rem 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- ===== HEADER ===== -->
+    <div class="header">
+        <div class="lesson-badge">📘 LESSON 5</div>
+        <h1>For Loops</h1>
+        <div class="sub">The most powerful way to repeat code!</div>
+        <a href="index.html" class="back-link">Back to Homepage</a>
+    </div>
+
+    <!-- ===== LEARNING OBJECTIVES ===== -->
+    <div class="objectives-box">
+        <h2>🎯 What You'll Learn Today</h2>
+        <ul>
+            <li>What a <span class="highlight">for loop</span> is and why it's so useful</li>
+            <li>The three parts of a for loop: <strong>start</strong>, <strong>condition</strong>, <strong>update</strong></li>
+            <li>How to count <strong>up</strong> and <strong>down</strong> with for loops</li>
+            <li>How to use <strong>nested loops</strong> (loops inside loops)</li>
+            <li>How to create <strong>patterns</strong> and <strong>tables</strong> with for loops</li>
+        </ul>
+    </div>
+
+    <!-- ===== INTRODUCTION ===== -->
+    <div class="section-title">
+        <span class="emoji">💡</span> What is a For Loop?
+    </div>
+
+    <div class="explanation">
+        <p>A <span class="highlight">for loop</span> is a more compact way to write loops when you know <strong>exactly how many times</strong> you want to repeat something.</p>
+        <p>Think of it like this: <strong>"For each number from 1 to 10, print that number."</strong></p>
+        <p>The for loop has <strong>three parts</strong> all in one line:</p>
+        <div class="code-block" style="background:#0b0e1a; padding:0.8rem 1.2rem; margin:0.5rem 0;">
+            <span class="keyword">for</span> (<span class="variable">start</span>; <span class="variable">condition</span>; <span class="variable">update</span>) {
+                <span class="comment">// code to repeat</span>
+            }
+        </div>
+        <ul style="color:#c8d2f0; margin-left:1.5rem; margin-top:0.5rem;">
+            <li><strong>Start:</strong> Where does the counter begin? <span class="highlight">int i = 1</span></li>
+            <li><strong>Condition:</strong> When does it stop? <span class="highlight">i &lt;= 10</span></li>
+            <li><strong>Update:</strong> How does it change each time? <span class="highlight">i++</span></li>
+        </ul>
+        <div class="keywords">
+            <span>for</span>
+            <span>counter</span>
+            <span>initialization</span>
+            <span>condition</span>
+            <span>increment</span>
+            <span>nested loops</span>
+        </div>
+    </div>
+
+    <!-- ===== WHILE VS FOR ===== -->
+    <div class="section-title">
+        <span class="emoji">⚖️</span> While vs For Loops
+    </div>
+
+    <div class="comparison-box">
+        <h4>📊 When to Use Each</h4>
+        <table>
+            <tr>
+                <td>✅ <strong>Use WHILE</strong></td>
+                <td>When you don't know how many times to repeat</td>
+                <td style="color:#7bcfa6;">"Keep guessing until you get it right"</td>
+            </tr>
+            <tr>
+                <td>✅ <strong>Use FOR</strong></td>
+                <td>When you know exactly how many times to repeat</td>
+                <td style="color:#7bcfa6;">"Print numbers 1 to 100"</td>
+            </tr>
+            <tr>
+                <td>✅ <strong>Use FOR</strong></td>
+                <td>When you're counting up or down</td>
+                <td style="color:#7bcfa6;">"Times table from 1 to 10"</td>
+            </tr>
+            <tr>
+                <td>✅ <strong>Use WHILE</strong></td>
+                <td>When the loop depends on user input</td>
+                <td style="color:#7bcfa6;">"Enter numbers until you type 0"</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- ===== EXAMPLE 1 ===== -->
+    <div class="section-title">
+        <span class="emoji">📝</span> Example 1: Simple For Loop
+    </div>
+
+    <div class="example-box">
+        <div class="example-title">
+            <span class="num">1</span> Counting from 1 to 5
+        </div>
+        <p style="color:#c8d2f0; margin-bottom:0.5rem;">A for loop is perfect for counting!</p>
+
+        <div class="code-label">📄 lesson5.cpp</div>
+        <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            <span class="keyword">#include</span> &lt;iostream&gt;
+            <span class="keyword">using namespace</span> std;
+
+            <span class="keyword">int</span> <span class="function">main</span>() {
+                <span class="comment">// For loop: start at 1, go to 5, increment by 1</span>
+                <span class="keyword">for</span> (<span class="keyword">int</span> <span class="variable">i</span> = <span class="number">1</span>; i &lt;= <span class="number">5</span>; i++) {
+                    cout &lt;&lt; <span class="string">"Count: "</span> &lt;&lt; i &lt;&lt; endl;
+                }
+
+                cout &lt;&lt; <span class="string">"Loop finished! 🎉"</span> &lt;&lt; endl;
+
+                <span class="keyword">return</span> <span class="number">0</span>;
+            }
+        </div>
+
+        <div class="output-label">▶️ Output:</div>
+        <div class="output">
+            Count: 1<br />
+            Count: 2<br />
+            Count: 3<br />
+            Count: 4<br />
+            Count: 5<br />
+            Loop finished! 🎉
+        </div>
+
+        <div class="tip-box success">
+            <strong>💡 Notice:</strong> <span style="color:#c8d2f0;">The for loop has everything in one line! <span class="highlight">int i = 1</span> (start), <span class="highlight">i &lt;= 5</span> (condition), <span class="highlight">i++</span> (update).</span>
+        </div>
+    </div>
+
+    <!-- ===== EXAMPLE 2 ===== -->
+    <div class="section-title">
+        <span class="emoji">📝</span> Example 2: Counting Backwards & Stepping
+    </div>
+
+    <div class="example-box">
+        <div class="example-title">
+            <span class="num">2</span> Countdown with For Loop
+        </div>
+        <p style="color:#c8d2f0; margin-bottom:0.5rem;">For loops can count backwards and skip numbers too!</p>
+
+        <div class="code-label">📄 lesson5.cpp</div>
+        <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            <span class="keyword">#include</span> &lt;iostream&gt;
+            <span class="keyword">using namespace</span> std;
+
+            <span class="keyword">int</span> <span class="function">main</span>() {
+                <span class="comment">// Count DOWN from 10 to 1</span>
+                cout &lt;&lt; <span class="string">"🚀 Countdown: "</span> &lt;&lt; endl;
+                <span class="keyword">for</span> (<span class="keyword">int</span> <span class="variable">i</span> = <span class="number">10</span>; i &gt;= <span class="number">1</span>; i--) {
+                    cout &lt;&lt; i &lt;&lt; <span class="string">"..."</span> &lt;&lt; endl;
+                }
+                cout &lt;&lt; <span class="string">"🔥 LIFTOFF!"</span> &lt;&lt; endl &lt;&lt; endl;
+
+                <span class="comment">// Count by 2s (even numbers)</span>
+                cout &lt;&lt; <span class="string">"🔢 Even numbers: "</span> &lt;&lt; endl;
+                <span class="keyword">for</span> (<span class="keyword">int</span> <span class="variable">i</span> = <span class="number">2</span>; i &lt;= <span class="number">10</span>; i += <span class="number">2</span>) {
+                    cout &lt;&lt; i &lt;&lt; <span class="string">" "</span>;
+                }
+                cout &lt;&lt; endl;
+
+                <span class="keyword">return</span> <span class="number">0</span>;
+            }
+        </div>
+
+        <div class="output-label">▶️ Output:</div>
+        <div class="output">
+            🚀 Countdown:<br />
+            10...<br />
+            9...<br />
+            8...<br />
+            7...<br />
+            6...<br />
+            5...<br />
+            4...<br />
+            3...<br />
+            2...<br />
+            1...<br />
+            🔥 LIFTOFF!<br />
+            <br />
+            🔢 Even numbers:<br />
+            2 4 6 8 10
+        </div>
+
+        <div class="tip-box">
+            <strong>💡 Tip:</strong> <span style="color:#c8d2f0;">Use <span class="highlight">i--</span> to count down, and <span class="highlight">i += 2</span> to count by 2s! You can use any step you want!</span>
+        </div>
+    </div>
+
+    <!-- ===== EXAMPLE 3 ===== -->
+    <div class="section-title">
+        <span class="emoji">📝</span> Example 3: Nested Loops — Loops Inside Loops
+    </div>
+
+    <div class="example-box">
+        <div class="example-title">
+            <span class="num">3</span> Multiplication Table
+        </div>
+        <p style="color:#c8d2f0; margin-bottom:0.5rem;">You can put a loop <strong>inside</strong> another loop! This is great for tables and patterns.</p>
+
+        <div class="code-label">📄 lesson5.cpp</div>
+        <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            <span class="keyword">#include</span> &lt;iostream&gt;
+            <span class="keyword">using namespace</span> std;
+
+            <span class="keyword">int</span> <span class="function">main</span>() {
+                cout &lt;&lt; <span class="string">"📊 5x5 Multiplication Table"</span> &lt;&lt; endl;
+                cout &lt;&lt; <span class="string">"------------------------"</span> &lt;&lt; endl;
+
+                <span class="comment">// Outer loop: rows (1 to 5)</span>
+                <span class="keyword">for</span> (<span class="keyword">int</span> <span class="variable">row</span> = <span class="number">1</span>; row &lt;= <span class="number">5</span>; row++) {
+
+                    <span class="comment">// Inner loop: columns (1 to 5)</span>
+                    <span class="keyword">for</span> (<span class="keyword">int</span> <span class="variable">col</span> = <span class="number">1</span>; col &lt;= <span class="number">5</span>; col++) {
+                        cout &lt;&lt; row * col &lt;&lt; <span class="string">"\t"</span>; <span class="comment">// \t = tab</span>
+                    }
+                    cout &lt;&lt; endl; <span class="comment">// New line after each row</span>
+                }
+
+                <span class="keyword">return</span> <span class="number">0</span>;
+            }
+        </div>
+
+        <div class="output-label">▶️ Output:</div>
+        <div class="output">
+            📊 5x5 Multiplication Table<br />
+            ------------------------<br />
+            1   2   3   4   5<br />
+            2   4   6   8   10<br />
+            3   6   9   12  15<br />
+            4   8   12  16  20<br />
+            5   10  15  20  25
+        </div>
+
+        <div class="tip-box warning">
+            <strong>⚠️ Important:</strong> <span style="color:#c8d2f0;">For each <strong>row</strong>, the <strong>col</strong> loop runs completely from 1 to 5. That's why nested loops create tables!</span>
+        </div>
+    </div>
+
+    <!-- ===== PATTERN EXAMPLE ===== -->
+    <div class="section-title">
+        <span class="emoji">🎨</span> Creating Patterns with Nested Loops
+    </div>
+
+    <div class="explanation">
+        <p>Nested loops are perfect for creating <strong>patterns</strong> and <strong>shapes</strong>!</p>
+    </div>
+
+    <div class="example-box">
+        <div class="example-title">
+            <span class="num">📌</span> Triangle Pattern
+        </div>
+
+        <div class="code-label">📄 lesson5.cpp</div>
+        <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            <span class="comment">// Print a triangle of stars</span>
+            <span class="keyword">for</span> (<span class="keyword">int</span> <span class="variable">row</span> = <span class="number">1</span>; row &lt;= <span class="number">5</span>; row++) {
+
+                <span class="comment">// Print stars for this row</span>
+                <span class="keyword">for</span> (<span class="keyword">int</span> <span class="variable">star</span> = <span class="number">1</span>; star &lt;= row; star++) {
+                    cout &lt;&lt; <span class="string">"*"</span>;
+                }
+                cout &lt;&lt; endl; <span class="comment">// Move to next row</span>
+            }
+        </div>
+
+        <div class="output-label">▶️ Output:</div>
+        <div class="pattern-box">
+*<br />
+**<br />
+***<br />
+****<br />
+*****
+        </div>
+
+        <div class="tip-box success">
+            <strong>💡 Cool Fact:</strong> <span style="color:#c8d2f0;">The inner loop runs <span class="highlight">row</span> times. So row 1 prints 1 star, row 2 prints 2 stars, etc. This creates the triangle!</span>
+        </div>
+    </div>
+
+    <!-- ===== CHEAT SHEET ===== -->
+    <div class="section-title">
+        <span class="emoji">📋</span> Quick Reference
+    </div>
+
+    <div class="cheat-sheet">
+        <h3>🔑 Key Code You Just Learned</h3>
+        <table>
+            <tr>
+                <td>for (int i = 1; i <= 10; i++)</td>
+                <td>Counts from 1 to 10</td>
+            </tr>
+            <tr>
+                <td>for (int i = 10; i >= 1; i--)</td>
+                <td>Counts down from 10 to 1</td>
+            </tr>
+            <tr>
+                <td>for (int i = 2; i <= 10; i += 2)</td>
+                <td>Counts by 2s: 2, 4, 6, 8, 10</td>
+            </tr>
+            <tr>
+                <td>for (int i = 0; i < n; i++)</td>
+                <td>Common pattern: 0 to n-1</td>
+            </tr>
+            <tr>
+                <td>for (row) { for (col) { } }</td>
+                <td>Nested loops for tables/patterns</td>
+            </tr>
+            <tr>
+                <td>\t</td>
+                <td>Tab character (makes columns line up)</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- ===== ACTIVITY 1 ===== -->
+    <div class="section-title">
+        <span class="emoji">🏋️</span> Practice Time!
+    </div>
+
+    <div class="activity-box">
+        <div class="activity-title">
+            🎯 Activity 1: Sum with For Loop
+            <span class="badge">⭐ BEGINNER</span>
+        </div>
+        <div class="challenge">
+            <p><strong>Your Task:</strong> Use a for loop to add up all numbers from 1 to 50!</p>
+            <ul style="color:#c8d2f0; margin-left:1.5rem; margin-top:0.5rem;">
+                <li>Use a <span class="highlight">for</span> loop from 1 to 50</li>
+                <li>Create a <span class="highlight">sum</span> variable</li>
+                <li>Add each number to the sum</li>
+                <li>Print the result</li>
+            </ul>
+            <div class="output" style="margin-top:0.5rem;">
+                The sum of numbers from 1 to 50 is: 1275 🎉
+            </div>
+        </div>
+        <div class="hint">
+            <strong>💡 Hint:</strong> <span class="highlight">int sum = 0;</span> then inside the loop: <span class="highlight">sum += i;</span>
+        </div>
+    </div>
+
+    <!-- ===== ACTIVITY 2 ===== -->
+    <div class="activity-box">
+        <div class="activity-title">
+            🚀 Activity 2: Multiplication Table (User Input)
+            <span class="badge">⭐⭐ CHALLENGE</span>
+        </div>
+        <div class="challenge">
+            <p><strong>Your Task:</strong> Ask the user for a number and print its times table!</p>
+            <ul style="color:#c8d2f0; margin-left:1.5rem; margin-top:0.5rem;">
+                <li>Ask the user for a <strong>number</strong></li>
+                <li>Use a <span class="highlight">for</span> loop from 1 to 10</li>
+                <li>Print each multiplication</li>
+            </ul>
+            <div class="output" style="margin-top:0.5rem;">
+                Enter a number: 7<br />
+                7 x 1 = 7<br />
+                7 x 2 = 14<br />
+                7 x 3 = 21<br />
+                7 x 4 = 28<br />
+                7 x 5 = 35<br />
+                7 x 6 = 42<br />
+                7 x 7 = 49<br />
+                7 x 8 = 56<br />
+                7 x 9 = 63<br />
+                7 x 10 = 70
+            </div>
+        </div>
+        <div class="hint">
+            <strong>💡 Hint:</strong> Use <span class="highlight">cin &gt;&gt; number;</span> then loop <span class="highlight">for (int i = 1; i <= 10; i++)</span> and print <span class="highlight">number * i</span>.
+        </div>
+    </div>
+
+    <!-- ===== BONUS CHALLENGE ===== -->
+    <div class="activity-box" style="border-color: #7b93d6;">
+        <div class="activity-title" style="color: #7b93d6;">
+            🌟 Bonus Challenge: Diamond Pattern
+            <span class="badge" style="background:#7b93d6;">⭐⭐⭐ ADVANCED</span>
+        </div>
+        <div class="challenge">
+            <p><strong>Your Task:</strong> Create a diamond pattern using nested loops!</p>
+            <ul style="color:#c8d2f0; margin-left:1.5rem; margin-top:0.5rem;">
+                <li>Use two <span class="highlight">for</span> loops</li>
+                <li>First loop: print the <strong>top half</strong> (increasing stars)</li>
+                <li>Second loop: print the <strong>bottom half</strong> (decreasing stars)</li>
+            </ul>
+            <div class="pattern-box" style="margin-top:0.5rem;">
+&nbsp;&nbsp;&nbsp;&nbsp;*<br />
+&nbsp;&nbsp;&nbsp;***<br />
+&nbsp;&nbsp;*****<br />
+&nbsp;*******<br />
+*********<br />
+&nbsp;*******<br />
+&nbsp;&nbsp;*****<br />
+&nbsp;&nbsp;&nbsp;***<br />
+&nbsp;&nbsp;&nbsp;&nbsp;*
+            </div>
+        </div>
+        <div class="hint">
+            <strong>💡 Hint:</strong> You'll need to print <strong>spaces</strong> and <strong>stars</strong>. Top half: <span class="highlight">for (row = 1; row <= 5; row++)</span> then print spaces (5-row) and stars (2*row-1). Bottom half: count down from 4 to 1.
+        </div>
+    </div>
+
+    <!-- ===== SUMMARY ===== -->
+    <div class="section-title">
+        <span class="emoji">🎓</span> Lesson Summary
+    </div>
+
+    <div class="summary-box">
+        <h3>✅ What You Learned Today</h3>
+        <ul>
+            <li>How to use <span class="highlight">for loops</span> when you know exactly how many times to repeat</li>
+            <li>The three parts of a for loop: <strong>start</strong>, <strong>condition</strong>, <strong>update</strong></li>
+            <li>How to count <strong>up</strong> (<span class="highlight">i++</span>), <strong>down</strong> (<span class="highlight">i--</span>), and <strong>by steps</strong> (<span class="highlight">i += 2</span>)</li>
+            <li>How to create <strong>nested loops</strong> (loops inside loops)</li>
+            <li>How to build <strong>multiplication tables</strong> and <strong>patterns</strong></li>
+            <li>When to use <strong>while</strong> vs <strong>for</strong> loops</li>
+        </ul>
+    </div>
+
+    <!-- ===== WHAT'S NEXT ===== -->
+    <div class="section-title">
+        <span class="emoji">🔜</span> What's Next?
+    </div>
+
+    <div class="explanation">
+        <p>In <strong>Lesson 6</strong>, you'll learn how to:</p>
+        <ul style="color:#c8d2f0; margin-left:1.5rem;">
+            <li>📋 Work with <strong>arrays</strong> (lists of items)</li>
+            <li>🏆 Create a <strong>score tracker</strong> for games</li>
+            <li>🔢 Store and manipulate <strong>multiple values</strong> at once</li>
+        </ul>
+        <p style="margin-top:0.8rem; color:#9aa8d9;">👉 <a href="lesson6.html" style="color:#f5c542;">Click here to go to Lesson 6 →</a></p>
+    </div>
+
+    <!-- ===== NAVIGATION BUTTONS ===== -->
+    <div class="btn-group">
+        <a href="index.html" class="btn btn-secondary">🏠 Homepage</a>
+        <a href="lesson4.html" class="btn btn-secondary">⬅️ Previous Lesson</a>
+        <a href="lesson6.html" class="btn">➡️ Next Lesson</a>
+    </div>
+
+    <!-- ===== FOOTER ===== -->
+    <div class="footer">
+        <p>💻 <strong>C++ Coding Adventure</strong> · Grade 9 · Lesson 5</p>
+        <p style="font-size:0.8rem; color:#4f6199;">Keep coding, keep learning! 🚀</p>
+    </div>
+
+</div>
+
+<!-- ===== COPY FUNCTION ===== -->
+<script>
+    function copyCode(button) {
+        const codeBlock = button.parentElement;
+        const codeText = codeBlock.innerText.replace('📋 Copy', '').trim();
+        navigator.clipboard.writeText(codeText).then(() => {
+            const original = button.textContent;
+            button.textContent = '✅ Copied!';
+            setTimeout(() => {
+                button.textContent = original;
+            }, 2000);
+        }).catch(() => {
+            alert('Please select and copy the code manually.');
+        });
+    }
+</script>
+
+</body>
+</html>

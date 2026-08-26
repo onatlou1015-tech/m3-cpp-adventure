@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Lesson 9 - File I/O 💾</title>
+    <style>
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0b0e1a;
+            color: #e8edf5;
+            line-height: 1.7;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #141a2b;
+            padding: 2.5rem 2.5rem;
+            border-radius: 2rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+            border: 1px solid #2a3457;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            text-align: center;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px dashed #3b4780;
+            margin-bottom: 2rem;
+        }
+
+        .header .lesson-badge {
+            display: inline-block;
+            background: #f5a623;
+            color: #0b0e1a;
+            font-weight: 700;
+            padding: 0.3rem 1.5rem;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .header h1 {
+            font-size: 2.8rem;
+            background: linear-gradient(135deg, #f7b731, #f5a623);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header .sub {
+            font-size: 1.1rem;
+            color: #9aa8d9;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #7b93d6;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: 0.2s;
+        }
+
+        .back-link:hover {
+            color: #f5c542;
+        }
+
+        .back-link::before {
+            content: "⬅️ ";
+        }
+
+        /* ===== LEARNING OBJECTIVES ===== */
+        .objectives-box {
+            background: #1b2339;
+            border-left: 6px solid #f5a623;
+            padding: 1.5rem 2rem;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .objectives-box h2 {
+            color: #f5c542;
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .objectives-box ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .objectives-box ul li {
+            padding: 0.2rem 0;
+            color: #c8d2f0;
+        }
+
+        .objectives-box ul li::before {
+            content: "🎯 ";
+        }
+
+        /* ===== SECTION TITLES ===== */
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 2.5rem 0 1rem 0;
+            color: #f5c542;
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+        }
+
+        .section-title .emoji {
+            font-size: 1.8rem;
+        }
+
+        /* ===== EXPLANATION ===== */
+        .explanation {
+            background: #0f1629;
+            padding: 1.5rem 2rem;
+            border-radius: 1rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #2a3457;
+        }
+
+        .explanation p {
+            color: #c8d2f0;
+            margin-bottom: 0.8rem;
+        }
+
+        .explanation strong {
+            color: #f7d88a;
+        }
+
+        .highlight {
+            background: #1f2a4a;
+            padding: 0.1rem 0.5rem;
+            border-radius: 6px;
+            color: #f5c542;
+            font-family: 'Courier New', monospace;
+        }
+
+        /* ===== FILE METHODS TABLE ===== */
+        .methods-box {
+            background: #1a2238;
+            border-radius: 1rem;
+            padding: 1.5rem 2rem;
+            margin: 1rem 0 1.5rem 0;
+            border: 1px solid #3b4780;
+        }
+
+        .methods-box h4 {
+            color: #f5c542;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .methods-box table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 0.5rem;
+        }
+
+        .methods-box td {
+            padding: 0.4rem 0.8rem;
+            border-bottom: 1px solid #28315a;
+            color: #c8d2f0;
+            font-size: 0.92rem;
+        }
+
+        .methods-box td:first-child {
+            font-family: 'Courier New', monospace;
+            color: #f5a623;
+            font-weight: 600;
+        }
+
+        .methods-box td:last-child {
+            color: #9aa8d9;
+        }
+
+        /* ===== FILE VISUAL ===== */
+        .file-visual {
+            background: #0f1629;
+            border-radius: 1rem;
+            padding: 1.5rem 2rem;
+            margin: 1rem 0;
+            border: 1px solid #2a3457;
+            text-align: center;
+        }
+
+        .file-visual .file-icon {
+            font-size: 3rem;
+        }
+
+        .file-visual .file-content {
+            background: #1b2339;
+            border-radius: 0.5rem;
+            padding: 0.8rem 1.2rem;
+            margin: 0.5rem auto;
+            max-width: 400px;
+            font-family: 'Courier New', monospace;
+            color: #7bcfa6;
+            text-align: left;
+            border: 1px solid #2a3457;
+        }
+
+        /* ===== CODE BLOCKS ===== */
+        .code-block {
+            background: #0b0e1a;
+            padding: 1.2rem 1.5rem;
+            border-radius: 0.8rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.92rem;
+            color: #c8d2f0;
+            border: 1px solid #2a3457;
+            margin: 0.8rem 0 1.2rem 0;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-break: break-word;
+            position: relative;
+        }
+
+        .code-block .comment {
+            color: #6b8a7a;
+        }
+
+        .code-block .keyword {
+            color: #f5a623;
+        }
+
+        .code-block .string {
+            color: #7bcfa6;
+        }
+
+        .code-block .function {
+            color: #7b93d6;
+        }
+
+        .code-block .number {
+            color: #f7b731;
+        }
+
+        .code-block .variable {
+            color: #7bcfa6;
+        }
+
+        .code-label {
+            display: inline-block;
+            background: #1f2a4a;
+            color: #7b93d6;
+            font-size: 0.7rem;
+            padding: 0.1rem 0.8rem;
+            border-radius: 20px;
+            margin-bottom: 0.3rem;
+            font-family: 'Segoe UI', sans-serif;
+            letter-spacing: 0.5px;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #1f2a4a;
+            color: #7b93d6;
+            border: none;
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .copy-btn:hover {
+            background: #f5a623;
+            color: #0b0e1a;
+        }
+
+        /* ===== EXAMPLE BOXES ===== */
+        .example-box {
+            background: #1b2339;
+            border-radius: 1rem;
+            padding: 1.5rem 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid #2a3457;
+        }
+
+        .example-box .example-title {
+            color: #f7d88a;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .example-box .example-title .num {
+            background: #f5a623;
+            color: #0b0e1a;
+            padding: 0.1rem 0.7rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            margin-right: 0.5rem;
+        }
+
+        .example-box .output {
+            background: #0b0e1a;
+            padding: 0.8rem 1.2rem;
+            border-radius: 0.6rem;
+            color: #7bcfa6;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            border-left: 3px solid #f5a623;
+        }
+
+        .example-box .output-label {
+            font-size: 0.7rem;
+            color: #6b7db3;
+            font-family: 'Segoe UI', sans-serif;
+            margin-top: 0.5rem;
+        }
+
+        .example-box .file-content-demo {
+            background: #0b0e1a;
+            padding: 0.8rem 1.2rem;
+            border-radius: 0.6rem;
+            color: #7bcfa6;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            border-left: 3px solid #7b93d6;
+            white-space: pre-wrap;
+        }
+
+        /* ===== TIPS ===== */
+        .tip-box {
+            background: #1a2238;
+            border-left: 4px solid #7b93d6;
+            padding: 1rem 1.5rem;
+            border-radius: 0.8rem;
+            margin: 1rem 0;
+        }
+
+        .tip-box strong {
+            color: #7b93d6;
+        }
+
+        .tip-box.warning {
+            border-left-color: #f5a623;
+        }
+
+        .tip-box.warning strong {
+            color: #f5a623;
+        }
+
+        .tip-box.success {
+            border-left-color: #7bcfa6;
+        }
+
+        .tip-box.success strong {
+            color: #7bcfa6;
+        }
+
+        /* ===== ACTIVITIES ===== */
+        .activity-box {
+            background: #1b2339;
+            border-radius: 1rem;
+            padding: 1.8rem 2rem;
+            margin-bottom: 2rem;
+            border: 2px solid #f5a623;
+        }
+
+        .activity-box .activity-title {
+            color: #f5c542;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .activity-box .activity-title .badge {
+            background: #f5a623;
+            color: #0b0e1a;
+            padding: 0.1rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            margin-left: 0.5rem;
+            font-weight: 700;
+        }
+
+        .activity-box .challenge {
+            color: #c8d2f0;
+            margin: 0.5rem 0;
+        }
+
+        .activity-box .hint {
+            background: #0f1629;
+            padding: 0.8rem 1.2rem;
+            border-radius: 0.6rem;
+            color: #7b93d6;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        .activity-box .hint strong {
+            color: #f7d88a;
+        }
+
+        /* ===== SUMMARY ===== */
+        .summary-box {
+            background: #0f1629;
+            border-radius: 1rem;
+            padding: 1.5rem 2rem;
+            margin: 2rem 0;
+            border: 1px solid #2a3457;
+        }
+
+        .summary-box h3 {
+            color: #f5c542;
+            margin-bottom: 0.5rem;
+        }
+
+        .summary-box ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .summary-box ul li {
+            padding: 0.2rem 0;
+            color: #c8d2f0;
+        }
+
+        .summary-box ul li::before {
+            content: "✅ ";
+        }
+
+        /* ===== KEYWORDS ===== */
+        .keywords {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 0.5rem 0;
+        }
+
+        .keywords span {
+            background: #1f2a4a;
+            padding: 0.2rem 1rem;
+            border-radius: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            color: #7b93d6;
+            border: 1px solid #2a3457;
+        }
+
+        /* ===== CHEAT SHEET ===== */
+        .cheat-sheet {
+            background: #1a2238;
+            border-radius: 1rem;
+            padding: 1.5rem 2rem;
+            margin: 1.5rem 0;
+            border: 1px solid #3b4780;
+        }
+
+        .cheat-sheet h3 {
+            color: #f5c542;
+        }
+
+        .cheat-sheet table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 0.5rem;
+        }
+
+        .cheat-sheet td {
+            padding: 0.4rem 0.8rem;
+            border-bottom: 1px solid #28315a;
+            color: #c8d2f0;
+            font-size: 0.92rem;
+        }
+
+        .cheat-sheet td:first-child {
+            font-family: 'Courier New', monospace;
+            color: #f5a623;
+            font-weight: 600;
+        }
+
+        .cheat-sheet td:last-child {
+            color: #9aa8d9;
+        }
+
+        /* ===== BUTTONS ===== */
+        .btn {
+            display: inline-block;
+            background: #f5a623;
+            color: #0b0e1a;
+            font-weight: 700;
+            padding: 0.7rem 2rem;
+            border-radius: 40px;
+            text-decoration: none;
+            transition: 0.2s;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: #f7b731;
+            transform: scale(1.02);
+        }
+
+        .btn-secondary {
+            background: #1f2a4a;
+            color: #7b93d6;
+        }
+
+        .btn-secondary:hover {
+            background: #2a3457;
+            color: #f5c542;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+            justify-content: center;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            text-align: center;
+            margin-top: 2.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #28315a;
+            color: #6b7db3;
+            font-size: 0.9rem;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 750px) {
+            .container {
+                padding: 1.5rem 1rem;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.4rem;
+            }
+
+            .code-block {
+                font-size: 0.8rem;
+                padding: 0.8rem 1rem;
+            }
+
+            .example-box {
+                padding: 1rem 1.2rem;
+            }
+
+            .activity-box {
+                padding: 1.2rem 1.2rem;
+            }
+
+            .cheat-sheet {
+                padding: 1rem 1.2rem;
+            }
+
+            .btn-group {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .methods-box {
+                padding: 1rem 1.2rem;
+            }
+
+            .file-visual {
+                padding: 1rem 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- ===== HEADER ===== -->
+    <div class="header">
+        <div class="lesson-badge">📘 LESSON 9</div>
+        <h1>File I/O</h1>
+        <div class="sub">Save and load data from files!</div>
+        <a href="index.html" class="back-link">Back to Homepage</a>
+    </div>
+
+    <!-- ===== LEARNING OBJECTIVES ===== -->
+    <div class="objectives-box">
+        <h2>🎯 What You'll Learn Today</h2>
+        <ul>
+            <li>How to <strong>save data</strong> to a file using <span class="highlight">ofstream</span></li>
+            <li>How to <strong>read data</strong> from a file using <span class="highlight">ifstream</span></li>
+            <li>How to <strong>append</strong> data to an existing file</li>
+            <li>How to <strong>check if a file exists</strong> before reading</li>
+            <li>How to build a <strong>high score tracker</strong> that saves between games</li>
+        </ul>
+    </div>
+
+    <!-- ===== INTRODUCTION ===== -->
+    <div class="section-title">
+        <span class="emoji">💡</span> What is File I/O?
+    </div>
+
+    <div class="explanation">
+        <p><span class="highlight">File I/O</span> (Input/Output) is how programs <strong>save</strong> and <strong>load</strong> data from files on your computer.</p>
+        <p>Think of it like this:</p>
+        <ul style="color:#c8d2f0; margin-left:1.5rem; margin-bottom:0.8rem;">
+            <li>📝 <strong>Writing to a file</strong> = Saving your game progress</li>
+            <li>📖 <strong>Reading from a file</strong> = Loading your saved game</li>
+        </ul>
+        <p>This is how games remember your high scores, how apps save your settings, and how programs store data permanently!</p>
+        <div class="keywords">
+            <span>ofstream</span>
+            <span>ifstream</span>
+            <span>fstream</span>
+            <span>file</span>
+            <span>read</span>
+            <span>write</span>
+            <span>append</span>
+        </div>
+    </div>
+
+    <!-- ===== FILE METHODS ===== -->
+    <div class="section-title">
+        <span class="emoji">📋</span> File I/O Classes
+    </div>
+
+    <div class="methods-box">
+        <h4>🔧 File Stream Classes</h4>
+        <table>
+            <tr>
+                <td>#include &lt;fstream&gt;</td>
+                <td>Required for file I/O</td>
+            </tr>
+            <tr>
+                <td>ofstream</td>
+                <td>Output file stream — for <strong>writing</strong> to files</td>
+            </tr>
+            <tr>
+                <td>ifstream</td>
+                <td>Input file stream — for <strong>reading</strong> from files</td>
+            </tr>
+            <tr>
+                <td>fstream</td>
+                <td>Can do both reading and writing</td>
+            </tr>
+            <tr>
+                <td>file.open("filename.txt")</td>
+                <td>Opens a file (or creates it)</td>
+            </tr>
+            <tr>
+                <td>file.close()</td>
+                <td>Closes the file (always do this!)</td>
+            </tr>
+            <tr>
+                <td>file.is_open()</td>
+                <td>Checks if the file opened successfully</td>
+            </tr>
+            <tr>
+                <td>ios::app</td>
+                <td>Append mode — adds to the end of the file</td>
+            </tr>
+        </table>
+        <div class="tip-box warning" style="margin-top:0.8rem;">
+            <strong>⚠️ Important:</strong> <span style="color:#c8d2f0;">Always <span class="highlight">close()</span> your files when you're done! This ensures all data is saved properly.</span>
+        </div>
+    </div>
+
+    <!-- ===== FILE VISUAL ===== -->
+    <div class="section-title">
+        <span class="emoji">👀</span> What a File Looks Like
+    </div>
+
+    <div class="file-visual">
+        <div class="file-icon">📄</div>
+        <p style="color:#9aa8d9; margin:0.3rem 0;"><strong>highscores.txt</strong></p>
+        <div class="file-content">
+            Player1 1000<br />
+            Player2 850<br />
+            Player3 720
+        </div>
+        <div class="label" style="color:#6b7db3; font-size:0.8rem; margin-top:0.3rem;">
+            💡 Each line stores a player name and their score
+        </div>
+    </div>
+
+    <!-- ===== EXAMPLE 1 ===== -->
+    <div class="section-title">
+        <span class="emoji">📝</span> Example 1: Writing to a File
+    </div>
+
+    <div class="example-box">
+        <div class="example-title">
+            <span class="num">1</span> Saving a Message to a File
+        </div>
+        <p style="color:#c8d2f0; margin-bottom:0.5rem;">This program writes a message to a text file.</p>
+
+        <div class="code-label">📄 lesson9.cpp</div>
+        <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            <span class="keyword">#include</span> &lt;iostream&gt;
+            <span class="keyword">#include</span> &lt;fstream&gt; <span class="comment">// Needed for file operations</span>
+            <span class="keyword">using namespace</span> std;
+
+            <span class="keyword">int</span> <span class="function">main</span>() {
+                <span class="comment">// Create an output file stream</span>
+                <span class="keyword">ofstream</span> <span class="variable">myFile</span>;
+
+                <span class="comment">// Open (or create) the file</span>
+                myFile.open(<span class="string">"message.txt"</span>);
+
+                <span class="comment">// Check if it opened successfully</span>
+                <span class="keyword">if</span> (myFile.is_open()) {
+                    <span class="comment">// Write to the file</span>
+                    myFile &lt;&lt; <span class="string">"Hello from C++!"</span> &lt;&lt; endl;
+                    myFile &lt;&lt; <span class="string">"This is a saved message."</span> &lt;&lt; endl;
+                    myFile &lt;&lt; <span class="string">"File I/O is awesome! 🚀"</span> &lt;&lt; endl;
+
+                    cout &lt;&lt; <span class="string">"✅ Message saved to message.txt!"</span> &lt;&lt; endl;
+                } <span class="keyword">else</span> {
+                    cout &lt;&lt; <span class="string">"❌ Could not open the file!"</span> &lt;&lt; endl;
+                }
+
+                <span class="comment">// Always close the file</span>
+                myFile.close();
+
+                <span class="keyword">return</span> <span class="number">0</span>;
+            }
+        </div>
+
+        <div class="output-label">▶️ Output:</div>
+        <div class="output">
+            ✅ Message saved to message.txt!
+        </div>
+
+        <div class="file-content-demo" style="margin-top:0.5rem;">
+            📄 message.txt contains:<br />
+            Hello from C++!<br />
+            This is a saved message.<br />
+            File I/O is awesome! 🚀
+        </div>
+
+        <div class="tip-box success">
+            <strong>💡 Notice:</strong> <span style="color:#c8d2f0;">Using <span class="highlight">&lt;&lt;</span> with a file works just like <span class="highlight">cout</span>! You write to the file the same way you print to the screen.</span>
+        </div>
+    </div>
+
+    <!-- ===== EXAMPLE 2 ===== -->
+    <div class="section-title">
+        <span class="emoji">📝</span> Example 2: Reading from a File
+    </div>
+
+    <div class="example-box">
+        <div class="example-title">
+            <span class="num">2</span> Reading a File Line by Line
+        </div>
+        <p style="color:#c8d2f0; margin-bottom:0.5rem;">This program reads a file and displays its contents.</p>
+
+        <div class="code-label">📄 lesson9.cpp</div>
+        <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            <span class="keyword">#include</span> &lt;iostream&gt;
+            <span class="keyword">#include</span> &lt;fstream&gt;
+            <span class="keyword">#include</span> &lt;string&gt;
+            <span class="keyword">using namespace</span> std;
+
+            <span class="keyword">int</span> <span class="function">main</span>() {
+                <span class="comment">// Create an input file stream</span>
+                <span class="keyword">ifstream</span> <span class="variable">myFile</span>;
+
+                <span class="comment">// Open the file</span>
+                myFile.open(<span class="string">"message.txt"</span>);
+
+                <span class="comment">// Check if it exists</span>
+                <span class="keyword">if</span> (myFile.is_open()) {
+                    <span class="keyword">string</span> <span class="variable">line</span>;
+
+                    cout &lt;&lt; <span class="string">"📖 Reading file contents:"</span> &lt;&lt; endl;
+                    cout &lt;&lt; <span class="string">"------------------------"</span> &lt;&lt; endl;
+
+                    <span class="comment">// Read and print each line</span>
+                    <span class="keyword">while</span> (getline(myFile, line)) {
+                        cout &lt;&lt; line &lt;&lt; endl;
+                    }
+
+                    cout &lt;&lt; <span class="string">"------------------------"</span> &lt;&lt; endl;
+                    cout &lt;&lt; <span class="string">"✅ File read complete!"</span> &lt;&lt; endl;
+                } <span class="keyword">else</span> {
+                    cout &lt;&lt; <span class="string">"❌ File not found!"</span> &lt;&lt; endl;
+                }
+
+                myFile.close();
+
+                <span class="keyword">return</span> <span class="number">0</span>;
+            }
+        </div>
+
+        <div class="output-label">▶️ Output:</div>
+        <div class="output">
+            📖 Reading file contents:<br />
+            ------------------------<br />
+            Hello from C++!<br />
+            This is a saved message.<br />
+            File I/O is awesome! 🚀<br />
+            ------------------------<br />
+            ✅ File read complete!
+        </div>
+
+        <div class="tip-box">
+            <strong>💡 Tip:</strong> <span style="color:#c8d2f0;"><span class="highlight">getline(myFile, line)</span> reads one line at a time. The while loop continues until the end of the file!</span>
+        </div>
+    </div>
+
+    <!-- ===== EXAMPLE 3 ===== -->
+    <div class="section-title">
+        <span class="emoji">📝</span> Example 3: High Score Tracker
+    </div>
+
+    <div class="example-box">
+        <div class="example-title">
+            <span class="num">3</span> Saving and Loading High Scores
+        </div>
+        <p style="color:#c8d2f0; margin-bottom:0.5rem;">This program saves and loads high scores from a file!</p>
+
+        <div class="code-label">📄 lesson9.cpp</div>
+        <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            <span class="keyword">#include</span> &lt;iostream&gt;
+            <span class="keyword">#include</span> &lt;fstream&gt;
+            <span class="keyword">#include</span> &lt;string&gt;
+            <span class="keyword">using namespace</span> std;
+
+            <span class="comment">// Function to save a high score</span>
+            <span class="keyword">void</span> <span class="function">saveScore</span>(<span class="keyword">string</span> <span class="variable">name</span>, <span class="keyword">int</span> <span class="variable">score</span>) {
+                <span class="keyword">ofstream</span> <span class="variable">file</span>;
+                <span class="comment">// Open in append mode (adds to the end)</span>
+                file.open(<span class="string">"highscores.txt"</span>, ios::app);
+
+                <span class="keyword">if</span> (file.is_open()) {
+                    file &lt;&lt; name &lt;&lt; <span class="string">" "</span> &lt;&lt; score &lt;&lt; endl;
+                    cout &lt;&lt; <span class="string">"✅ Score saved!"</span> &lt;&lt; endl;
+                } <span class="keyword">else</span> {
+                    cout &lt;&lt; <span class="string">"❌ Error saving score!"</span> &lt;&lt; endl;
+                }
+                file.close();
+            }
+
+            <span class="comment">// Function to display all high scores</span>
+            <span class="keyword">void</span> <span class="function">showHighScores</span>() {
+                <span class="keyword">ifstream</span> <span class="variable">file</span>;
+                file.open(<span class="string">"highscores.txt"</span>);
+
+                <span class="keyword">if</span> (file.is_open()) {
+                    <span class="keyword">string</span> <span class="variable">name</span>;
+                    <span class="keyword">int</span> <span class="variable">score</span>;
+
+                    cout &lt;&lt; <span class="string">"\n🏆 HIGH SCORES:"</span> &lt;&lt; endl;
+                    cout &lt;&lt; <span class="string">"---------------"</span> &lt;&lt; endl;
+
+                    <span class="comment">// Read each name and score from the file</span>
+                    <span class="keyword">while</span> (file &gt;&gt; name &gt;&gt; score) {
+                        cout &lt;&lt; name &lt;&lt; <span class="string">" - "</span> &lt;&lt; score &lt;&lt; endl;
+                    }
+
+                    cout &lt;&lt; <span class="string">"---------------"</span> &lt;&lt; endl;
+                } <span class="keyword">else</span> {
+                    cout &lt;&lt; <span class="string">"📭 No scores saved yet!"</span> &lt;&lt; endl;
+                }
+                file.close();
+            }
+
+            <span class="keyword">int</span> <span class="function">main</span>() {
+                <span class="keyword">int</span> <span class="variable">choice</span>;
+                <span class="keyword">string</span> <span class="variable">name</span>;
+                <span class="keyword">int</span> <span class="variable">score</span>;
+
+                cout &lt;&lt; <span class="string">"🎮 HIGH SCORE TRACKER"</span> &lt;&lt; endl;
+
+                <span class="keyword">do</span> {
+                    cout &lt;&lt; <span class="string">"\n1. Save a score"</span> &lt;&lt; endl;
+                    cout &lt;&lt; <span class="string">"2. View all scores"</span> &lt;&lt; endl;
+                    cout &lt;&lt; <span class="string">"3. Exit"</span> &lt;&lt; endl;
+                    cout &lt;&lt; <span class="string">"Enter choice: "</span>;
+                    cin &gt;&gt; choice;
+
+                    <span class="keyword">if</span> (choice == <span class="number">1</span>) {
+                        cout &lt;&lt; <span class="string">"Enter player name: "</span>;
+                        cin &gt;&gt; name;
+                        cout &lt;&lt; <span class="string">"Enter score: "</span>;
+                        cin &gt;&gt; score;
+                        saveScore(name, score);
+                    } <span class="keyword">else if</span> (choice == <span class="number">2</span>) {
+                        showHighScores();
+                    }
+
+                } <span class="keyword">while</span> (choice != <span class="number">3</span>);
+
+                cout &lt;&lt; <span class="string">"👋 Goodbye!"</span> &lt;&lt; endl;
+
+                <span class="keyword">return</span> <span class="number">0</span>;
+            }
+        </div>
+
+        <div class="input-demo-label">💬 User Types:</div>
+        <div class="input-demo">
+            1<br />
+            Alex<br />
+            1000<br />
+            2<br />
+            3
+        </div>
+
+        <div class="output-label">▶️ Output:</div>
+        <div class="output">
+            🎮 HIGH SCORE TRACKER<br />
+            <br />
+            1. Save a score<br />
+            2. View all scores<br />
+            3. Exit<br />
+            Enter choice: 1<br />
+            Enter player name: Alex<br />
+            Enter score: 1000<br />
+            ✅ Score saved!<br />
+            <br />
+            1. Save a score<br />
+            2. View all scores<br />
+            3. Exit<br />
+            Enter choice: 2<br />
+            <br />
+            🏆 HIGH SCORES:<br />
+            ---------------<br />
+            Alex - 1000<br />
+            ---------------<br />
+            <br />
+            1. Save a score<br />
+            2. View all scores<br />
+            3. Exit<br />
+            Enter choice: 3<br />
+            👋 Goodbye!
+        </div>
+
+        <div class="file-content-demo" style="margin-top:0.5rem;">
+            📄 highscores.txt contains:<br />
+            Alex 1000<br />
+            Sarah 850<br />
+            Leo 720
+        </div>
+
+        <div class="tip-box success">
+            <strong>💡 Pro Tip:</strong> <span style="color:#c8d2f0;"><span class="highlight">ios::app</span> opens the file in <strong>append mode</strong> — it adds new data to the end without erasing existing data!</span>
+        </div>
+    </div>
+
+    <!-- ===== CHEAT SHEET ===== -->
+    <div class="section-title">
+        <span class="emoji">📋</span> Quick Reference
+    </div>
+
+    <div class="cheat-sheet">
+        <h3>🔑 Key Code You Just Learned</h3>
+        <table>
+            <tr>
+                <td>#include &lt;fstream&gt;</td>
+                <td>Include this for file operations</td>
+            </tr>
+            <tr>
+                <td>ofstream file;</td>
+                <td>Creates a file stream for writing</td>
+            </tr>
+            <tr>
+                <td>ifstream file;</td>
+                <td>Creates a file stream for reading</td>
+            </tr>
+            <tr>
+                <td>file.open("filename.txt");</td>
+                <td>Opens a file</td>
+            </tr>
+            <tr>
+                <td>file.open("file.txt", ios::app);</td>
+                <td>Opens a file in append mode</td>
+            </tr>
+            <tr>
+                <td>file &lt;&lt; "text" &lt;&lt; endl;</td>
+                <td>Writes text to the file</td>
+            </tr>
+            <tr>
+                <td>file &gt;&gt; variable;</td>
+                <td>Reads data from the file</td>
+            </tr>
+            <tr>
+                <td>getline(file, line);</td>
+                <td>Reads a whole line from the file</td>
+            </tr>
+            <tr>
+                <td>file.is_open()</td>
+                <td>Checks if the file opened successfully</td>
+            </tr>
+            <tr>
+                <td>file.close();</td>
+                <td>Closes the file (always do this!)</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- ===== ACTIVITY 1 ===== -->
+    <div class="section-title">
+        <span class="emoji">🏋️</span> Practice Time!
+    </div>
+
+    <div class="activity-box">
+        <div class="activity-title">
+            🎯 Activity 1: Note Keeper
+            <span class="badge">⭐ BEGINNER</span>
+        </div>
+        <div class="challenge">
+            <p><strong>Your Task:</strong> Create a program that saves notes to a file!</p>
+            <ul style="color:#c8d2f0; margin-left:1.5rem; margin-top:0.5rem;">
+                <li>Ask the user to enter a <strong>note</strong> (a sentence)</li>
+                <li>Save it to a file called <span class="highlight">notes.txt</span></li>
+                <li>Ask if they want to <strong>view</strong> all notes</li>
+                <li>If yes, read and display everything in the file</li>
+            </ul>
+            <div class="output" style="margin-top:0.5rem;">
+                📝 NOTE KEEPER<br />
+                <br />
+                Enter your note: Buy groceries tomorrow<br />
+                ✅ Note saved!<br />
+                <br />
+                View all notes? (y/n): y<br />
+                <br />
+                📋 ALL NOTES:<br />
+                Buy groceries tomorrow<br />
+                Call grandma on Sunday<br />
+                Study for math test
+            </div>
+        </div>
+        <div class="hint">
+            <strong>💡 Hint:</strong> Use <span class="highlight">ofstream</span> with <span class="highlight">ios::app</span> to add notes without erasing old ones. Use <span class="highlight">ifstream</span> to read them back.
+        </div>
+    </div>
+
+    <!-- ===== ACTIVITY 2 ===== -->
+    <div class="activity-box">
+        <div class="activity-title">
+            🚀 Activity 2: Shopping List Manager
+            <span class="badge">⭐⭐ CHALLENGE</span>
+        </div>
+        <div class="challenge">
+            <p><strong>Your Task:</strong> Create a shopping list program that saves to a file!</p>
+            <ul style="color:#c8d2f0; margin-left:1.5rem; margin-top:0.5rem;">
+                <li>Show a menu: <strong>1. Add item</strong>, <strong>2. View list</strong>, <strong>3. Clear list</strong>, <strong>4. Exit</strong></li>
+                <li>When adding, ask for the <strong>item name</strong></li>
+                <li>Save each item as a line in <span class="highlight">shopping.txt</span></li>
+                <li>When viewing, display all items with <strong>numbers</strong></li>
+                <li>When clearing, <strong>delete</strong> the file (or overwrite with empty)</li>
+            </ul>
+            <div class="output" style="margin-top:0.5rem;">
+                🛒 SHOPPING LIST MANAGER<br />
+                <br />
+                1. Add item<br />
+                2. View list<br />
+                3. Clear list<br />
+                4. Exit<br />
+                Enter choice: 1<br />
+                Enter item: Milk<br />
+                ✅ Added!<br />
+                <br />
+                Enter choice: 1<br />
+                Enter item: Eggs<br />
+                ✅ Added!<br />
+                <br />
+                Enter choice: 2<br />
+                <br />
+                🛒 YOUR SHOPPING LIST:<br />
+                1. Milk<br />
+                2. Eggs
+            </div>
+        </div>
+        <div class="hint">
+            <strong>💡 Hint:</strong> For clearing the list, open the file with <span class="highlight">ios::trunc</span> (truncate mode) — this erases everything. Then close it immediately.
+        </div>
+    </div>
+
+    <!-- ===== BONUS CHALLENGE ===== -->
+    <div class="activity-box" style="border-color: #7b93d6;">
+        <div class="activity-title" style="color: #7b93d6;">
+            🌟 Bonus Challenge: Quiz Game with Score Tracking
+            <span class="badge" style="background:#7b93d6;">⭐⭐⭐ ADVANCED</span>
+        </div>
+        <div class="challenge">
+            <p><strong>Your Task:</strong> Create a quiz game that saves and loads scores!</p>
+            <ul style="color:#c8d2f0; margin-left:1.5rem; margin-top:0.5rem;">
+                <li>Ask the user <strong>3 quiz questions</strong> (you choose the topics!)</li>
+                <li>Keep track of their <strong>score</strong> (0-3)</li>
+                <li>Ask for their <strong>name</strong></li>
+                <li>Save their name and score to <span class="highlight">quiz_scores.txt</span></li>
+                <li>At the end, display all <strong>previous scores</strong> from the file</li>
+                <li>Also display the <strong>highest score</strong> ever recorded</li>
+            </ul>
+            <div class="output" style="margin-top:0.5rem;">
+                📝 QUIZ GAME<br />
+                <br />
+                Question 1: What is 5 + 3? <br />
+                Your answer: 8 ✅ Correct!<br />
+                <br />
+                Question 2: What is the capital of France? <br />
+                Your answer: Paris ✅ Correct!<br />
+                <br />
+                Question 3: What is 10 / 2? <br />
+                Your answer: 3 ❌ Incorrect!<br />
+                <br />
+                Enter your name: Alex<br />
+                <br />
+                ✅ Score saved! Alex scored 2/3<br />
+                <br />
+                🏆 PREVIOUS SCORES:<br />
+                Sarah - 3/3<br />
+                Leo - 1/3<br />
+                Alex - 2/3<br />
+                <br />
+                🏅 HIGHEST SCORE: Sarah with 3/3
+            </div>
+        </div>
+        <div class="hint">
+            <strong>💡 Hint:</strong> Read all scores from the file into variables to find the highest. Save scores with format: <span class="highlight">name score</span> (e.g., "Alex 2"). Use <span class="highlight">ifstream</span> to read and <span class="highlight">ofstream</span> in append mode to save.
+        </div>
+    </div>
+
+    <!-- ===== SUMMARY ===== -->
+    <div class="section-title">
+        <span class="emoji">🎓</span> Lesson Summary
+    </div>
+
+    <div class="summary-box">
+        <h3>✅ What You Learned Today</h3>
+        <ul>
+            <li>What <span class="highlight">File I/O</span> is and why it's important</li>
+            <li>How to <strong>write</strong> to a file using <span class="highlight">ofstream</span></li>
+            <li>How to <strong>read</strong> from a file using <span class="highlight">ifstream</span></li>
+            <li>How to use <strong>append mode</strong> (<span class="highlight">ios::app</span>) to add data</li>
+            <li>How to <strong>check if a file exists</strong> with <span class="highlight">.is_open()</span></li>
+            <li>How to <strong>read line by line</strong> with <span class="highlight">getline()</span></li>
+            <li>How to build a <strong>high score tracker</strong> that saves between games</li>
+            <li>How to build a <strong>note keeper</strong> and <strong>shopping list</strong> app</li>
+        </ul>
+    </div>
+
+    <!-- ===== WHAT'S NEXT ===== -->
+    <div class="section-title">
+        <span class="emoji">🔜</span> What's Next?
+    </div>
+
+    <div class="explanation">
+        <p>In <strong>Lesson 10</strong>, you'll learn how to:</p>
+        <ul style="color:#c8d2f0; margin-left:1.5rem;">
+            <li>🐛 <strong>Find and fix bugs</strong> in your code</li>
+            <li>🛠️ Use <strong>debugging techniques</strong> to solve problems</li>
+            <li>🎯 Play a <strong>"Bug Hunt"</strong> game where you find and fix errors</li>
+        </ul>
+        <p style="margin-top:0.8rem; color:#9aa8d9;">👉 <a href="lesson10.html" style="color:#f5c542;">Click here to go to Lesson 10 →</a></p>
+    </div>
+
+    <!-- ===== NAVIGATION BUTTONS ===== -->
+    <div class="btn-group">
+        <a href="index.html" class="btn btn-secondary">🏠 Homepage</a>
+        <a href="lesson8.html" class="btn btn-secondary">⬅️ Previous Lesson</a>
+        <a href="lesson10.html" class="btn">➡️ Next Lesson</a>
+    </div>
+
+    <!-- ===== FOOTER ===== -->
+    <div class="footer">
+        <p>💻 <strong>C++ Coding Adventure</strong> · Grade 9 · Lesson 9</p>
+        <p style="font-size:0.8rem; color:#4f6199;">Keep coding, keep learning! 🚀</p>
+    </div>
+
+</div>
+
+<!-- ===== COPY FUNCTION ===== -->
+<script>
+    function copyCode(button) {
+        const codeBlock = button.parentElement;
+        const codeText = codeBlock.innerText.replace('📋 Copy', '').trim();
+        navigator.clipboard.writeText(codeText).then(() => {
+            const original = button.textContent;
+            button.textContent = '✅ Copied!';
+            setTimeout(() => {
+                button.textContent = original;
+            }, 2000);
+        }).catch(() => {
+            alert('Please select and copy the code manually.');
+        });
+    }
+</script>
+
+</body>
+</html>

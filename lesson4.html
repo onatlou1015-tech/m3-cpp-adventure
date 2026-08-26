@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Lesson 4 - While Loops 🔄</title>
+    <style>
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0b0e1a;
+            color: #e8edf5;
+            line-height: 1.7;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #141a2b;
+            padding: 2.5rem 2.5rem;
+            border-radius: 2rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+            border: 1px solid #2a3457;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            text-align: center;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px dashed #3b4780;
+            margin-bottom: 2rem;
+        }
+
+        .header .lesson-badge {
+            display: inline-block;
+            background: #f5a623;
+            color: #0b0e1a;
+            font-weight: 700;
+            padding: 0.3rem 1.5rem;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .header h1 {
+            font-size: 2.8rem;
+            background: linear-gradient(135deg, #f7b731, #f5a623);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header .sub {
+            font-size: 1.1rem;
+            color: #9aa8d9;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #7b93d6;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: 0.2s;
+        }
+
+        .back-link:hover {
+            color: #f5c542;
+        }
+
+        .back-link::before {
+            content: "⬅️ ";
+        }
+
+        /* ===== LEARNING OBJECTIVES ===== */
+        .objectives-box {
+            background: #1b2339;
+            border-left: 6px solid #f5a623;
+            padding: 1.5rem 2rem;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .objectives-box h2 {
+            color: #f5c542;
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .objectives-box ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .objectives-box ul li {
+            padding: 0.2rem 0;
+            color: #c8d2f0;
+        }
+
+        .objectives-box ul li::before {
+            content: "🎯 ";
+        }
+
+        /* ===== SECTION TITLES ===== */
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 2.5rem 0 1rem 0;
+            color: #f5c542;
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+        }
+
+        .section-title .emoji {
+            font-size: 1.8rem;
+        }
+
+        /* ===== EXPLANATION ===== */
+        .explanation {
+            background: #0f1629;
+            padding: 1.5rem 2rem;
+            border-radius: 1rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #2a3457;
+        }
+
+        .explanation p {
+            color: #c8d2f0;
+            margin-bottom: 0.8rem;
+        }
+
+        .explanation strong {
+            color: #f7d88a;
+        }
+
+        .highlight {
+            background: #1f2a4a;
+            padding: 0.1rem 0.5rem;
+            border-radius: 6px;
+            color: #f5c542;
+            font-family: 'Courier New', monospace;
+        }
+
+        /* ===== CODE BLOCKS ===== */
+        .code-block {
+            background: #0b0e1a;
+            padding: 1.2rem 1.5rem;
+            border-radius: 0.8rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.92rem;
+            color: #c8d2f0;
+            border: 1px solid #2a3457;
+            margin: 0.8rem 0 1.2rem 0;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-break: break-word;
+            position: relative;
+        }
+
+        .code-block .comment {
+            color: #6b8a7a;
+        }
+
+        .code-block .keyword {
+            color: #f5a623;
+        }
+
+        .code-block .string {
+            color: #7bcfa6;
+        }
+
+        .code-block .function {
+            color: #7b93d6;
+        }
+
+        .code-block .number {
+            color: #f7b731;
+        }
+
+        .code-block .variable {
+            color: #7bcfa6;
+        }
+
+        .code-label {
+            display: inline-block;
+            background: #1f2a4a;
+            color: #7b93d6;
+            font-size: 0.7rem;
+            padding: 0.1rem 0.8rem;
+            border-radius: 20px;
+            margin-bottom: 0.3rem;
+            font-family: 'Segoe UI', sans-serif;
+            letter-spacing: 0.5px;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #1f2a4a;
+            color: #7b93d6;
+            border: none;
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .copy-btn:hover {
+            background: #f5a623;
+            color: #0b0e1a;
+        }
+
+        /* ===== EXAMPLE BOXES ===== */
+        .example-box {
+            background: #1b2339;
+            border-radius: 1rem;
+            padding: 1.5rem 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid #2a3457;
+        }
+
+        .example-box .example-title {
+            color: #f7d88a;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .example-box .example-title .num {
+            background: #f5a623;
+            color: #0b0e1a;
+            padding: 0.1rem 0.7rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            margin-right: 0.5rem;
+        }
+
+        .example-box .output {
+            background: #0b0e1a;
+            padding: 0.8rem 1.2rem;
+            border-radius: 0.6rem;
+            color: #7bcfa6;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            border-left: 3px solid #f5a623;
+        }
+
+        .example-box .output-label {
+            font-size: 0.7rem;
+            color: #6b7db3;
+            font-family: 'Segoe UI', sans-serif;
+            margin-top: 0.5rem;
+        }
+
+        .example-box .input-demo {
+            background: #0b0e1a;
+            padding: 0.8rem 1.2rem;
+            border-radius: 0.6rem;
+            color: #f7b731;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            border-left: 3px solid #7b93d6;
+        }
+
+        .example-box .input-demo-label {
+            font-size: 0.7rem;
+            color: #6b7db3;
+            font-family: 'Segoe UI', sans-serif;
+            margin-top: 0.5rem;
+        }
+
+        /* ===== FLOWCHART ===== */
+        .flowchart {
+            background: #0f1629;
+            border-radius: 1rem;
+            padding: 1.5rem 2rem;
+            margin: 1rem 0;
+            text-align: center;
+            border: 1px solid #2a3457;
+        }
+
+        .flowchart .flow-step {
+            display: inline-block;
+            background: #1f2a4a;
+            padding: 0.5rem 1.5rem;
+            border-radius: 0.5rem;
+            margin: 0.2rem;
+            font-size: 0.9rem;
+            border: 1px solid #3b4780;
+        }
+
+        .flowchart .flow-arrow {
+            color: #f5a623;
+            font-size: 1.5rem;
+            padding: 0 0.3rem;
+        }
+
+        .flowchart .flow-diamond {
+            display: inline-block;
+            background: #1a2238;
+            padding: 0.5rem 2rem;
+            border-radius: 0.5rem;
+            margin: 0.2rem;
+            font-size: 0.9rem;
+            border: 2px solid #f5a623;
+        }
+
+        /* ===== TIPS ===== */
+        .tip-box {
+            background: #1a2238;
+            border-left: 4px solid #7b93d6;
+            padding: 1rem 1.5rem;
+            border-radius: 0.8rem;
+            margin: 1rem 0;
+        }
+
+        .tip-box strong {
+            color: #7b93d6;
+        }
+
+        .tip-box.warning {
+            border-left-color: #f5a623;
+        }
+
+        .tip-box.warning strong {
+            color: #f5a623;
+        }
+
+        .tip-box.success {
+            border-left-color: #7bcfa6;
+        }
+
+        .tip-box.success strong {
+            color: #7bcfa6;
+        }
+
+        /* ===== ACTIVITIES ===== */
+        .activity-box {
+            background: #1b2339;
+            border-radius: 1rem;
+            padding: 1.8rem 2rem;
+            margin-bottom: 2rem;
+            border: 2px solid #f5a623;
+        }
+
+        .activity-box .activity-title {
+            color: #f5c542;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .activity-box .activity-title .badge {
+            background: #f5a623;
+            color: #0b0e1a;
+            padding: 0.1rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            margin-left: 0.5rem;
+            font-weight: 700;
+        }
+
+        .activity-box .challenge {
+            color: #c8d2f0;
+            margin: 0.5rem 0;
+        }
+
+        .activity-box .hint {
+            background: #0f1629;
+            padding: 0.8rem 1.2rem;
+            border-radius: 0.6rem;
+            color: #7b93d6;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        .activity-box .hint strong {
+            color: #f7d88a;
+        }
+
+        /* ===== SUMMARY ===== */
+        .summary-box {
+            background: #0f1629;
+            border-radius: 1rem;
+            padding: 1.5rem 2rem;
+            margin: 2rem 0;
+            border: 1px solid #2a3457;
+        }
+
+        .summary-box h3 {
+            color: #f5c542;
+            margin-bottom: 0.5rem;
+        }
+
+        .summary-box ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .summary-box ul li {
+            padding: 0.2rem 0;
+            color: #c8d2f0;
+        }
+
+        .summary-box ul li::before {
+            content: "✅ ";
+        }
+
+        /* ===== KEYWORDS ===== */
+        .keywords {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 0.5rem 0;
+        }
+
+        .keywords span {
+            background: #1f2a4a;
+            padding: 0.2rem 1rem;
+            border-radius: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            color: #7b93d6;
+            border: 1px solid #2a3457;
+        }
+
+        /* ===== CHEAT SHEET ===== */
+        .cheat-sheet {
+            background: #1a2238;
+            border-radius: 1rem;
+            padding: 1.5rem 2rem;
+            margin: 1.5rem 0;
+            border: 1px solid #3b4780;
+        }
+
+        .cheat-sheet h3 {
+            color: #f5c542;
+        }
+
+        .cheat-sheet table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 0.5rem;
+        }
+
+        .cheat-sheet td {
+            padding: 0.4rem 0.8rem;
+            border-bottom: 1px solid #28315a;
+            color: #c8d2f0;
+            font-size: 0.92rem;
+        }
+
+        .cheat-sheet td:first-child {
+            font-family: 'Courier New', monospace;
+            color: #f5a623;
+            font-weight: 600;
+        }
+
+        .cheat-sheet td:last-child {
+            color: #9aa8d9;
+        }
+
+        /* ===== BUTTONS ===== */
+        .btn {
+            display: inline-block;
+            background: #f5a623;
+            color: #0b0e1a;
+            font-weight: 700;
+            padding: 0.7rem 2rem;
+            border-radius: 40px;
+            text-decoration: none;
+            transition: 0.2s;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: #f7b731;
+            transform: scale(1.02);
+        }
+
+        .btn-secondary {
+            background: #1f2a4a;
+            color: #7b93d6;
+        }
+
+        .btn-secondary:hover {
+            background: #2a3457;
+            color: #f5c542;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+            justify-content: center;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            text-align: center;
+            margin-top: 2.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #28315a;
+            color: #6b7db3;
+            font-size: 0.9rem;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 750px) {
+            .container {
+                padding: 1.5rem 1rem;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.4rem;
+            }
+
+            .code-block {
+                font-size: 0.8rem;
+                padding: 0.8rem 1rem;
+            }
+
+            .example-box {
+                padding: 1rem 1.2rem;
+            }
+
+            .activity-box {
+                padding: 1.2rem 1.2rem;
+            }
+
+            .cheat-sheet {
+                padding: 1rem 1.2rem;
+            }
+
+            .btn-group {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .flowchart .flow-step,
+            .flowchart .flow-diamond {
+                display: block;
+                margin: 0.3rem auto;
+            }
+
+            .flowchart .flow-arrow {
+                display: block;
+                transform: rotate(90deg);
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- ===== HEADER ===== -->
+    <div class="header">
+        <div class="lesson-badge">📘 LESSON 4</div>
+        <h1>While Loops</h1>
+        <div class="sub">Repeat code over and over again!</div>
+        <a href="index.html" class="back-link">Back to Homepage</a>
+    </div>
+
+    <!-- ===== LEARNING OBJECTIVES ===== -->
+    <div class="objectives-box">
+        <h2>🎯 What You'll Learn Today</h2>
+        <ul>
+            <li>What a <span class="highlight">while loop</span> is and why we use it</li>
+            <li>How to write a <span class="highlight">while loop</span> to repeat code</li>
+            <li>How to avoid <strong>infinite loops</strong> (very important!)</li>
+            <li>How to build a <strong>countdown timer</strong></li>
+            <li>How to create a <strong>number guessing game</strong></li>
+        </ul>
+    </div>
+
+    <!-- ===== INTRODUCTION ===== -->
+    <div class="section-title">
+        <span class="emoji">💡</span> What is a While Loop?
+    </div>
+
+    <div class="explanation">
+        <p>Sometimes you need to do something <strong>over and over again</strong>. That's where <strong>loops</strong> come in!</p>
+        <p>A <span class="highlight">while loop</span> keeps repeating a block of code <strong>as long as</strong> a condition is true.</p>
+        <p>Think of it like this: <strong>"While it's raining, keep your umbrella open."</strong> Once it stops raining, you close the umbrella.</p>
+        <div class="keywords">
+            <span>while</span>
+            <span>condition</span>
+            <span>infinite loop</span>
+            <span>counter</span>
+            <span>iteration</span>
+        </div>
+    </div>
+
+    <!-- ===== FLOWCHART ===== -->
+    <div class="section-title">
+        <span class="emoji">🗺️</span> How a While Loop Works
+    </div>
+
+    <div class="flowchart">
+        <div class="flow-step">Start</div>
+        <span class="flow-arrow">⬇️</span>
+        <div class="flow-diamond">❓ Condition?</div>
+        <span class="flow-arrow">⬇️</span>
+        <div style="display:flex; justify-content:center; gap:2rem; flex-wrap:wrap; margin:0.5rem 0;">
+            <div>
+                <div style="color:#7bcfa6;">✅ TRUE</div>
+                <div class="flow-step" style="border-color:#7bcfa6;">Run code inside loop</div>
+                <span class="flow-arrow" style="display:block; transform:rotate(90deg);">⬅️</span>
+                <div style="color:#6b7db3; font-size:0.8rem;">Go back and check again</div>
+            </div>
+            <div>
+                <div style="color:#f5a623;">❌ FALSE</div>
+                <div class="flow-step" style="border-color:#f5a623;">Exit the loop</div>
+                <span class="flow-arrow" style="display:block;">⬇️</span>
+                <div class="flow-step">Continue</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== EXAMPLE 1 ===== -->
+    <div class="section-title">
+        <span class="emoji">📝</span> Example 1: Simple While Loop
+    </div>
+
+    <div class="example-box">
+        <div class="example-title">
+            <span class="num">1</span> Counting from 1 to 5
+        </div>
+        <p style="color:#c8d2f0; margin-bottom:0.5rem;">This program counts from 1 to 5 using a while loop!</p>
+
+        <div class="code-label">📄 lesson4.cpp</div>
+        <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            <span class="keyword">#include</span> &lt;iostream&gt;
+            <span class="keyword">using namespace</span> std;
+
+            <span class="keyword">int</span> <span class="function">main</span>() {
+                <span class="comment">// Create a counter variable</span>
+                <span class="keyword">int</span> <span class="variable">count</span> = <span class="number">1</span>;
+
+                <span class="comment">// While count is less than or equal to 5</span>
+                <span class="keyword">while</span> (count &lt;= <span class="number">5</span>) {
+                    cout &lt;&lt; <span class="string">"Count: "</span> &lt;&lt; count &lt;&lt; endl;
+                    count++; <span class="comment">// Add 1 to count (very important!)</span>
+                }
+
+                cout &lt;&lt; <span class="string">"Loop finished! 🎉"</span> &lt;&lt; endl;
+
+                <span class="keyword">return</span> <span class="number">0</span>;
+            }
+        </div>
+
+        <div class="output-label">▶️ Output:</div>
+        <div class="output">
+            Count: 1<br />
+            Count: 2<br />
+            Count: 3<br />
+            Count: 4<br />
+            Count: 5<br />
+            Loop finished! 🎉
+        </div>
+
+        <div class="tip-box warning">
+            <strong>⚠️ VERY IMPORTANT:</strong> <span style="color:#c8d2f0;">If you forget <span class="highlight">count++</span>, the loop will run FOREVER! This is called an <strong>infinite loop</strong>. Always make sure your condition will eventually become false!</span>
+        </div>
+    </div>
+
+    <!-- ===== EXAMPLE 2 ===== -->
+    <div class="section-title">
+        <span class="emoji">📝</span> Example 2: Countdown Timer
+    </div>
+
+    <div class="example-box">
+        <div class="example-title">
+            <span class="num">2</span> Rocket Launch Countdown
+        </div>
+        <p style="color:#c8d2f0; margin-bottom:0.5rem;">This program counts down from 10 to 1 and then says "Liftoff!"</p>
+
+        <div class="code-label">📄 lesson4.cpp</div>
+        <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            <span class="keyword">#include</span> &lt;iostream&gt;
+            <span class="keyword">using namespace</span> std;
+
+            <span class="keyword">int</span> <span class="function">main</span>() {
+                <span class="keyword">int</span> <span class="variable">timer</span> = <span class="number">10</span>;
+
+                cout &lt;&lt; <span class="string">"🚀 Launch Countdown!"</span> &lt;&lt; endl;
+
+                <span class="keyword">while</span> (timer &gt; <span class="number">0</span>) {
+                    cout &lt;&lt; timer &lt;&lt; <span class="string">"..."</span> &lt;&lt; endl;
+                    timer--; <span class="comment">// Decrease by 1</span>
+                }
+
+                cout &lt;&lt; <span class="string">"🔥 LIFTOFF! 🚀"</span> &lt;&lt; endl;
+
+                <span class="keyword">return</span> <span class="number">0</span>;
+            }
+        </div>
+
+        <div class="output-label">▶️ Output:</div>
+        <div class="output">
+            🚀 Launch Countdown!<br />
+            10...<br />
+            9...<br />
+            8...<br />
+            7...<br />
+            6...<br />
+            5...<br />
+            4...<br />
+            3...<br />
+            2...<br />
+            1...<br />
+            🔥 LIFTOFF! 🚀
+        </div>
+
+        <div class="tip-box success">
+            <strong>💡 Tip:</strong> <span style="color:#c8d2f0;"><span class="highlight">timer--</span> is the same as <span class="highlight">timer = timer - 1</span>. It decreases the value by 1 each time the loop runs!</span>
+        </div>
+    </div>
+
+    <!-- ===== EXAMPLE 3 ===== -->
+    <div class="section-title">
+        <span class="emoji">📝</span> Example 3: Number Guessing Game
+    </div>
+
+    <div class="example-box">
+        <div class="example-title">
+            <span class="num">3</span> Guess the Secret Number!
+        </div>
+        <p style="color:#c8d2f0; margin-bottom:0.5rem;">This program keeps asking the user to guess a number until they get it right!</p>
+
+        <div class="code-label">📄 lesson4.cpp</div>
+        <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            <span class="keyword">#include</span> &lt;iostream&gt;
+            <span class="keyword">using namespace</span> std;
+
+            <span class="keyword">int</span> <span class="function">main</span>() {
+                <span class="keyword">int</span> <span class="variable">secretNumber</span> = <span class="number">7</span>;
+                <span class="keyword">int</span> <span class="variable">guess</span>;
+                <span class="keyword">int</span> <span class="variable">attempts</span> = <span class="number">0</span>;
+
+                cout &lt;&lt; <span class="string">"🎮 Guess the secret number (1-10)!"</span> &lt;&lt; endl;
+
+                <span class="comment">// Keep asking until the user guesses correctly</span>
+                <span class="keyword">while</span> (guess != secretNumber) {
+                    cout &lt;&lt; <span class="string">"Enter your guess: "</span>;
+                    cin &gt;&gt; guess;
+                    attempts++;
+
+                    <span class="keyword">if</span> (guess &lt; secretNumber) {
+                        cout &lt;&lt; <span class="string">"📈 Too low! Try again."</span> &lt;&lt; endl;
+                    } <span class="keyword">else if</span> (guess &gt; secretNumber) {
+                        cout &lt;&lt; <span class="string">"📉 Too high! Try again."</span> &lt;&lt; endl;
+                    } <span class="keyword">else</span> {
+                        cout &lt;&lt; <span class="string">"🎉 Correct! You got it in "</span> &lt;&lt; attempts &lt;&lt; <span class="string">" attempts!"</span> &lt;&lt; endl;
+                    }
+                }
+
+                <span class="keyword">return</span> <span class="number">0</span>;
+            }
+        </div>
+
+        <div class="input-demo-label">💬 User Types:</div>
+        <div class="input-demo">3<br />5<br />7</div>
+
+        <div class="output-label">▶️ Output:</div>
+        <div class="output">
+            🎮 Guess the secret number (1-10)!<br />
+            Enter your guess: 3<br />
+            📈 Too low! Try again.<br />
+            Enter your guess: 5<br />
+            📈 Too low! Try again.<br />
+            Enter your guess: 7<br />
+            🎉 Correct! You got it in 3 attempts!
+        </div>
+
+        <div class="tip-box">
+            <strong>💡 Tip:</strong> <span style="color:#c8d2f0;">The loop condition <span class="highlight">guess != secretNumber</span> means "while the guess is NOT equal to the secret number, keep going!"</span>
+        </div>
+    </div>
+
+    <!-- ===== INFINITE LOOP WARNING ===== -->
+    <div class="section-title">
+        <span class="emoji">🚨</span> DANGER: Infinite Loops!
+    </div>
+
+    <div class="explanation">
+        <p style="color:#f5a623; font-weight:700;">⚠️ This is the most common mistake beginners make!</p>
+        <p>An <strong>infinite loop</strong> is a loop that <strong>never stops</strong> because the condition never becomes false.</p>
+    </div>
+
+    <div class="example-box" style="border-color: #f5a623;">
+        <div class="example-title" style="color: #f5a623;">
+            ❌ BAD CODE — Infinite Loop!
+        </div>
+        <div class="code-block" style="border-color: #f5a623;">
+            <span class="keyword">int</span> <span class="variable">count</span> = <span class="number">1</span>;
+
+            <span class="comment">// This loop will run FOREVER because count never changes!</span>
+            <span class="keyword">while</span> (count &lt;= <span class="number">5</span>) {
+                cout &lt;&lt; <span class="string">"This will print forever! 😱"</span> &lt;&lt; endl;
+                <span class="comment">// ❌ MISSING: count++;</span>
+            }
+        </div>
+        <div class="tip-box warning">
+            <strong>🚨 How to fix it:</strong> <span style="color:#c8d2f0;">Always make sure your loop has a way to eventually make the condition <strong>false</strong>. Add <span class="highlight">count++</span> or <span class="highlight">timer--</span> inside the loop!</span>
+        </div>
+    </div>
+
+    <!-- ===== CHEAT SHEET ===== -->
+    <div class="section-title">
+        <span class="emoji">📋</span> Quick Reference
+    </div>
+
+    <div class="cheat-sheet">
+        <h3>🔑 Key Code You Just Learned</h3>
+        <table>
+            <tr>
+                <td>while (condition) { }</td>
+                <td>Repeats code while condition is true</td>
+            </tr>
+            <tr>
+                <td>count++</td>
+                <td>Adds 1 to count (increment)</td>
+            </tr>
+            <tr>
+                <td>count--</td>
+                <td>Subtracts 1 from count (decrement)</td>
+            </tr>
+            <tr>
+                <td>count += 2</td>
+                <td>Adds 2 to count</td>
+            </tr>
+            <tr>
+                <td>count = count + 1</td>
+                <td>Another way to add 1</td>
+            </tr>
+            <tr>
+                <td>while (true) { }</td>
+                <td>⚠️ Infinite loop — BE CAREFUL!</td>
+            </tr>
+            <tr>
+                <td>break;</td>
+                <td>Exits a loop immediately</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- ===== ACTIVITY 1 ===== -->
+    <div class="section-title">
+        <span class="emoji">🏋️</span> Practice Time!
+    </div>
+
+    <div class="activity-box">
+        <div class="activity-title">
+            🎯 Activity 1: Print Numbers
+            <span class="badge">⭐ BEGINNER</span>
+        </div>
+        <div class="challenge">
+            <p><strong>Your Task:</strong> Create a program that prints all numbers from 1 to 20!</p>
+            <ul style="color:#c8d2f0; margin-left:1.5rem; margin-top:0.5rem;">
+                <li>Use a <span class="highlight">while</span> loop</li>
+                <li>Start with <span class="highlight">num = 1</span></li>
+                <li>Print each number</li>
+                <li>Make it look like this:</li>
+            </ul>
+            <div class="output" style="margin-top:0.5rem;">
+                1<br />
+                2<br />
+                3<br />
+                ...<br />
+                20<br />
+                Done! 🎉
+            </div>
+        </div>
+        <div class="hint">
+            <strong>💡 Hint:</strong> Use <span class="highlight">while (num &lt;= 20)</span> and don't forget to <span class="highlight">num++</span> inside the loop!
+        </div>
+    </div>
+
+    <!-- ===== ACTIVITY 2 ===== -->
+    <div class="activity-box">
+        <div class="activity-title">
+            🚀 Activity 2: Sum of Numbers
+            <span class="badge">⭐⭐ CHALLENGE</span>
+        </div>
+        <div class="challenge">
+            <p><strong>Your Task:</strong> Create a program that adds up all numbers from 1 to 100!</p>
+            <ul style="color:#c8d2f0; margin-left:1.5rem; margin-top:0.5rem;">
+                <li>Use a <span class="highlight">while</span> loop</li>
+                <li>Create a <span class="highlight">sum</span> variable to store the total</li>
+                <li>Add each number to the sum</li>
+                <li>Print the final result</li>
+            </ul>
+            <div class="output" style="margin-top:0.5rem;">
+                The sum of numbers from 1 to 100 is: 5050 🎉
+            </div>
+        </div>
+        <div class="hint">
+            <strong>💡 Hint:</strong> <span class="highlight">sum = sum + num;</span> or <span class="highlight">sum += num;</span> inside the loop!
+        </div>
+    </div>
+
+    <!-- ===== BONUS CHALLENGE ===== -->
+    <div class="activity-box" style="border-color: #7b93d6;">
+        <div class="activity-title" style="color: #7b93d6;">
+            🌟 Bonus Challenge: Multiplication Table
+            <span class="badge" style="background:#7b93d6;">⭐⭐⭐ ADVANCED</span>
+        </div>
+        <div class="challenge">
+            <p><strong>Your Task:</strong> Create a program that prints a multiplication table for a number!</p>
+            <ul style="color:#c8d2f0; margin-left:1.5rem; margin-top:0.5rem;">
+                <li>Ask the user for a <strong>number</strong></li>
+                <li>Use a <span class="highlight">while</span> loop to print the times table from 1 to 10</li>
+                <li>Make it look like this:</li>
+            </ul>
+            <div class="output" style="margin-top:0.5rem;">
+                Enter a number: 5<br />
+                5 x 1 = 5<br />
+                5 x 2 = 10<br />
+                5 x 3 = 15<br />
+                5 x 4 = 20<br />
+                5 x 5 = 25<br />
+                5 x 6 = 30<br />
+                5 x 7 = 35<br />
+                5 x 8 = 40<br />
+                5 x 9 = 45<br />
+                5 x 10 = 50
+            </div>
+        </div>
+        <div class="hint">
+            <strong>💡 Hint:</strong> Use <span class="highlight">int counter = 1;</span> and loop while <span class="highlight">counter &lt;= 10</span>. Inside the loop, print <span class="highlight">number * counter</span>.
+        </div>
+    </div>
+
+    <!-- ===== SUMMARY ===== -->
+    <div class="section-title">
+        <span class="emoji">🎓</span> Lesson Summary
+    </div>
+
+    <div class="summary-box">
+        <h3>✅ What You Learned Today</h3>
+        <ul>
+            <li>What a <span class="highlight">while loop</span> is and how it works</li>
+            <li>How to use a <strong>counter variable</strong> to control a loop</li>
+            <li>How to count <strong>up</strong> (<span class="highlight">count++</span>) and <strong>down</strong> (<span class="highlight">count--</span>)</li>
+            <li>How to avoid <strong>infinite loops</strong> (always update your counter!)</li>
+            <li>How to build a <strong>countdown timer</strong> with a while loop</li>
+            <li>How to create a <strong>number guessing game</strong> using a while loop</li>
+            <li>How to add up numbers using a <span class="highlight">sum</span> variable</li>
+        </ul>
+    </div>
+
+    <!-- ===== WHAT'S NEXT ===== -->
+    <div class="section-title">
+        <span class="emoji">🔜</span> What's Next?
+    </div>
+
+    <div class="explanation">
+        <p>In <strong>Lesson 5</strong>, you'll learn how to:</p>
+        <ul style="color:#c8d2f0; margin-left:1.5rem;">
+            <li>🔄 Use <strong>for loops</strong> — a different way to repeat code</li>
+            <li>📊 Print <strong>times tables</strong> and <strong>patterns</strong></li>
+            <li>🎨 Create <strong>ASCII art</strong> with loops</li>
+        </ul>
+        <p style="margin-top:0.8rem; color:#9aa8d9;">👉 <a href="lesson5.html" style="color:#f5c542;">Click here to go to Lesson 5 →</a></p>
+    </div>
+
+    <!-- ===== NAVIGATION BUTTONS ===== -->
+    <div class="btn-group">
+        <a href="index.html" class="btn btn-secondary">🏠 Homepage</a>
+        <a href="lesson3.html" class="btn btn-secondary">⬅️ Previous Lesson</a>
+        <a href="lesson5.html" class="btn">➡️ Next Lesson</a>
+    </div>
+
+    <!-- ===== FOOTER ===== -->
+    <div class="footer">
+        <p>💻 <strong>C++ Coding Adventure</strong> · Grade 9 · Lesson 4</p>
+        <p style="font-size:0.8rem; color:#4f6199;">Keep coding, keep learning! 🚀</p>
+    </div>
+
+</div>
+
+<!-- ===== COPY FUNCTION ===== -->
+<script>
+    function copyCode(button) {
+        const codeBlock = button.parentElement;
+        const codeText = codeBlock.innerText.replace('📋 Copy', '').trim();
+        navigator.clipboard.writeText(codeText).then(() => {
+            const original = button.textContent;
+            button.textContent = '✅ Copied!';
+            setTimeout(() => {
+                button.textContent = original;
+            }, 2000);
+        }).catch(() => {
+            alert('Please select and copy the code manually.');
+        });
+    }
+</script>
+
+</body>
+</html>

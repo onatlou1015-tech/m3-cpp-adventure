@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Lesson 6 - Arrays 📋</title>
+    <style>
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0b0e1a;
+            color: #e8edf5;
+            line-height: 1.7;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #141a2b;
+            padding: 2.5rem 2.5rem;
+            border-radius: 2rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+            border: 1px solid #2a3457;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            text-align: center;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px dashed #3b4780;
+            margin-bottom: 2rem;
+        }
+
+        .header .lesson-badge {
+            display: inline-block;
+            background: #f5a623;
+            color: #0b0e1a;
+            font-weight: 700;
+            padding: 0.3rem 1.5rem;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .header h1 {
+            font-size: 2.8rem;
+            background: linear-gradient(135deg, #f7b731, #f5a623);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header .sub {
+            font-size: 1.1rem;
+            color: #9aa8d9;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #7b93d6;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: 0.2s;
+        }
+
+        .back-link:hover {
+            color: #f5c542;
+        }
+
+        .back-link::before {
+            content: "⬅️ ";
+        }
+
+        /* ===== LEARNING OBJECTIVES ===== */
+        .objectives-box {
+            background: #1b2339;
+            border-left: 6px solid #f5a623;
+            padding: 1.5rem 2rem;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .objectives-box h2 {
+            color: #f5c542;
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .objectives-box ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .objectives-box ul li {
+            padding: 0.2rem 0;
+            color: #c8d2f0;
+        }
+
+        .objectives-box ul li::before {
+            content: "🎯 ";
+        }
+
+        /* ===== SECTION TITLES ===== */
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 2.5rem 0 1rem 0;
+            color: #f5c542;
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+        }
+
+        .section-title .emoji {
+            font-size: 1.8rem;
+        }
+
+        /* ===== EXPLANATION ===== */
+        .explanation {
+            background: #0f1629;
+            padding: 1.5rem 2rem;
+            border-radius: 1rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #2a3457;
+        }
+
+        .explanation p {
+            color: #c8d2f0;
+            margin-bottom: 0.8rem;
+        }
+
+        .explanation strong {
+            color: #f7d88a;
+        }
+
+        .highlight {
+            background: #1f2a4a;
+            padding: 0.1rem 0.5rem;
+            border-radius: 6px;
+            color: #f5c542;
+            font-family: 'Courier New', monospace;
+        }
+
+        /* ===== VISUAL ARRAY BOX ===== */
+        .array-visual {
+            background: #0f1629;
+            border-radius: 1rem;
+            padding: 1.5rem 2rem;
+            margin: 1rem 0;
+            border: 1px solid #2a3457;
+            text-align: center;
+        }
+
+        .array-visual .box {
+            display: inline-block;
+            background: #1f2a4a;
+            border: 2px solid #f5a623;
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            margin: 0.2rem;
+            min-width: 60px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #f5c542;
+        }
+
+        .array-visual .box .index {
+            display: block;
+            font-size: 0.7rem;
+            color: #6b7db3;
+            font-weight: 400;
+        }
+
+        .array-visual .box .value {
+            display: block;
+            font-size: 1.3rem;
+            color: #7bcfa6;
+        }
+
+        .array-visual .label {
+            color: #6b7db3;
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+        }
+
+        /* ===== CODE BLOCKS ===== */
+        .code-block {
+            background: #0b0e1a;
+            padding: 1.2rem 1.5rem;
+            border-radius: 0.8rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.92rem;
+            color: #c8d2f0;
+            border: 1px solid #2a3457;
+            margin: 0.8rem 0 1.2rem 0;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-break: break-word;
+            position: relative;
+        }
+
+        .code-block .comment {
+            color: #6b8a7a;
+        }
+
+        .code-block .keyword {
+            color: #f5a623;
+        }
+
+        .code-block .string {
+            color: #7bcfa6;
+        }
+
+        .code-block .function {
+            color: #7b93d6;
+        }
+
+        .code-block .number {
+            color: #f7b731;
+        }
+
+        .code-block .variable {
+            color: #7bcfa6;
+        }
+
+        .code-label {
+            display: inline-block;
+            background: #1f2a4a;
+            color: #7b93d6;
+            font-size: 0.7rem;
+            padding: 0.1rem 0.8rem;
+            border-radius: 20px;
+            margin-bottom: 0.3rem;
+            font-family: 'Segoe UI', sans-serif;
+            letter-spacing: 0.5px;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #1f2a4a;
+            color: #7b93d6;
+            border: none;
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .copy-btn:hover {
+            background: #f5a623;
+            color: #0b0e1a;
+        }
+
+        /* ===== EXAMPLE BOXES ===== */
+        .example-box {
+            background: #1b2339;
+            border-radius: 1rem;
+            padding: 1.5rem 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid #2a3457;
+        }
+
+        .example-box .example-title {
+            color: #f7d88a;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .example-box .example-title .num {
+            background: #f5a623;
+            color: #0b0e1a;
+            padding: 0.1rem 0.7rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            margin-right: 0.5rem;
+        }
+
+        .example-box .output {
+            background: #0b0e1a;
+            padding: 0.8rem 1.2rem;
+            border-radius: 0.6rem;
+            color: #7bcfa6;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            border-left: 3px solid #f5a623;
+        }
+
+        .example-box .output-label {
+            font-size: 0.7rem;
+            color: #6b7db3;
+            font-family: 'Segoe UI', sans-serif;
+            margin-top: 0.5rem;
+        }
+
+        .example-box .input-demo {
+            background: #0b0e1a;
+            padding: 0.8rem 1.2rem;
+            border-radius: 0.6rem;
+            color: #f7b731;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            border-left: 3px solid #7b93d6;
+        }
+
+        .example-box .input-demo-label {
+            font-size: 0.7rem;
+            color: #6b7db3;
+            font-family: 'Segoe UI', sans-serif;
+            margin-top: 0.5rem;
+        }
+
+        /* ===== TIPS ===== */
+        .tip-box {
+            background: #1a2238;
+            border-left: 4px solid #7b93d6;
+            padding: 1rem 1.5rem;
+            border-radius: 0.8rem;
+            margin: 1rem 0;
+        }
+
+        .tip-box strong {
+            color: #7b93d6;
+        }
+
+        .tip-box.warning {
+            border-left-color: #f5a623;
+        }
+
+        .tip-box.warning strong {
+            color: #f5a623;
+        }
+
+        .tip-box.success {
+            border-left-color: #7bcfa6;
+        }
+
+        .tip-box.success strong {
+            color: #7bcfa6;
+        }
+
+        /* ===== ACTIVITIES ===== */
+        .activity-box {
+            background: #1b2339;
+            border-radius: 1rem;
+            padding: 1.8rem 2rem;
+            margin-bottom: 2rem;
+            border: 2px solid #f5a623;
+        }
+
+        .activity-box .activity-title {
+            color: #f5c542;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .activity-box .activity-title .badge {
+            background: #f5a623;
+            color: #0b0e1a;
+            padding: 0.1rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            margin-left: 0.5rem;
+            font-weight: 700;
+        }
+
+        .activity-box .challenge {
+            color: #c8d2f0;
+            margin: 0.5rem 0;
+        }
+
+        .activity-box .hint {
+            background: #0f1629;
+            padding: 0.8rem 1.2rem;
+            border-radius: 0.6rem;
+            color: #7b93d6;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        .activity-box .hint strong {
+            color: #f7d88a;
+        }
+
+        /* ===== SUMMARY ===== */
+        .summary-box {
+            background: #0f1629;
+            border-radius: 1rem;
+            padding: 1.5rem 2rem;
+            margin: 2rem 0;
+            border: 1px solid #2a3457;
+        }
+
+        .summary-box h3 {
+            color: #f5c542;
+            margin-bottom: 0.5rem;
+        }
+
+        .summary-box ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .summary-box ul li {
+            padding: 0.2rem 0;
+            color: #c8d2f0;
+        }
+
+        .summary-box ul li::before {
+            content: "✅ ";
+        }
+
+        /* ===== KEYWORDS ===== */
+        .keywords {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 0.5rem 0;
+        }
+
+        .keywords span {
+            background: #1f2a4a;
+            padding: 0.2rem 1rem;
+            border-radius: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            color: #7b93d6;
+            border: 1px solid #2a3457;
+        }
+
+        /* ===== CHEAT SHEET ===== */
+        .cheat-sheet {
+            background: #1a2238;
+            border-radius: 1rem;
+            padding: 1.5rem 2rem;
+            margin: 1.5rem 0;
+            border: 1px solid #3b4780;
+        }
+
+        .cheat-sheet h3 {
+            color: #f5c542;
+        }
+
+        .cheat-sheet table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 0.5rem;
+        }
+
+        .cheat-sheet td {
+            padding: 0.4rem 0.8rem;
+            border-bottom: 1px solid #28315a;
+            color: #c8d2f0;
+            font-size: 0.92rem;
+        }
+
+        .cheat-sheet td:first-child {
+            font-family: 'Courier New', monospace;
+            color: #f5a623;
+            font-weight: 600;
+        }
+
+        .cheat-sheet td:last-child {
+            color: #9aa8d9;
+        }
+
+        /* ===== BUTTONS ===== */
+        .btn {
+            display: inline-block;
+            background: #f5a623;
+            color: #0b0e1a;
+            font-weight: 700;
+            padding: 0.7rem 2rem;
+            border-radius: 40px;
+            text-decoration: none;
+            transition: 0.2s;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: #f7b731;
+            transform: scale(1.02);
+        }
+
+        .btn-secondary {
+            background: #1f2a4a;
+            color: #7b93d6;
+        }
+
+        .btn-secondary:hover {
+            background: #2a3457;
+            color: #f5c542;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+            justify-content: center;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            text-align: center;
+            margin-top: 2.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #28315a;
+            color: #6b7db3;
+            font-size: 0.9rem;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 750px) {
+            .container {
+                padding: 1.5rem 1rem;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.4rem;
+            }
+
+            .code-block {
+                font-size: 0.8rem;
+                padding: 0.8rem 1rem;
+            }
+
+            .example-box {
+                padding: 1rem 1.2rem;
+            }
+
+            .activity-box {
+                padding: 1.2rem 1.2rem;
+            }
+
+            .cheat-sheet {
+                padding: 1rem 1.2rem;
+            }
+
+            .btn-group {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .array-visual .box {
+                min-width: 40px;
+                padding: 0.3rem 0.5rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- ===== HEADER ===== -->
+    <div class="header">
+        <div class="lesson-badge">📘 LESSON 6</div>
+        <h1>Arrays</h1>
+        <div class="sub">Store and manage lists of data!</div>
+        <a href="index.html" class="back-link">Back to Homepage</a>
+    </div>
+
+    <!-- ===== LEARNING OBJECTIVES ===== -->
+    <div class="objectives-box">
+        <h2>🎯 What You'll Learn Today</h2>
+        <ul>
+            <li>What an <span class="highlight">array</span> is and why we use it</li>
+            <li>How to <strong>create</strong> and <strong>fill</strong> an array</li>
+            <li>How to <strong>access</strong> and <strong>change</strong> array elements using <strong>indexes</strong></li>
+            <li>How to <strong>loop through</strong> an array with a <span class="highlight">for</span> loop</li>
+            <li>How to find the <strong>highest</strong> and <strong>lowest</strong> values in an array</li>
+            <li>How to <strong>calculate the average</strong> of array values</li>
+        </ul>
+    </div>
+
+    <!-- ===== INTRODUCTION ===== -->
+    <div class="section-title">
+        <span class="emoji">💡</span> What is an Array?
+    </div>
+
+    <div class="explanation">
+        <p>Sometimes you need to store <strong>multiple</strong> pieces of data. Instead of creating 10 separate variables like <span class="highlight">score1</span>, <span class="highlight">score2</span>, <span class="highlight">score3</span>... you can use an <strong>array</strong>!</p>
+        <p>An <span class="highlight">array</span> is like a <strong>list</strong> or <strong>row of lockers</strong>. Each locker (called an <strong>element</strong>) has a number (called an <strong>index</strong>) that tells you where it is.</p>
+        <p><strong>Important:</strong> Array indexes start at <span class="highlight">0</span>, not 1! So the first element is at index 0, the second at index 1, and so on.</p>
+        <div class="keywords">
+            <span>array</span>
+            <span>index</span>
+            <span>element</span>
+            <span>size</span>
+            <span>loop</span>
+            <span>access</span>
+        </div>
+    </div>
+
+    <!-- ===== VISUAL ARRAY ===== -->
+    <div class="section-title">
+        <span class="emoji">👀</span> Visual Array
+    </div>
+
+    <div class="array-visual">
+        <p style="color:#9aa8d9; margin-bottom:0.8rem;">An array of 5 scores:</p>
+        <div>
+            <span class="box">
+                <span class="index">[0]</span>
+                <span class="value">85</span>
+            </span>
+            <span class="box">
+                <span class="index">[1]</span>
+                <span class="value">92</span>
+            </span>
+            <span class="box">
+                <span class="index">[2]</span>
+                <span class="value">78</span>
+            </span>
+            <span class="box">
+                <span class="index">[3]</span>
+                <span class="value">95</span>
+            </span>
+            <span class="box">
+                <span class="index">[4]</span>
+                <span class="value">88</span>
+            </span>
+        </div>
+        <div class="label">🔑 Index 0 → First element · Index 4 → Last element</div>
+        <div class="label">💡 Remember: Arrays start at <strong>0</strong>!</div>
+    </div>
+
+    <!-- ===== EXAMPLE 1 ===== -->
+    <div class="section-title">
+        <span class="emoji">📝</span> Example 1: Creating and Accessing Arrays
+    </div>
+
+    <div class="example-box">
+        <div class="example-title">
+            <span class="num">1</span> Storing and Printing Scores
+        </div>
+        <p style="color:#c8d2f0; margin-bottom:0.5rem;">This program creates an array of scores and prints each one!</p>
+
+        <div class="code-label">📄 lesson6.cpp</div>
+        <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            <span class="keyword">#include</span> &lt;iostream&gt;
+            <span class="keyword">using namespace</span> std;
+
+            <span class="keyword">int</span> <span class="function">main</span>() {
+                <span class="comment">// Create an array of 5 scores</span>
+                <span class="keyword">int</span> <span class="variable">scores</span>[<span class="number">5</span>] = {<span class="number">85</span>, <span class="number">92</span>, <span class="number">78</span>, <span class="number">95</span>, <span class="number">88</span>};
+
+                <span class="comment">// Access and print each element</span>
+                cout &lt;&lt; <span class="string">"Score 1: "</span> &lt;&lt; scores[<span class="number">0</span>] &lt;&lt; endl;  <span class="comment">// First element</span>
+                cout &lt;&lt; <span class="string">"Score 2: "</span> &lt;&lt; scores[<span class="number">1</span>] &lt;&lt; endl;  <span class="comment">// Second element</span>
+                cout &lt;&lt; <span class="string">"Score 3: "</span> &lt;&lt; scores[<span class="number">2</span>] &lt;&lt; endl;  <span class="comment">// Third element</span>
+                cout &lt;&lt; <span class="string">"Score 4: "</span> &lt;&lt; scores[<span class="number">3</span>] &lt;&lt; endl;  <span class="comment">// Fourth element</span>
+                cout &lt;&lt; <span class="string">"Score 5: "</span> &lt;&lt; scores[<span class="number">4</span>] &lt;&lt; endl;  <span class="comment">// Fifth element</span>
+
+                <span class="keyword">return</span> <span class="number">0</span>;
+            }
+        </div>
+
+        <div class="output-label">▶️ Output:</div>
+        <div class="output">
+            Score 1: 85<br />
+            Score 2: 92<br />
+            Score 3: 78<br />
+            Score 4: 95<br />
+            Score 5: 88
+        </div>
+
+        <div class="tip-box warning">
+            <strong>⚠️ Remember:</strong> <span style="color:#c8d2f0;">Array indexes start at <span class="highlight">0</span>, so the first element is <span class="highlight">scores[0]</span> and the last is <span class="highlight">scores[4]</span>. There is no <span class="highlight">scores[5]</span>!</span>
+        </div>
+    </div>
+
+    <!-- ===== EXAMPLE 2 ===== -->
+    <div class="section-title">
+        <span class="emoji">📝</span> Example 2: Looping Through an Array
+    </div>
+
+    <div class="example-box">
+        <div class="example-title">
+            <span class="num">2</span> Using a For Loop with Arrays
+        </div>
+        <p style="color:#c8d2f0; margin-bottom:0.5rem;">For loops are perfect for going through every element in an array!</p>
+
+        <div class="code-label">📄 lesson6.cpp</div>
+        <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            <span class="keyword">#include</span> &lt;iostream&gt;
+            <span class="keyword">using namespace</span> std;
+
+            <span class="keyword">int</span> <span class="function">main</span>() {
+                <span class="comment">// Create an array of 5 scores</span>
+                <span class="keyword">int</span> <span class="variable">scores</span>[<span class="number">5</span>] = {<span class="number">85</span>, <span class="number">92</span>, <span class="number">78</span>, <span class="number">95</span>, <span class="number">88</span>};
+
+                <span class="comment">// Use a for loop to print all scores</span>
+                cout &lt;&lt; <span class="string">"All scores: "</span>;
+                <span class="keyword">for</span> (<span class="keyword">int</span> <span class="variable">i</span> = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) {
+                    cout &lt;&lt; scores[i] &lt;&lt; <span class="string">" "</span>;
+                }
+                cout &lt;&lt; endl;
+
+                <span class="comment">// Calculate and print the average</span>
+                <span class="keyword">int</span> <span class="variable">sum</span> = <span class="number">0</span>;
+                <span class="keyword">for</span> (<span class="keyword">int</span> <span class="variable">i</span> = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) {
+                    sum += scores[i];
+                }
+                <span class="keyword">double</span> <span class="variable">average</span> = sum / <span class="number">5.0</span>;
+
+                cout &lt;&lt; <span class="string">"Sum: "</span> &lt;&lt; sum &lt;&lt; endl;
+                cout &lt;&lt; <span class="string">"Average: "</span> &lt;&lt; average &lt;&lt; endl;
+
+                <span class="keyword">return</span> <span class="number">0</span>;
+            }
+        </div>
+
+        <div class="output-label">▶️ Output:</div>
+        <div class="output">
+            All scores: 85 92 78 95 88<br />
+            Sum: 438<br />
+            Average: 87.6
+        </div>
+
+        <div class="tip-box success">
+            <strong>💡 Tip:</strong> <span style="color:#c8d2f0;">Use <span class="highlight">i &lt; 5</span> in the loop condition. Since indexes go from 0 to 4, we stop when <span class="highlight">i</span> reaches 5.</span>
+        </div>
+    </div>
+
+    <!-- ===== EXAMPLE 3 ===== -->
+    <div class="section-title">
+        <span class="emoji">📝</span> Example 3: Finding Max, Min, and User Input
+    </div>
+
+    <div class="example-box">
+        <div class="example-title">
+            <span class="num">3</span> Score Analyzer with User Input
+        </div>
+        <p style="color:#c8d2f0; margin-bottom:0.5rem;">This program asks the user for 5 scores, then finds the highest, lowest, and average!</p>
+
+        <div class="code-label">📄 lesson6.cpp</div>
+        <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            <span class="keyword">#include</span> &lt;iostream&gt;
+            <span class="keyword">using namespace</span> std;
+
+            <span class="keyword">int</span> <span class="function">main</span>() {
+                <span class="keyword">int</span> <span class="variable">scores</span>[<span class="number">5</span>];
+                <span class="keyword">int</span> <span class="variable">sum</span> = <span class="number">0</span>;
+
+                <span class="comment">// Ask user for 5 scores</span>
+                cout &lt;&lt; <span class="string">"Enter 5 scores:"</span> &lt;&lt; endl;
+                <span class="keyword">for</span> (<span class="keyword">int</span> <span class="variable">i</span> = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) {
+                    cout &lt;&lt; <span class="string">"Score "</span> &lt;&lt; i + <span class="number">1</span> &lt;&lt; <span class="string">": "</span>;
+                    cin &gt;&gt; scores[i];
+                    sum += scores[i];
+                }
+
+                <span class="comment">// Find highest and lowest</span>
+                <span class="keyword">int</span> <span class="variable">highest</span> = scores[<span class="number">0</span>];
+                <span class="keyword">int</span> <span class="variable">lowest</span> = scores[<span class="number">0</span>];
+
+                <span class="keyword">for</span> (<span class="keyword">int</span> <span class="variable">i</span> = <span class="number">1</span>; i &lt; <span class="number">5</span>; i++) {
+                    <span class="keyword">if</span> (scores[i] &gt; highest) {
+                        highest = scores[i];
+                    }
+                    <span class="keyword">if</span> (scores[i] &lt; lowest) {
+                        lowest = scores[i];
+                    }
+                }
+
+                <span class="comment">// Print results</span>
+                cout &lt;&lt; <span class="string">"\n📊 Results:"</span> &lt;&lt; endl;
+                cout &lt;&lt; <span class="string">"Highest score: "</span> &lt;&lt; highest &lt;&lt; endl;
+                cout &lt;&lt; <span class="string">"Lowest score: "</span> &lt;&lt; lowest &lt;&lt; endl;
+                cout &lt;&lt; <span class="string">"Average: "</span> &lt;&lt; sum / <span class="number">5.0</span> &lt;&lt; endl;
+
+                <span class="keyword">return</span> <span class="number">0</span>;
+            }
+        </div>
+
+        <div class="input-demo-label">💬 User Types:</div>
+        <div class="input-demo">85<br />92<br />78<br />95<br />88</div>
+
+        <div class="output-label">▶️ Output:</div>
+        <div class="output">
+            Enter 5 scores:<br />
+            Score 1: 85<br />
+            Score 2: 92<br />
+            Score 3: 78<br />
+            Score 4: 95<br />
+            Score 5: 88<br />
+            <br />
+            📊 Results:<br />
+            Highest score: 95<br />
+            Lowest score: 78<br />
+            Average: 87.6
+        </div>
+
+        <div class="tip-box">
+            <strong>💡 Tip:</strong> <span style="color:#c8d2f0;">To find the highest, start with the first element as the highest, then compare with the rest. Same for lowest!</span>
+        </div>
+    </div>
+
+    <!-- ===== CHEAT SHEET ===== -->
+    <div class="section-title">
+        <span class="emoji">📋</span> Quick Reference
+    </div>
+
+    <div class="cheat-sheet">
+        <h3>🔑 Key Code You Just Learned</h3>
+        <table>
+            <tr>
+                <td>int scores[5];</td>
+                <td>Creates an array of 5 integers</td>
+            </tr>
+            <tr>
+                <td>int scores[5] = {85, 92, 78};</td>
+                <td>Creates and fills an array</td>
+            </tr>
+            <tr>
+                <td>scores[0] = 100;</td>
+                <td>Changes the first element to 100</td>
+            </tr>
+            <tr>
+                <td>cout &lt;&lt; scores[2];</td>
+                <td>Prints the third element (index 2)</td>
+            </tr>
+            <tr>
+                <td>for (int i = 0; i < 5; i++)</td>
+                <td>Loops through all 5 elements</td>
+            </tr>
+            <tr>
+                <td>scores[i]</td>
+                <td>Access the element at index i</td>
+            </tr>
+            <tr>
+                <td>int size = sizeof(scores)/sizeof(scores[0]);</td>
+                <td>Gets the size of the array</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- ===== ACTIVITY 1 ===== -->
+    <div class="section-title">
+        <span class="emoji">🏋️</span> Practice Time!
+    </div>
+
+    <div class="activity-box">
+        <div class="activity-title">
+            🎯 Activity 1: Weather Temperatures
+            <span class="badge">⭐ BEGINNER</span>
+        </div>
+        <div class="challenge">
+            <p><strong>Your Task:</strong> Create a program that stores the temperature for 7 days!</p>
+            <ul style="color:#c8d2f0; margin-left:1.5rem; margin-top:0.5rem;">
+                <li>Create an array called <span class="highlight">temperatures</span> with 7 values</li>
+                <li>Use a <span class="highlight">for</span> loop to print each day's temperature</li>
+                <li>Calculate and print the <strong>average</strong> temperature</li>
+            </ul>
+            <div class="output" style="margin-top:0.5rem;">
+                📊 Weekly Temperatures:<br />
+                Day 1: 22°C<br />
+                Day 2: 25°C<br />
+                Day 3: 19°C<br />
+                Day 4: 23°C<br />
+                Day 5: 27°C<br />
+                Day 6: 21°C<br />
+                Day 7: 24°C<br />
+                <br />
+                Average temperature: 23.0°C
+            </div>
+        </div>
+        <div class="hint">
+            <strong>💡 Hint:</strong> Create <span class="highlight">int temperatures[7] = {22, 25, 19, 23, 27, 21, 24};</span> then loop through with <span class="highlight">for (int i = 0; i < 7; i++)</span>
+        </div>
+    </div>
+
+    <!-- ===== ACTIVITY 2 ===== -->
+    <div class="activity-box">
+        <div class="activity-title">
+            🚀 Activity 2: Grade Tracker
+            <span class="badge">⭐⭐ CHALLENGE</span>
+        </div>
+        <div class="challenge">
+            <p><strong>Your Task:</strong> Create a program that tracks and analyzes grades!</p>
+            <ul style="color:#c8d2f0; margin-left:1.5rem; margin-top:0.5rem;">
+                <li>Ask the user for <strong>8</strong> grades</li>
+                <li>Store them in an array</li>
+                <li>Find and print the <strong>highest</strong> grade</li>
+                <li>Find and print the <strong>lowest</strong> grade</li>
+                <li>Calculate and print the <strong>average</strong></li>
+                <li>Count how many grades are <strong>above 70</strong></li>
+            </ul>
+            <div class="output" style="margin-top:0.5rem;">
+                Enter 8 grades:<br />
+                Grade 1: 85<br />
+                Grade 2: 62<br />
+                Grade 3: 91<br />
+                Grade 4: 77<br />
+                Grade 5: 54<br />
+                Grade 6: 88<br />
+                Grade 7: 73<br />
+                Grade 8: 96<br />
+                <br />
+                📊 Grade Report:<br />
+                Highest: 96<br />
+                Lowest: 54<br />
+                Average: 78.25<br />
+                Grades above 70: 6
+            </div>
+        </div>
+        <div class="hint">
+            <strong>💡 Hint:</strong> Use <span class="highlight">if (grades[i] > 70) { count++; }</span> inside the loop to count grades above 70.
+        </div>
+    </div>
+
+    <!-- ===== BONUS CHALLENGE ===== -->
+    <div class="activity-box" style="border-color: #7b93d6;">
+        <div class="activity-title" style="color: #7b93d6;">
+            🌟 Bonus Challenge: Reverse Array
+            <span class="badge" style="background:#7b93d6;">⭐⭐⭐ ADVANCED</span>
+        </div>
+        <div class="challenge">
+            <p><strong>Your Task:</strong> Create a program that reverses an array!</p>
+            <ul style="color:#c8d2f0; margin-left:1.5rem; margin-top:0.5rem;">
+                <li>Create an array with 5 numbers: <span class="highlight">{10, 20, 30, 40, 50}</span></li>
+                <li>Print the array forwards</li>
+                <li><strong>Reverse</strong> the array (swap first with last, second with second-last, etc.)</li>
+                <li>Print the reversed array</li>
+            </ul>
+            <div class="output" style="margin-top:0.5rem;">
+                Original array: 10 20 30 40 50<br />
+                Reversed array: 50 40 30 20 10
+            </div>
+        </div>
+        <div class="hint">
+            <strong>💡 Hint:</strong> Use a <span class="highlight">for</span> loop that goes from 0 to 2 (halfway). Swap <span class="highlight">arr[i]</span> with <span class="highlight">arr[4 - i]</span>. You'll need a <strong>temporary</strong> variable to swap!
+        </div>
+    </div>
+
+    <!-- ===== SUMMARY ===== -->
+    <div class="section-title">
+        <span class="emoji">🎓</span> Lesson Summary
+    </div>
+
+    <div class="summary-box">
+        <h3>✅ What You Learned Today</h3>
+        <ul>
+            <li>What <span class="highlight">arrays</span> are and why they're useful for storing lists</li>
+            <li>How to <strong>create</strong> and <strong>initialize</strong> arrays</li>
+            <li>How to <strong>access</strong> elements using <strong>indexes</strong> (starting at 0)</li>
+            <li>How to <strong>loop through</strong> arrays with <span class="highlight">for</span> loops</li>
+            <li>How to <strong>find the highest</strong> and <strong>lowest</strong> values in an array</li>
+            <li>How to <strong>calculate the average</strong> of array values</li>
+            <li>How to get <strong>user input</strong> and store it in an array</li>
+        </ul>
+    </div>
+
+    <!-- ===== WHAT'S NEXT ===== -->
+    <div class="section-title">
+        <span class="emoji">🔜</span> What's Next?
+    </div>
+
+    <div class="explanation">
+        <p>In <strong>Lesson 7</strong>, you'll learn how to:</p>
+        <ul style="color:#c8d2f0; margin-left:1.5rem;">
+            <li>📦 Create your own <strong>functions</strong> to organize code</li>
+            <li>🔄 <strong>Reuse</strong> code by calling functions multiple times</li>
+            <li>📤 <strong>Pass data</strong> to functions and get <strong>results back</strong></li>
+            <li>🏗️ Build <strong>larger programs</strong> that are easier to manage</li>
+        </ul>
+        <p style="margin-top:0.8rem; color:#9aa8d9;">👉 <a href="lesson7.html" style="color:#f5c542;">Click here to go to Lesson 7 →</a></p>
+    </div>
+
+    <!-- ===== NAVIGATION BUTTONS ===== -->
+    <div class="btn-group">
+        <a href="index.html" class="btn btn-secondary">🏠 Homepage</a>
+        <a href="lesson5.html" class="btn btn-secondary">⬅️ Previous Lesson</a>
+        <a href="lesson7.html" class="btn">➡️ Next Lesson</a>
+    </div>
+
+    <!-- ===== FOOTER ===== -->
+    <div class="footer">
+        <p>💻 <strong>C++ Coding Adventure</strong> · Grade 9 · Lesson 6</p>
+        <p style="font-size:0.8rem; color:#4f6199;">Keep coding, keep learning! 🚀</p>
+    </div>
+
+</div>
+
+<!-- ===== COPY FUNCTION ===== -->
+<script>
+    function copyCode(button) {
+        const codeBlock = button.parentElement;
+        const codeText = codeBlock.innerText.replace('📋 Copy', '').trim();
+        navigator.clipboard.writeText(codeText).then(() => {
+            const original = button.textContent;
+            button.textContent = '✅ Copied!';
+            setTimeout(() => {
+                button.textContent = original;
+            }, 2000);
+        }).catch(() => {
+            alert('Please select and copy the code manually.');
+        });
+    }
+</script>
+
+</body>
+</html>

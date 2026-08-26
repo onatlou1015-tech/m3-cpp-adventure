@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Lesson 2 - User Input & Math 🖥️</title>
+    <style>
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0b0e1a;
+            color: #e8edf5;
+            line-height: 1.7;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #141a2b;
+            padding: 2.5rem 2.5rem;
+            border-radius: 2rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+            border: 1px solid #2a3457;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            text-align: center;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px dashed #3b4780;
+            margin-bottom: 2rem;
+        }
+
+        .header .lesson-badge {
+            display: inline-block;
+            background: #f5a623;
+            color: #0b0e1a;
+            font-weight: 700;
+            padding: 0.3rem 1.5rem;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .header h1 {
+            font-size: 2.8rem;
+            background: linear-gradient(135deg, #f7b731, #f5a623);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header .sub {
+            font-size: 1.1rem;
+            color: #9aa8d9;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #7b93d6;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: 0.2s;
+        }
+
+        .back-link:hover {
+            color: #f5c542;
+        }
+
+        .back-link::before {
+            content: "⬅️ ";
+        }
+
+        /* ===== LEARNING OBJECTIVES ===== */
+        .objectives-box {
+            background: #1b2339;
+            border-left: 6px solid #f5a623;
+            padding: 1.5rem 2rem;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .objectives-box h2 {
+            color: #f5c542;
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .objectives-box ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .objectives-box ul li {
+            padding: 0.2rem 0;
+            color: #c8d2f0;
+        }
+
+        .objectives-box ul li::before {
+            content: "🎯 ";
+        }
+
+        /* ===== SECTION TITLES ===== */
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 2.5rem 0 1rem 0;
+            color: #f5c542;
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+        }
+
+        .section-title .emoji {
+            font-size: 1.8rem;
+        }
+
+        /* ===== EXPLANATION ===== */
+        .explanation {
+            background: #0f1629;
+            padding: 1.5rem 2rem;
+            border-radius: 1rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #2a3457;
+        }
+
+        .explanation p {
+            color: #c8d2f0;
+            margin-bottom: 0.8rem;
+        }
+
+        .explanation strong {
+            color: #f7d88a;
+        }
+
+        .highlight {
+            background: #1f2a4a;
+            padding: 0.1rem 0.5rem;
+            border-radius: 6px;
+            color: #f5c542;
+            font-family: 'Courier New', monospace;
+        }
+
+        /* ===== CODE BLOCKS ===== */
+        .code-block {
+            background: #0b0e1a;
+            padding: 1.2rem 1.5rem;
+            border-radius: 0.8rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.92rem;
+            color: #c8d2f0;
+            border: 1px solid #2a3457;
+            margin: 0.8rem 0 1.2rem 0;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-break: break-word;
+            position: relative;
+        }
+
+        .code-block .comment {
+            color: #6b8a7a;
+        }
+        .code-block .keyword {
+            color: #f5a623;
+        }
+        .code-block .string {
+            color: #7bcfa6;
+        }
+        .code-block .function {
+            color: #7b93d6;
+        }
+        .code-block .number {
+            color: #f7b731;
+        }
+
+        .code-label {
+            display: inline-block;
+            background: #1f2a4a;
+            color: #7b93d6;
+            font-size: 0.7rem;
+            padding: 0.1rem 0.8rem;
+            border-radius: 20px;
+            margin-bottom: 0.3rem;
+            font-family: 'Segoe UI', sans-serif;
+            letter-spacing: 0.5px;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #1f2a4a;
+            color: #7b93d6;
+            border: none;
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .copy-btn:hover {
+            background: #f5a623;
+            color: #0b0e1a;
+        }
+
+        /* ===== EXAMPLE BOXES ===== */
+        .example-box {
+            background: #1b2339;
+            border-radius: 1rem;
+            padding: 1.5rem 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid #2a3457;
+        }
+
+        .example-box .example-title {
+            color: #f7d88a;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .example-box .example-title .num {
+            background: #f5a623;
+            color: #0b0e1a;
+            padding: 0.1rem 0.7rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            margin-right: 0.5rem;
+        }
+
+        .example-box .output {
+            background: #0b0e1a;
+            padding: 0.8rem 1.2rem;
+            border-radius: 0.6rem;
+            color: #7bcfa6;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            border-left: 3px solid #f5a623;
+        }
+
+        .example-box .output-label {
+            font-size: 0.7rem;
+            color: #6b7db3;
+            font-family: 'Segoe UI', sans-serif;
+            margin-top: 0.5rem;
+        }
+
+        .example-box .input-demo {
+            background: #0b0e1a;
+            padding: 0.8rem 1.2rem;
+            border-radius: 0.6rem;
+            color: #f7b731;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            border-left: 3px solid #7b93d6;
+        }
+
+        .example-box .input-demo-label {
+            font-size: 0.7rem;
+            color: #6b7db3;
+            font-family: 'Segoe UI', sans-serif;
+            margin-top: 0.5rem;
+        }
+
+        /* ===== TIPS ===== */
+        .tip-box {
+            background: #1a2238;
+            border-left: 4px solid #7b93d6;
+            padding: 1rem 1.5rem;
+            border-radius: 0.8rem;
+            margin: 1rem 0;
+        }
+
+        .tip-box strong {
+            color: #7b93d6;
+        }
+
+        .tip-box.warning {
+            border-left-color: #f5a623;
+        }
+
+        .tip-box.warning strong {
+            color: #f5a623;
+        }
+
+        /* ===== ACTIVITIES ===== */
+        .activity-box {
+            background: #1b2339;
+            border-radius: 1rem;
+            padding: 1.8rem 2rem;
+            margin-bottom: 2rem;
+            border: 2px solid #f5a623;
+        }
+
+        .activity-box .activity-title {
+            color: #f5c542;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .activity-box .activity-title .badge {
+            background: #f5a623;
+            color: #0b0e1a;
+            padding: 0.1rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            margin-left: 0.5rem;
+            font-weight: 700;
+        }
+
+        .activity-box .challenge {
+            color: #c8d2f0;
+            margin: 0.5rem 0;
+        }
+
+        .activity-box .hint {
+            background: #0f1629;
+            padding: 0.8rem 1.2rem;
+            border-radius: 0.6rem;
+            color: #7b93d6;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        .activity-box .hint strong {
+            color: #f7d88a;
+        }
+
+        /* ===== SUMMARY ===== */
+        .summary-box {
+            background: #0f1629;
+            border-radius: 1rem;
+            padding: 1.5rem 2rem;
+            margin: 2rem 0;
+            border: 1px solid #2a3457;
+        }
+
+        .summary-box h3 {
+            color: #f5c542;
+            margin-bottom: 0.5rem;
+        }
+
+        .summary-box ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .summary-box ul li {
+            padding: 0.2rem 0;
+            color: #c8d2f0;
+        }
+
+        .summary-box ul li::before {
+            content: "✅ ";
+        }
+
+        /* ===== KEYWORDS ===== */
+        .keywords {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 0.5rem 0;
+        }
+
+        .keywords span {
+            background: #1f2a4a;
+            padding: 0.2rem 1rem;
+            border-radius: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            color: #7b93d6;
+            border: 1px solid #2a3457;
+        }
+
+        /* ===== CHEAT SHEET ===== */
+        .cheat-sheet {
+            background: #1a2238;
+            border-radius: 1rem;
+            padding: 1.5rem 2rem;
+            margin: 1.5rem 0;
+            border: 1px solid #3b4780;
+        }
+
+        .cheat-sheet h3 {
+            color: #f5c542;
+        }
+
+        .cheat-sheet table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 0.5rem;
+        }
+
+        .cheat-sheet td {
+            padding: 0.4rem 0.8rem;
+            border-bottom: 1px solid #28315a;
+            color: #c8d2f0;
+            font-size: 0.92rem;
+        }
+
+        .cheat-sheet td:first-child {
+            font-family: 'Courier New', monospace;
+            color: #f5a623;
+            font-weight: 600;
+        }
+
+        .cheat-sheet td:last-child {
+            color: #9aa8d9;
+        }
+
+        /* ===== BUTTONS ===== */
+        .btn {
+            display: inline-block;
+            background: #f5a623;
+            color: #0b0e1a;
+            font-weight: 700;
+            padding: 0.7rem 2rem;
+            border-radius: 40px;
+            text-decoration: none;
+            transition: 0.2s;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: #f7b731;
+            transform: scale(1.02);
+        }
+
+        .btn-secondary {
+            background: #1f2a4a;
+            color: #7b93d6;
+        }
+
+        .btn-secondary:hover {
+            background: #2a3457;
+            color: #f5c542;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+            justify-content: center;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            text-align: center;
+            margin-top: 2.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #28315a;
+            color: #6b7db3;
+            font-size: 0.9rem;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 750px) {
+            .container {
+                padding: 1.5rem 1rem;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.4rem;
+            }
+
+            .code-block {
+                font-size: 0.8rem;
+                padding: 0.8rem 1rem;
+            }
+
+            .example-box {
+                padding: 1rem 1.2rem;
+            }
+
+            .activity-box {
+                padding: 1.2rem 1.2rem;
+            }
+
+            .cheat-sheet {
+                padding: 1rem 1.2rem;
+            }
+
+            .btn-group {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- ===== HEADER ===== -->
+    <div class="header">
+        <div class="lesson-badge">📘 LESSON 2</div>
+        <h1>User Input &amp; Math</h1>
+        <div class="sub">Make your programs interactive with user input!</div>
+        <a href="index.html" class="back-link">Back to Homepage</a>
+    </div>
+
+    <!-- ===== LEARNING OBJECTIVES ===== -->
+    <div class="objectives-box">
+        <h2>🎯 What You'll Learn Today</h2>
+        <ul>
+            <li>How to ask the user questions with <span class="highlight">cout</span></li>
+            <li>How to get input from the user with <span class="highlight">cin</span></li>
+            <li>How to store user input in variables</li>
+            <li>How to do calculations with user input</li>
+            <li>Build a real calculator that works with user numbers!</li>
+        </ul>
+    </div>
+
+    <!-- ===== INTRODUCTION ===== -->
+    <div class="section-title">
+        <span class="emoji">💡</span> Making Programs Interactive
+    </div>
+
+    <div class="explanation">
+        <p>In Lesson 1, you learned how to <strong>print</strong> things to the screen. But programs are much more fun when they can <strong>talk back</strong> to you!</p>
+        <p>Today, you'll learn how to use <span class="highlight">cin</span> (pronounced "see-in") to get input from the user. This makes your programs <strong>interactive</strong> — they can ask questions and respond based on what the user types.</p>
+        <div class="keywords">
+            <span>cin</span>
+            <span>&gt;&gt;</span>
+            <span>user input</span>
+            <span>interactive</span>
+            <span>calculator</span>
+        </div>
+    </div>
+
+    <!-- ===== EXAMPLE 1 ===== -->
+    <div class="section-title">
+        <span class="emoji">📝</span> Example 1: Getting User Input
+    </div>
+
+    <div class="example-box">
+        <div class="example-title">
+            <span class="num">1</span> Asking for a Name
+        </div>
+        <p style="color:#c8d2f0; margin-bottom:0.5rem;">This program asks the user for their name and then greets them personally!</p>
+
+        <div class="code-label">📄 lesson2.cpp</div>
+        <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            <span class="keyword">#include</span> &lt;iostream&gt;
+            <span class="keyword">#include</span> &lt;string&gt;
+            <span class="keyword">using namespace</span> std;
+
+            <span class="keyword">int</span> <span class="function">main</span>() {
+                <span class="comment">// Create a variable to store the user's name</span>
+                <span class="keyword">string</span> name;
+
+                <span class="comment">// Ask the user for their name</span>
+                cout &lt;&lt; <span class="string">"What's your name? "</span>;
+
+                <span class="comment">// Get the user's input and store it in 'name'</span>
+                cin &gt;&gt; name;
+
+                <span class="comment">// Greet the user personally!</span>
+                cout &lt;&lt; <span class="string">"Hello, "</span> &lt;&lt; name &lt;&lt; <span class="string">"! Nice to meet you!"</span> &lt;&lt; endl;
+
+                <span class="keyword">return</span> <span class="number">0</span>;
+            }
+        </div>
+
+        <div class="input-demo-label">💬 User Types:</div>
+        <div class="input-demo">Alex</div>
+
+        <div class="output-label">▶️ Output:</div>
+        <div class="output">
+            What's your name? Alex<br />
+            Hello, Alex! Nice to meet you!
+        </div>
+
+        <div class="tip-box">
+            <strong>💡 Tip:</strong> <span style="color:#c8d2f0;"><span class="highlight">cin &gt;&gt; name;</span> waits for the user to type something and press Enter. The typed text is then stored in the <span class="highlight">name</span> variable!</span>
+        </div>
+    </div>
+
+    <!-- ===== EXAMPLE 2 ===== -->
+    <div class="section-title">
+        <span class="emoji">📝</span> Example 2: Getting Numbers
+    </div>
+
+    <div class="example-box">
+        <div class="example-title">
+            <span class="num">2</span> Asking for Numbers
+        </div>
+        <p style="color:#c8d2f0; margin-bottom:0.5rem;">This program asks the user for their age and favorite number, then does some math!</p>
+
+        <div class="code-label">📄 lesson2.cpp</div>
+        <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            <span class="keyword">#include</span> &lt;iostream&gt;
+            <span class="keyword">using namespace</span> std;
+
+            <span class="keyword">int</span> <span class="function">main</span>() {
+                <span class="keyword">int</span> age;
+                <span class="keyword">int</span> favoriteNumber;
+
+                cout &lt;&lt; <span class="string">"How old are you? "</span>;
+                cin &gt;&gt; age;
+
+                cout &lt;&lt; <span class="string">"What's your favorite number? "</span>;
+                cin &gt;&gt; favoriteNumber;
+
+                <span class="keyword">int</span> magicNumber = age + favoriteNumber;
+
+                cout &lt;&lt; <span class="string">"Your age is "</span> &lt;&lt; age &lt;&lt; endl;
+                cout &lt;&lt; <span class="string">"Your favorite number is "</span> &lt;&lt; favoriteNumber &lt;&lt; endl;
+                cout &lt;&lt; <span class="string">"Your magic number is "</span> &lt;&lt; magicNumber &lt;&lt; <span class="string">"! ✨"</span> &lt;&lt; endl;
+
+                <span class="keyword">return</span> <span class="number">0</span>;
+            }
+        </div>
+
+        <div class="input-demo-label">💬 User Types:</div>
+        <div class="input-demo">15<br />7</div>
+
+        <div class="output-label">▶️ Output:</div>
+        <div class="output">
+            How old are you? 15<br />
+            What's your favorite number? 7<br />
+            Your age is 15<br />
+            Your favorite number is 7<br />
+            Your magic number is 22! ✨
+        </div>
+
+        <div class="tip-box">
+            <strong>💡 Tip:</strong> <span style="color:#c8d2f0;">You can chain <span class="highlight">cin</span> statements together to get multiple inputs from the user!</span>
+        </div>
+    </div>
+
+    <!-- ===== EXAMPLE 3 ===== -->
+    <div class="section-title">
+        <span class="emoji">📝</span> Example 3: Interactive Calculator
+    </div>
+
+    <div class="example-box">
+        <div class="example-title">
+            <span class="num">3</span> Calculator with User Input
+        </div>
+        <p style="color:#c8d2f0; margin-bottom:0.5rem;">This program asks the user for two numbers and does calculations on them!</p>
+
+        <div class="code-label">📄 lesson2.cpp</div>
+        <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            <span class="keyword">#include</span> &lt;iostream&gt;
+            <span class="keyword">using namespace</span> std;
+
+            <span class="keyword">int</span> <span class="function">main</span>() {
+                <span class="keyword">double</span> num1, num2;
+
+                cout &lt;&lt; <span class="string">"===== SIMPLE CALCULATOR ===== "</span> &lt;&lt; endl;
+                cout &lt;&lt; <span class="string">"Enter first number: "</span>;
+                cin &gt;&gt; num1;
+
+                cout &lt;&lt; <span class="string">"Enter second number: "</span>;
+                cin &gt;&gt; num2;
+
+                cout &lt;&lt; <span class="string">"================================"</span> &lt;&lt; endl;
+                cout &lt;&lt; <span class="string">"Sum: "</span> &lt;&lt; num1 + num2 &lt;&lt; endl;
+                cout &lt;&lt; <span class="string">"Difference: "</span> &lt;&lt; num1 - num2 &lt;&lt; endl;
+                cout &lt;&lt; <span class="string">"Product: "</span> &lt;&lt; num1 * num2 &lt;&lt; endl;
+                cout &lt;&lt; <span class="string">"Quotient: "</span> &lt;&lt; num1 / num2 &lt;&lt; endl;
+
+                <span class="keyword">return</span> <span class="number">0</span>;
+            }
+        </div>
+
+        <div class="input-demo-label">💬 User Types:</div>
+        <div class="input-demo">10<br />3</div>
+
+        <div class="output-label">▶️ Output:</div>
+        <div class="output">
+            ===== SIMPLE CALCULATOR =====<br />
+            Enter first number: 10<br />
+            Enter second number: 3<br />
+            ================================<br />
+            Sum: 13<br />
+            Difference: 7<br />
+            Product: 30<br />
+            Quotient: 3.33333
+        </div>
+
+        <div class="tip-box warning">
+            <strong>⚠️ Important:</strong> <span style="color:#c8d2f0;">Using <span class="highlight">double</span> instead of <span class="highlight">int</span> allows decimals in the calculations!</span>
+        </div>
+    </div>
+
+    <!-- ===== CHEAT SHEET ===== -->
+    <div class="section-title">
+        <span class="emoji">📋</span> Quick Reference
+    </div>
+
+    <div class="cheat-sheet">
+        <h3>🔑 New Code You Just Learned</h3>
+        <table>
+            <tr>
+                <td>cin &gt;&gt; variable;</td>
+                <td>Gets input from the user and stores it</td>
+            </tr>
+            <tr>
+                <td>cout &lt;&lt; "Question? ";</td>
+                <td>Asks the user a question</td>
+            </tr>
+            <tr>
+                <td>cin &gt;&gt; num1 &gt;&gt; num2;</td>
+                <td>Gets two inputs in one line (advanced!)</td>
+            </tr>
+            <tr>
+                <td>double</td>
+                <td>Use this for numbers with decimals</td>
+            </tr>
+            <tr>
+                <td>num1 + num2</td>
+                <td>You can do math right inside cout!</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- ===== ACTIVITY 1 ===== -->
+    <div class="section-title">
+        <span class="emoji">🏋️</span> Practice Time!
+    </div>
+
+    <div class="activity-box">
+        <div class="activity-title">
+            🎯 Activity 1: Personal Questionnaire
+            <span class="badge">⭐ BEGINNER</span>
+        </div>
+        <div class="challenge">
+            <p><strong>Your Task:</strong> Create a program that asks the user about themselves!</p>
+            <ul style="color:#c8d2f0; margin-left:1.5rem; margin-top:0.5rem;">
+                <li>Ask for their <strong>name</strong></li>
+                <li>Ask for their <strong>age</strong></li>
+                <li>Ask for their <strong>favorite food</strong></li>
+                <li>Ask for their <strong>favorite number</strong></li>
+                <li>Print a summary of all their answers</li>
+            </ul>
+            <p style="color:#c8d2f0; margin-top:0.5rem;">Make it look like this:</p>
+            <div class="output" style="margin-top:0.5rem;">
+                What's your name? Sarah<br />
+                How old are you? 14<br />
+                What's your favorite food? Pizza<br />
+                What's your favorite number? 7<br />
+                <br />
+                ===== YOUR PROFILE =====<br />
+                Name: Sarah<br />
+                Age: 14<br />
+                Favorite Food: Pizza<br />
+                Favorite Number: 7<br />
+                ============================
+            </div>
+        </div>
+        <div class="hint">
+            <strong>💡 Hint:</strong> Use <span class="highlight">string</span> for name and food, <span class="highlight">int</span> for age and favorite number. Remember to use <span class="highlight">#include &lt;string&gt;</span>!
+        </div>
+    </div>
+
+    <!-- ===== ACTIVITY 2 ===== -->
+    <div class="activity-box">
+        <div class="activity-title">
+            🚀 Activity 2: BMI Calculator
+            <span class="badge">⭐⭐ CHALLENGE</span>
+        </div>
+        <div class="challenge">
+            <p><strong>Your Task:</strong> Create a BMI (Body Mass Index) calculator!</p>
+            <ul style="color:#c8d2f0; margin-left:1.5rem; margin-top:0.5rem;">
+                <li>Ask the user for their <strong>weight</strong> (in kilograms)</li>
+                <li>Ask the user for their <strong>height</strong> (in meters)</li>
+                <li>Calculate BMI using the formula: <span class="highlight">bmi = weight / (height * height)</span></li>
+                <li>Print the BMI result</li>
+            </ul>
+            <p style="color:#c8d2f0; margin-top:0.5rem;">Make it look like this:</p>
+            <div class="output" style="margin-top:0.5rem;">
+                ===== BMI CALCULATOR =====<br />
+                Enter your weight (kg): 70<br />
+                Enter your height (m): 1.75<br />
+                <br />
+                Your BMI is: 22.86<br />
+                ============================
+            </div>
+        </div>
+        <div class="hint">
+            <strong>💡 Hint:</strong> Use <span class="highlight">double</span> for weight and height to get decimal results. The formula is <span class="highlight">bmi = weight / (height * height);</span>
+        </div>
+    </div>
+
+    <!-- ===== BONUS CHALLENGE ===== -->
+    <div class="activity-box" style="border-color: #7b93d6;">
+        <div class="activity-title" style="color: #7b93d6;">
+            🌟 Bonus Challenge: Tip Calculator
+            <span class="badge" style="background:#7b93d6;">⭐⭐⭐ ADVANCED</span>
+        </div>
+        <div class="challenge">
+            <p><strong>Your Task:</strong> Create a restaurant tip calculator!</p>
+            <ul style="color:#c8d2f0; margin-left:1.5rem; margin-top:0.5rem;">
+                <li>Ask the user for the <strong>total bill amount</strong></li>
+                <li>Ask for the <strong>tip percentage</strong> (e.g., 15 for 15%)</li>
+                <li>Calculate the <strong>tip amount</strong></li>
+                <li>Calculate the <strong>total to pay</strong> (bill + tip)</li>
+                <li>Print a nice receipt</li>
+            </ul>
+            <p style="color:#c8d2f0; margin-top:0.5rem;">Make it look like this:</p>
+            <div class="output" style="margin-top:0.5rem;">
+                ===== TIP CALCULATOR =====<br />
+                Enter bill amount: $45.50<br />
+                Enter tip percentage: 18<br />
+                <br />
+                Bill: $45.50<br />
+                Tip (18%): $8.19<br />
+                Total: $53.69<br />
+                ============================
+            </div>
+        </div>
+        <div class="hint">
+            <strong>💡 Hint:</strong> Tip amount = bill * (tipPercent / 100). Use <span class="highlight">double</span> for all numbers. Don't forget <span class="highlight">#include &lt;iomanip&gt;</span> if you want to format decimals nicely!
+        </div>
+    </div>
+
+    <!-- ===== SUMMARY ===== -->
+    <div class="section-title">
+        <span class="emoji">🎓</span> Lesson Summary
+    </div>
+
+    <div class="summary-box">
+        <h3>✅ What You Learned Today</h3>
+        <ul>
+            <li>How to ask the user questions with <span class="highlight">cout</span></li>
+            <li>How to get user input with <span class="highlight">cin &gt;&gt; variable;</span></li>
+            <li>How to store different types of input (<span class="highlight">int</span>, <span class="highlight">double</span>, <span class="highlight">string</span>)</li>
+            <li>How to do math with user-provided numbers</li>
+            <li>How to build an interactive calculator</li>
+        </ul>
+    </div>
+
+    <!-- ===== WHAT'S NEXT ===== -->
+    <div class="section-title">
+        <span class="emoji">🔜</span> What's Next?
+    </div>
+
+    <div class="explanation">
+        <p>In <strong>Lesson 3</strong>, you'll learn how to:</p>
+        <ul style="color:#c8d2f0; margin-left:1.5rem;">
+            <li>🤔 Make decisions with <span class="highlight">if/else</span> statements</li>
+            <li>🎲 Build a <strong>Fortune Teller</strong> program</li>
+            <li>📊 Create a <strong>personality quiz</strong></li>
+        </ul>
+        <p style="margin-top:0.8rem; color:#9aa8d9;">👉 <a href="lesson3.html" style="color:#f5c542;">Click here to go to Lesson 3 →</a></p>
+    </div>
+
+    <!-- ===== NAVIGATION BUTTONS ===== -->
+    <div class="btn-group">
+        <a href="index.html" class="btn btn-secondary">🏠 Homepage</a>
+        <a href="lesson1.html" class="btn btn-secondary">⬅️ Previous Lesson</a>
+        <a href="lesson3.html" class="btn">➡️ Next Lesson</a>
+    </div>
+
+    <!-- ===== FOOTER ===== -->
+    <div class="footer">
+        <p>💻 <strong>C++ Coding Adventure</strong> · Grade 9 · Lesson 2</p>
+        <p style="font-size:0.8rem; color:#4f6199;">Keep coding, keep learning! 🚀</p>
+    </div>
+
+</div>
+
+<!-- ===== COPY FUNCTION ===== -->
+<script>
+    function copyCode(button) {
+        const codeBlock = button.parentElement;
+        const codeText = codeBlock.innerText.replace('📋 Copy', '').trim();
+        navigator.clipboard.writeText(codeText).then(() => {
+            const original = button.textContent;
+            button.textContent = '✅ Copied!';
+            setTimeout(() => {
+                button.textContent = original;
+            }, 2000);
+        }).catch(() => {
+            alert('Please select and copy the code manually.');
+        });
+    }
+</script>
+
+</body>
+</html>

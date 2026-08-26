@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Lesson 10 - Debugging 🐛</title>
+    <style>
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0b0e1a;
+            color: #e8edf5;
+            line-height: 1.7;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #141a2b;
+            padding: 2.5rem 2.5rem;
+            border-radius: 2rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+            border: 1px solid #2a3457;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            text-align: center;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px dashed #3b4780;
+            margin-bottom: 2rem;
+        }
+
+        .header .lesson-badge {
+            display: inline-block;
+            background: #f5a623;
+            color: #0b0e1a;
+            font-weight: 700;
+            padding: 0.3rem 1.5rem;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .header h1 {
+            font-size: 2.8rem;
+            background: linear-gradient(135deg, #f7b731, #f5a623);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header .sub {
+            font-size: 1.1rem;
+            color: #9aa8d9;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #7b93d6;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: 0.2s;
+        }
+
+        .back-link:hover {
+            color: #f5c542;
+        }
+
+        .back-link::before {
+            content: "⬅️ ";
+        }
+
+        /* ===== LEARNING OBJECTIVES ===== */
+        .objectives-box {
+            background: #1b2339;
+            border-left: 6px solid #f5a623;
+            padding: 1.5rem 2rem;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .objectives-box h2 {
+            color: #f5c542;
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .objectives-box ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .objectives-box ul li {
+            padding: 0.2rem 0;
+            color: #c8d2f0;
+        }
+
+        .objectives-box ul li::before {
+            content: "🎯 ";
+        }
+
+        /* ===== SECTION TITLES ===== */
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 2.5rem 0 1rem 0;
+            color: #f5c542;
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+        }
+
+        .section-title .emoji {
+            font-size: 1.8rem;
+        }
+
+        /* ===== EXPLANATION ===== */
+        .explanation {
+            background: #0f1629;
+            padding: 1.5rem 2rem;
+            border-radius: 1rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #2a3457;
+        }
+
+        .explanation p {
+            color: #c8d2f0;
+            margin-bottom: 0.8rem;
+        }
+
+        .explanation strong {
+            color: #f7d88a;
+        }
+
+        .highlight {
+            background: #1f2a4a;
+            padding: 0.1rem 0.5rem;
+            border-radius: 6px;
+            color: #f5c542;
+            font-family: 'Courier New', monospace;
+        }
+
+        /* ===== BUG TYPES TABLE ===== */
+        .bug-table {
+            background: #1a2238;
+            border-radius: 1rem;
+            padding: 1.5rem 2rem;
+            margin: 1rem 0 1.5rem 0;
+            border: 1px solid #3b4780;
+        }
+
+        .bug-table h4 {
+            color: #f5c542;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .bug-table table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 0.5rem;
+        }
+
+        .bug-table td {
+            padding: 0.4rem 0.8rem;
+            border-bottom: 1px solid #28315a;
+            color: #c8d2f0;
+            font-size: 0.92rem;
+        }
+
+        .bug-table td:first-child {
+            font-weight: 600;
+        }
+
+        .bug-table .bug-syntax {
+            color: #f5a623;
+        }
+
+        .bug-table .bug-logic {
+            color: #7b93d6;
+        }
+
+        .bug-table .bug-runtime {
+            color: #f7b731;
+        }
+
+        /* ===== CODE BLOCKS ===== */
+        .code-block {
+            background: #0b0e1a;
+            padding: 1.2rem 1.5rem;
+            border-radius: 0.8rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.92rem;
+            color: #c8d2f0;
+            border: 1px solid #2a3457;
+            margin: 0.8rem 0 1.2rem 0;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-break: break-word;
+            position: relative;
+        }
+
+        .code-block .comment {
+            color: #6b8a7a;
+        }
+
+        .code-block .keyword {
+            color: #f5a623;
+        }
+
+        .code-block .string {
+            color: #7bcfa6;
+        }
+
+        .code-block .function {
+            color: #7b93d6;
+        }
+
+        .code-block .number {
+            color: #f7b731;
+        }
+
+        .code-block .variable {
+            color: #7bcfa6;
+        }
+
+        .code-block .bug {
+            background: #4a1a1a;
+            color: #f5a623;
+            padding: 0.1rem 0.3rem;
+            border-radius: 4px;
+            border: 1px solid #f5a623;
+        }
+
+        .code-block .fix {
+            background: #1a3a1a;
+            color: #7bcfa6;
+            padding: 0.1rem 0.3rem;
+            border-radius: 4px;
+            border: 1px solid #7bcfa6;
+        }
+
+        .code-label {
+            display: inline-block;
+            background: #1f2a4a;
+            color: #7b93d6;
+            font-size: 0.7rem;
+            padding: 0.1rem 0.8rem;
+            border-radius: 20px;
+            margin-bottom: 0.3rem;
+            font-family: 'Segoe UI', sans-serif;
+            letter-spacing: 0.5px;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #1f2a4a;
+            color: #7b93d6;
+            border: none;
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .copy-btn:hover {
+            background: #f5a623;
+            color: #0b0e1a;
+        }
+
+        /* ===== EXAMPLE BOXES ===== */
+        .example-box {
+            background: #1b2339;
+            border-radius: 1rem;
+            padding: 1.5rem 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid #2a3457;
+        }
+
+        .example-box .example-title {
+            color: #f7d88a;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .example-box .example-title .num {
+            background: #f5a623;
+            color: #0b0e1a;
+            padding: 0.1rem 0.7rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            margin-right: 0.5rem;
+        }
+
+        .example-box .example-title .bug-icon {
+            margin-left: 0.5rem;
+        }
+
+        .example-box .output {
+            background: #0b0e1a;
+            padding: 0.8rem 1.2rem;
+            border-radius: 0.6rem;
+            color: #7bcfa6;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            border-left: 3px solid #f5a623;
+        }
+
+        .example-box .output-label {
+            font-size: 0.7rem;
+            color: #6b7db3;
+            font-family: 'Segoe UI', sans-serif;
+            margin-top: 0.5rem;
+        }
+
+        .example-box .error-output {
+            background: #0b0e1a;
+            padding: 0.8rem 1.2rem;
+            border-radius: 0.6rem;
+            color: #f5a623;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            border-left: 3px solid #f5a623;
+        }
+
+        .example-box .bug-label {
+            display: inline-block;
+            background: #4a1a1a;
+            color: #f5a623;
+            font-size: 0.7rem;
+            padding: 0.1rem 0.8rem;
+            border-radius: 20px;
+            margin-top: 0.5rem;
+            font-weight: 600;
+            border: 1px solid #f5a623;
+        }
+
+        .example-box .fix-label {
+            display: inline-block;
+            background: #1a3a1a;
+            color: #7bcfa6;
+            font-size: 0.7rem;
+            padding: 0.1rem 0.8rem;
+            border-radius: 20px;
+            margin-top: 0.5rem;
+            font-weight: 600;
+            border: 1px solid #7bcfa6;
+        }
+
+        /* ===== DEBUGGING STEPS ===== */
+        .steps-box {
+            background: #1a2238;
+            border-radius: 1rem;
+            padding: 1.5rem 2rem;
+            margin: 1rem 0 1.5rem 0;
+            border: 1px solid #3b4780;
+        }
+
+        .steps-box h4 {
+            color: #f5c542;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .steps-box ol {
+            color: #c8d2f0;
+            margin-left: 1.5rem;
+        }
+
+        .steps-box ol li {
+            padding: 0.2rem 0;
+        }
+
+        /* ===== TIPS ===== */
+        .tip-box {
+            background: #1a2238;
+            border-left: 4px solid #7b93d6;
+            padding: 1rem 1.5rem;
+            border-radius: 0.8rem;
+            margin: 1rem 0;
+        }
+
+        .tip-box strong {
+            color: #7b93d6;
+        }
+
+        .tip-box.warning {
+            border-left-color: #f5a623;
+        }
+
+        .tip-box.warning strong {
+            color: #f5a623;
+        }
+
+        .tip-box.success {
+            border-left-color: #7bcfa6;
+        }
+
+        .tip-box.success strong {
+            color: #7bcfa6;
+        }
+
+        /* ===== ACTIVITIES ===== */
+        .activity-box {
+            background: #1b2339;
+            border-radius: 1rem;
+            padding: 1.8rem 2rem;
+            margin-bottom: 2rem;
+            border: 2px solid #f5a623;
+        }
+
+        .activity-box .activity-title {
+            color: #f5c542;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .activity-box .activity-title .badge {
+            background: #f5a623;
+            color: #0b0e1a;
+            padding: 0.1rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            margin-left: 0.5rem;
+            font-weight: 700;
+        }
+
+        .activity-box .challenge {
+            color: #c8d2f0;
+            margin: 0.5rem 0;
+        }
+
+        .activity-box .hint {
+            background: #0f1629;
+            padding: 0.8rem 1.2rem;
+            border-radius: 0.6rem;
+            color: #7b93d6;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        .activity-box .hint strong {
+            color: #f7d88a;
+        }
+
+        /* ===== SUMMARY ===== */
+        .summary-box {
+            background: #0f1629;
+            border-radius: 1rem;
+            padding: 1.5rem 2rem;
+            margin: 2rem 0;
+            border: 1px solid #2a3457;
+        }
+
+        .summary-box h3 {
+            color: #f5c542;
+            margin-bottom: 0.5rem;
+        }
+
+        .summary-box ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .summary-box ul li {
+            padding: 0.2rem 0;
+            color: #c8d2f0;
+        }
+
+        .summary-box ul li::before {
+            content: "✅ ";
+        }
+
+        /* ===== KEYWORDS ===== */
+        .keywords {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 0.5rem 0;
+        }
+
+        .keywords span {
+            background: #1f2a4a;
+            padding: 0.2rem 1rem;
+            border-radius: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            color: #7b93d6;
+            border: 1px solid #2a3457;
+        }
+
+        /* ===== CHEAT SHEET ===== */
+        .cheat-sheet {
+            background: #1a2238;
+            border-radius: 1rem;
+            padding: 1.5rem 2rem;
+            margin: 1.5rem 0;
+            border: 1px solid #3b4780;
+        }
+
+        .cheat-sheet h3 {
+            color: #f5c542;
+        }
+
+        .cheat-sheet table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 0.5rem;
+        }
+
+        .cheat-sheet td {
+            padding: 0.4rem 0.8rem;
+            border-bottom: 1px solid #28315a;
+            color: #c8d2f0;
+            font-size: 0.92rem;
+        }
+
+        .cheat-sheet td:first-child {
+            font-family: 'Courier New', monospace;
+            color: #f5a623;
+            font-weight: 600;
+        }
+
+        .cheat-sheet td:last-child {
+            color: #9aa8d9;
+        }
+
+        /* ===== BUTTONS ===== */
+        .btn {
+            display: inline-block;
+            background: #f5a623;
+            color: #0b0e1a;
+            font-weight: 700;
+            padding: 0.7rem 2rem;
+            border-radius: 40px;
+            text-decoration: none;
+            transition: 0.2s;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: #f7b731;
+            transform: scale(1.02);
+        }
+
+        .btn-secondary {
+            background: #1f2a4a;
+            color: #7b93d6;
+        }
+
+        .btn-secondary:hover {
+            background: #2a3457;
+            color: #f5c542;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+            justify-content: center;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            text-align: center;
+            margin-top: 2.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #28315a;
+            color: #6b7db3;
+            font-size: 0.9rem;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 750px) {
+            .container {
+                padding: 1.5rem 1rem;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.4rem;
+            }
+
+            .code-block {
+                font-size: 0.8rem;
+                padding: 0.8rem 1rem;
+            }
+
+            .example-box {
+                padding: 1rem 1.2rem;
+            }
+
+            .activity-box {
+                padding: 1.2rem 1.2rem;
+            }
+
+            .cheat-sheet {
+                padding: 1rem 1.2rem;
+            }
+
+            .btn-group {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .bug-table {
+                padding: 1rem 1.2rem;
+            }
+
+            .steps-box {
+                padding: 1rem 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- ===== HEADER ===== -->
+    <div class="header">
+        <div class="lesson-badge">📘 LESSON 10</div>
+        <h1>Debugging</h1>
+        <div class="sub">Find and fix bugs like a pro!</div>
+        <a href="index.html" class="back-link">Back to Homepage</a>
+    </div>
+
+    <!-- ===== LEARNING OBJECTIVES ===== -->
+    <div class="objectives-box">
+        <h2>🎯 What You'll Learn Today</h2>
+        <ul>
+            <li>What <span class="highlight">bugs</span> are and why they happen</li>
+            <li>The three types of bugs: <strong>Syntax</strong>, <strong>Logic</strong>, and <strong>Runtime</strong></li>
+            <li>How to <strong>read error messages</strong> to find problems</li>
+            <li>How to use <strong>cout debugging</strong> to track variables</li>
+            <li>How to <strong>fix common bugs</strong> in C++</li>
+        </ul>
+    </div>
+
+    <!-- ===== INTRODUCTION ===== -->
+    <div class="section-title">
+        <span class="emoji">💡</span> What is Debugging?
+    </div>
+
+    <div class="explanation">
+        <p><span class="highlight">Debugging</span> is the process of finding and fixing mistakes (called <strong>bugs</strong>) in your code.</p>
+        <p>Even professional programmers spend <strong>most of their time debugging</strong> — it's a normal and important part of programming!</p>
+        <p>The word "debugging" comes from an actual <strong>moth</strong> that was found stuck in a computer in 1947. They literally had to "debug" the computer!</p>
+        <div class="keywords">
+            <span>bug</span>
+            <span>debug</span>
+            <span>syntax error</span>
+            <span>logic error</span>
+            <span>runtime error</span>
+            <span>trace</span>
+        </div>
+    </div>
+
+    <!-- ===== TYPES OF BUGS ===== -->
+    <div class="section-title">
+        <span class="emoji">🐛</span> Types of Bugs
+    </div>
+
+    <div class="bug-table">
+        <h4>📊 Three Types of Bugs</h4>
+        <table>
+            <tr>
+                <td class="bug-syntax">1. Syntax Errors</td>
+                <td>Mistakes in the <strong>rules</strong> of C++ (missing semicolons, typos)</td>
+                <td style="color:#f5a623;">Program won't compile</td>
+            </tr>
+            <tr>
+                <td class="bug-logic">2. Logic Errors</td>
+                <td>Code runs but does the <strong>wrong thing</strong> (wrong formula, wrong condition)</td>
+                <td style="color:#7b93d6;">Program runs but gives wrong results</td>
+            </tr>
+            <tr>
+                <td class="bug-runtime">3. Runtime Errors</td>
+                <td>Errors that happen <strong>while the program is running</strong> (divide by zero, out of bounds)</td>
+                <td style="color:#f7b731;">Program crashes or freezes</td>
+            </tr>
+        </table>
+        <div class="tip-box warning" style="margin-top:0.8rem;">
+            <strong>🔍 The good news:</strong> <span style="color:#c8d2f0;">The compiler tells you about <span class="highlight">syntax errors</span>! Logic errors are trickier — you have to figure those out yourself.</span>
+        </div>
+    </div>
+
+    <!-- ===== DEBUGGING STEPS ===== -->
+    <div class="section-title">
+        <span class="emoji">🔧</span> Debugging Steps
+    </div>
+
+    <div class="steps-box">
+        <h4>📋 Step-by-Step Debugging Process</h4>
+        <ol>
+            <li><strong>Read the error message</strong> — It tells you the line number and what's wrong</li>
+            <li><strong>Check the line number</strong> — Look at the line the error points to</li>
+            <li><strong>Use cout to debug</strong> — Print variables to see what's happening</li>
+            <li><strong>Trace your code</strong> — Follow the logic step by step</li>
+            <li><strong>Test with simple inputs</strong> — Start with easy values to test</li>
+            <li><strong>Fix one bug at a time</strong> — Don't change too much at once</li>
+            <li><strong>Test again</strong> — Make sure your fix worked</li>
+        </ol>
+    </div>
+
+    <!-- ===== EXAMPLE 1 ===== -->
+    <div class="section-title">
+        <span class="emoji">📝</span> Example 1: Syntax Error
+    </div>
+
+    <div class="example-box">
+        <div class="example-title">
+            <span class="num">1</span> Missing Semicolon
+            <span class="bug-icon">🐛</span>
+        </div>
+        <p style="color:#c8d2f0; margin-bottom:0.5rem;">This code has a <strong>syntax error</strong> — can you find it?</p>
+
+        <div class="code-label">❌ BUGGY CODE</div>
+        <div class="code-block" style="border-color: #f5a623;">
+            <span class="keyword">#include</span> &lt;iostream&gt;
+            <span class="keyword">using namespace</span> std;
+
+            <span class="keyword">int</span> <span class="function">main</span>() {
+                <span class="keyword">int</span> <span class="variable">x</span> = <span class="number">5</span>
+                <span class="keyword">int</span> <span class="variable">y</span> = <span class="number">10</span>
+                cout &lt;&lt; <span class="string">"Sum: "</span> &lt;&lt; x + y &lt;&lt; endl;
+                <span class="keyword">return</span> <span class="number">0</span>;
+            }
+        </div>
+
+        <div class="bug-label">🐛 BUG: Missing semicolons after x = 5 and y = 10</div>
+
+        <div class="code-label">✅ FIXED CODE</div>
+        <div class="code-block" style="border-color: #7bcfa6;">
+            <span class="keyword">#include</span> &lt;iostream&gt;
+            <span class="keyword">using namespace</span> std;
+
+            <span class="keyword">int</span> <span class="function">main</span>() {
+                <span class="keyword">int</span> <span class="variable">x</span> = <span class="number">5</span><span class="fix">;</span>  <span class="comment">// ← Added semicolon</span>
+                <span class="keyword">int</span> <span class="variable">y</span> = <span class="number">10</span><span class="fix">;</span> <span class="comment">// ← Added semicolon</span>
+                cout &lt;&lt; <span class="string">"Sum: "</span> &lt;&lt; x + y &lt;&lt; endl;
+                <span class="keyword">return</span> <span class="number">0</span>;
+            }
+        </div>
+
+        <div class="fix-label">✅ FIX: Add semicolons at the end of each statement</div>
+
+        <div class="tip-box success">
+            <strong>💡 Pro Tip:</strong> <span style="color:#c8d2f0;">When the compiler says <span class="highlight">"expected ';' before ..."</span> it means you forgot a semicolon on the line <strong>above</strong> where the error points!</span>
+        </div>
+    </div>
+
+    <!-- ===== EXAMPLE 2 ===== -->
+    <div class="section-title">
+        <span class="emoji">📝</span> Example 2: Logic Error
+    </div>
+
+    <div class="example-box">
+        <div class="example-title">
+            <span class="num">2</span> Wrong Calculation
+            <span class="bug-icon">🐛</span>
+        </div>
+        <p style="color:#c8d2f0; margin-bottom:0.5rem;">This code runs but gives the <strong>wrong answer</strong> — a logic error!</p>
+
+        <div class="code-label">❌ BUGGY CODE</div>
+        <div class="code-block" style="border-color: #f5a623;">
+            <span class="keyword">#include</span> &lt;iostream&gt;
+            <span class="keyword">using namespace</span> std;
+
+            <span class="keyword">int</span> <span class="function">main</span>() {
+                <span class="keyword">int</span> <span class="variable">celsius</span> = <span class="number">25</span>;
+                <span class="comment">// Wrong formula: should be (C × 9/5) + 32</span>
+                <span class="keyword">int</span> <span class="variable">fahrenheit</span> = celsius * <span class="number">9</span> / <span class="number">5</span> + <span class="number">32</span>; <span class="comment">// Wait, this is actually right!</span>
+                <span class="comment">// The bug is... wait, let me check...</span>
+                cout &lt;&lt; <span class="string">"Fahrenheit: "</span> &lt;&lt; fahrenheit &lt;&lt; endl;
+                <span class="keyword">return</span> <span class="number">0</span>;
+            }
+        </div>
+
+        <div class="bug-label">🐛 BUG: Using int instead of double — 9/5 = 1 (not 1.8)!</div>
+
+        <div class="code-label">✅ FIXED CODE</div>
+        <div class="code-block" style="border-color: #7bcfa6;">
+            <span class="keyword">#include</span> &lt;iostream&gt;
+            <span class="keyword">using namespace</span> std;
+
+            <span class="keyword">int</span> <span class="function">main</span>() {
+                <span class="keyword">double</span> <span class="variable">celsius</span> = <span class="number">25</span>;
+                <span class="comment">// Use double for decimal precision</span>
+                <span class="keyword">double</span> <span class="variable">fahrenheit</span> = celsius * <span class="number">9.0</span> / <span class="number">5.0</span> + <span class="number">32</span>;
+                cout &lt;&lt; <span class="string">"Fahrenheit: "</span> &lt;&lt; fahrenheit &lt;&lt; endl;
+                <span class="keyword">return</span> <span class="number">0</span>;
+            }
+        </div>
+
+        <div class="fix-label">✅ FIX: Use double instead of int, and 9.0/5.0 instead of 9/5</div>
+
+        <div class="tip-box warning">
+            <strong>⚠️ Common Bug:</strong> <span style="color:#c8d2f0;">When you divide two <span class="highlight">int</span>s, C++ does <strong>integer division</strong> (no decimals). Use <span class="highlight">double</span> or add <span class="highlight">.0</span> to your numbers!</span>
+        </div>
+    </div>
+
+    <!-- ===== EXAMPLE 3 ===== -->
+    <div class="section-title">
+        <span class="emoji">📝</span> Example 3: Runtime Error
+    </div>
+
+    <div class="example-box">
+        <div class="example-title">
+            <span class="num">3</span> Array Out of Bounds
+            <span class="bug-icon">🐛</span>
+        </div>
+        <p style="color:#c8d2f0; margin-bottom:0.5rem;">This code compiles but <strong>crashes</strong> when you run it!</p>
+
+        <div class="code-label">❌ BUGGY CODE</div>
+        <div class="code-block" style="border-color: #f5a623;">
+            <span class="keyword">#include</span> &lt;iostream&gt;
+            <span class="keyword">using namespace</span> std;
+
+            <span class="keyword">int</span> <span class="function">main</span>() {
+                <span class="keyword">int</span> <span class="variable">scores</span>[<span class="number">5</span>] = {<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">40</span>, <span class="number">50</span>};
+
+                <span class="comment">// The bug: looping from 0 to 5 (should be 0 to 4)</span>
+                <span class="keyword">for</span> (<span class="keyword">int</span> <span class="variable">i</span> = <span class="number">0</span>; i &lt;= <span class="number">5</span>; i++) {
+                    cout &lt;&lt; scores[i] &lt;&lt; <span class="string">" "</span>;
+                }
+
+                <span class="keyword">return</span> <span class="number">0</span>;
+            }
+        </div>
+
+        <div class="bug-label">🐛 BUG: i &lt;= 5 means i goes to 5, but scores[5] doesn't exist!</div>
+
+        <div class="code-label">✅ FIXED CODE</div>
+        <div class="code-block" style="border-color: #7bcfa6;">
+            <span class="keyword">#include</span> &lt;iostream&gt;
+            <span class="keyword">using namespace</span> std;
+
+            <span class="keyword">int</span> <span class="function">main</span>() {
+                <span class="keyword">int</span> <span class="variable">scores</span>[<span class="number">5</span>] = {<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">40</span>, <span class="number">50</span>};
+
+                <span class="comment">// Fix: loop from 0 to 4 (i < 5)</span>
+                <span class="keyword">for</span> (<span class="keyword">int</span> <span class="variable">i</span> = <span class="number">0</span>; i < <span class="number">5</span>; i++) {
+                    cout &lt;&lt; scores[i] &lt;&lt; <span class="string">" "</span>;
+                }
+
+                <span class="keyword">return</span> <span class="number">0</span>;
+            }
+        </div>
+
+        <div class="fix-label">✅ FIX: Change i &lt;= 5 to i < 5</div>
+
+        <div class="tip-box warning">
+            <strong>⚠️ Important:</strong> <span style="color:#c8d2f0;">An array of size <span class="highlight">5</span> has indexes <span class="highlight">0, 1, 2, 3, 4</span>. Accessing <span class="highlight">scores[5]</span> is <strong>out of bounds</strong> and can crash your program!</span>
+        </div>
+    </div>
+
+    <!-- ===== DEBUGGING WITH COUT ===== -->
+    <div class="section-title">
+        <span class="emoji">🔍</span> Debugging with cout
+    </div>
+
+    <div class="explanation">
+        <p>One of the <strong>simplest and most powerful</strong> debugging techniques is using <span class="highlight">cout</span> to print variable values.</p>
+        <p>Add <span class="highlight">cout</span> statements to see what's happening inside your program:</p>
+    </div>
+
+    <div class="example-box">
+        <div class="example-title">
+            <span class="num">📌</span> Using cout to Debug
+        </div>
+
+        <div class="code-label">🔍 DEBUGGING WITH COUT</div>
+        <div class="code-block">
+            <span class="keyword">#include</span> &lt;iostream&gt;
+            <span class="keyword">using namespace</span> std;
+
+            <span class="keyword">int</span> <span class="function">main</span>() {
+                <span class="keyword">int</span> <span class="variable">total</span> = <span class="number">0</span>;
+
+                <span class="keyword">for</span> (<span class="keyword">int</span> <span class="variable">i</span> = <span class="number">1</span>; i &lt;= <span class="number">5</span>; i++) {
+                    total += i;
+                    <span class="comment">// Debug: print what's happening</span>
+                    cout &lt;&lt; <span class="string">"DEBUG: i = "</span> &lt;&lt; i &lt;&lt; <span class="string">", total = "</span> &lt;&lt; total &lt;&lt; endl;
+                }
+
+                cout &lt;&lt; <span class="string">"Final total: "</span> &lt;&lt; total &lt;&lt; endl;
+                <span class="keyword">return</span> <span class="number">0</span>;
+            }
+        </div>
+
+        <div class="output-label">▶️ Debug Output:</div>
+        <div class="output">
+            DEBUG: i = 1, total = 1<br />
+            DEBUG: i = 2, total = 3<br />
+            DEBUG: i = 3, total = 6<br />
+            DEBUG: i = 4, total = 10<br />
+            DEBUG: i = 5, total = 15<br />
+            Final total: 15
+        </div>
+
+        <div class="tip-box success">
+            <strong>💡 Pro Tip:</strong> <span style="color:#c8d2f0;">Remove your <span class="highlight">cout</span> debug statements once you've fixed the bug — or comment them out with <span class="highlight">//</span> so you can use them again later!</span>
+        </div>
+    </div>
+
+    <!-- ===== COMMON BUGS CHEAT SHEET ===== -->
+    <div class="section-title">
+        <span class="emoji">📋</span> Common Bugs & Fixes
+    </div>
+
+    <div class="cheat-sheet">
+        <h3>🔑 Common C++ Bugs and How to Fix Them</h3>
+        <table>
+            <tr>
+                <td>Missing ;</td>
+                <td>Add a semicolon at the end of the statement</td>
+            </tr>
+            <tr>
+                <td>Misspelled variable</td>
+                <td>Check spelling — C++ is case-sensitive!</td>
+            </tr>
+            <tr>
+                <td>Using = instead of ==</td>
+                <td>Use == for comparison, = for assignment</td>
+            </tr>
+            <tr>
+                <td>Array out of bounds</td>
+                <td>Make sure your loop goes from 0 to size-1</td>
+            </tr>
+            <tr>
+                <td>Integer division</td>
+                <td>Use double or add .0 to numbers</td>
+            </tr>
+            <tr>
+                <td>Infinite loop</td>
+                <td>Make sure your loop condition changes</td>
+            </tr>
+            <tr>
+                <td>Forgetting &lt;string&gt;</td>
+                <td>Add #include &lt;string&gt; when using strings</td>
+            </tr>
+            <tr>
+                <td>Forgetting to close { }</td>
+                <td>Count your opening and closing braces</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- ===== ACTIVITY 1 ===== -->
+    <div class="section-title">
+        <span class="emoji">🏋️</span> Practice Time!
+    </div>
+
+    <div class="activity-box">
+        <div class="activity-title">
+            🎯 Activity 1: Bug Hunt - Find the Syntax Errors
+            <span class="badge">⭐ BEGINNER</span>
+        </div>
+        <div class="challenge">
+            <p><strong>Your Task:</strong> Find and fix all the <strong>syntax errors</strong> in this code!</p>
+            <p style="color:#f5a623; font-weight:700; margin-top:0.5rem;">🐛 There are 5 bugs in this code!</p>
+
+            <div class="code-block" style="border-color: #f5a623; margin-top:0.5rem;">
+                <span class="keyword">#include</span> &lt;iostream&gt;
+                <span class="keyword">using namespace</span> std
+
+                <span class="keyword">int</span> <span class="function">main</span>() 
+                    <span class="keyword">int</span> <span class="variable">num1</span> = <span class="number">10</span>
+                    <span class="keyword">int</span> <span class="variable">num2</span> = <span class="number">5</span>;
+                    cout &lt;&lt; <span class="string">"Sum: "</span> &lt;&lt; num1 + num2 &lt;&lt; endl
+                    cout &lt;&lt; <span class="string">"Product: "</span> &lt;&lt; num1 * num2 &lt;&lt; endl;
+                    <span class="keyword">return</span> <span class="number">0</span>
+                }
+            </div>
+
+            <p style="color:#c8d2f0; margin-top:0.5rem;">Write the corrected code below:</p>
+            <div class="output" style="min-height:100px; color:#7bcfa6;">
+                // Write your fixed code here
+            </div>
+        </div>
+        <div class="hint">
+            <strong>💡 Hint:</strong> Look for missing semicolons (<span class="highlight">;</span>), missing braces (<span class="highlight">{ }</span>), and missing parentheses.
+        </div>
+    </div>
+
+    <!-- ===== ACTIVITY 2 ===== -->
+    <div class="activity-box">
+        <div class="activity-title">
+            🚀 Activity 2: Bug Hunt - Fix the Logic
+            <span class="badge">⭐⭐ CHALLENGE</span>
+        </div>
+        <div class="challenge">
+            <p><strong>Your Task:</strong> Find and fix the <strong>logic errors</strong> in this program!</p>
+            <p style="color:#f5a623; font-weight:700; margin-top:0.5rem;">🐛 This program has 3 logic errors!</p>
+            <p style="color:#c8d2f0;">The program should ask for 5 numbers and calculate their average, but it's not working correctly.</p>
+
+            <div class="code-block" style="border-color: #f5a623; margin-top:0.5rem;">
+                <span class="keyword">#include</span> &lt;iostream&gt;
+                <span class="keyword">using namespace</span> std;
+
+                <span class="keyword">int</span> <span class="function">main</span>() {
+                    <span class="keyword">int</span> <span class="variable">numbers</span>[<span class="number">5</span>];
+                    <span class="keyword">int</span> <span class="variable">sum</span>;
+
+                    cout &lt;&lt; <span class="string">"Enter 5 numbers:"</span> &lt;&lt; endl;
+                    <span class="keyword">for</span> (<span class="keyword">int</span> <span class="variable">i</span> = <span class="number">0</span>; i &lt;= <span class="number">5</span>; i++) {
+                        cout &lt;&lt; <span class="string">"Number "</span> &lt;&lt; i &lt;&lt; <span class="string">": "</span>;
+                        cin &gt;&gt; numbers[i];
+                        sum += numbers[i];
+                    }
+
+                    <span class="keyword">int</span> <span class="variable">average</span> = sum / <span class="number">5</span>;
+                    cout &lt;&lt; <span class="string">"Average: "</span> &lt;&lt; average &lt;&lt; endl;
+
+                    <span class="keyword">return</span> <span class="number">0</span>;
+                }
+            </div>
+
+            <p style="color:#c8d2f0; margin-top:0.5rem;">What's wrong? List the bugs and write the fixed code:</p>
+            <div class="output" style="min-height:100px; color:#7bcfa6;">
+                // Write your fixed code here
+            </div>
+        </div>
+        <div class="hint">
+            <strong>💡 Hint:</strong> <span class="highlight">Bug 1:</span> The loop goes too far (out of bounds).<br />
+            <strong>💡 Hint:</strong> <span class="highlight">Bug 2:</span> The sum variable isn't initialized to 0.<br />
+            <strong>💡 Hint:</strong> <span class="highlight">Bug 3:</span> The average should be a double for decimal precision.
+        </div>
+    </div>
+
+    <!-- ===== BONUS CHALLENGE ===== -->
+    <div class="activity-box" style="border-color: #7b93d6;">
+        <div class="activity-title" style="color: #7b93d6;">
+            🌟 Bonus Challenge: Debug the Calculator
+            <span class="badge" style="background:#7b93d6;">⭐⭐⭐ ADVANCED</span>
+        </div>
+        <div class="challenge">
+            <p><strong>Your Task:</strong> This calculator has <strong>multiple bugs</strong>. Fix them all!</p>
+            <p style="color:#f5a623; font-weight:700; margin-top:0.5rem;">🐛 There are 6+ bugs in this code!</p>
+            <p style="color:#c8d2f0;">The program should ask for two numbers and an operation (+, -, *, /), then print the result.</p>
+
+            <div class="code-block" style="border-color: #f5a623; margin-top:0.5rem;">
+                <span class="keyword">#include</span> &lt;iostream&gt;
+                <span class="keyword">using namespace</span> std
+
+                <span class="keyword">int</span> <span class="function">main</span>() {
+                    <span class="keyword">double</span> <span class="variable">num1</span>, <span class="variable">num2</span>;
+                    <span class="keyword">char</span> <span class="variable">operation</span>;
+
+                    cout &lt;&lt; <span class="string">"Enter first number: "</span>;
+                    cin &gt;&gt; num1
+                    cout &lt;&lt; <span class="string">"Enter second number: "</span>;
+                    cin &gt;&gt; num2;
+                    cout &lt;&lt; <span class="string">"Enter operation (+, -, *, /): "</span>;
+                    cin &gt;&gt; operation;
+
+                    <span class="keyword">if</span> (operation = <span class="string">'+'</span>) {
+                        cout &lt;&lt; num1 &lt;&lt; <span class="string">" + "</span> &lt;&lt; num2 &lt;&lt; <span class="string">" = "</span> &lt;&lt; num1 + num2 &lt;&lt; endl;
+                    } <span class="keyword">else if</span> (operation = <span class="string">'-'</span>) {
+                        cout &lt;&lt; num1 &lt;&lt; <span class="string">" - "</span> &lt;&lt; num2 &lt;&lt; <span class="string">" = "</span> &lt;&lt; num1 - num2 &lt;&lt; endl;
+                    } <span class="keyword">else if</span> (operation = <span class="string">'*'</span>) {
+                        cout &lt;&lt; num1 &lt;&lt; <span class="string">" * "</span> &lt;&lt; num2 &lt;&lt; <span class="string">" = "</span> &lt;&lt; num1 * num2 &lt;&lt; endl;
+                    } <span class="keyword">else if</span> (operation = <span class="string">'/'</span>) {
+                        cout &lt;&lt; num1 &lt;&lt; <span class="string">" / "</span> &lt;&lt; num2 &lt;&lt; <span class="string">" = "</span> &lt;&lt; num1 / num2 &lt;&lt; endl;
+                    } <span class="keyword">else</span> {
+                        cout &lt;&lt; <span class="string">"Invalid operation!"</span> &lt;&lt; endl;
+                    }
+
+                    <span class="keyword">return</span> <span class="number">0</span>;
+                }
+            </div>
+
+            <p style="color:#c8d2f0; margin-top:0.5rem;">List all the bugs and write the fixed code:</p>
+            <div class="output" style="min-height:100px; color:#7bcfa6;">
+                // Write your fixed code here
+            </div>
+        </div>
+        <div class="hint">
+            <strong>💡 Hint:</strong> Look for missing semicolons, using = instead of == in if statements, missing <span class="highlight">#include &lt;string&gt;</span>, and missing braces.
+        </div>
+    </div>
+
+    <!-- ===== SUMMARY ===== -->
+    <div class="section-title">
+        <span class="emoji">🎓</span> Lesson Summary
+    </div>
+
+    <div class="summary-box">
+        <h3>✅ What You Learned Today</h3>
+        <ul>
+            <li>What <span class="highlight">bugs</span> are and why they happen</li>
+            <li>The three types of bugs: <strong>Syntax</strong>, <strong>Logic</strong>, and <strong>Runtime</strong></li>
+            <li>How to <strong>read error messages</strong> from the compiler</li>
+            <li>How to use <span class="highlight">cout</span> to debug your code</li>
+            <li>How to fix <strong>common bugs</strong> like missing semicolons and array out-of-bounds</li>
+            <li>The <strong>step-by-step debugging process</strong></li>
+            <li>That <strong>debugging is normal</strong> — even professional programmers do it every day!</li>
+        </ul>
+    </div>
+
+    <!-- ===== WHAT'S NEXT ===== -->
+    <div class="section-title">
+        <span class="emoji">🔜</span> What's Next?
+    </div>
+
+    <div class="explanation">
+        <p>In <strong>Lesson 11</strong>, you'll learn how to:</p>
+        <ul style="color:#c8d2f0; margin-left:1.5rem;">
+            <li>📝 <strong>Plan your final project</strong> — a text adventure game</li>
+            <li>🎮 <strong>Design the story</strong>, characters, and choices</li>
+            <li>📋 Create a <strong>project outline</strong> before you start coding</li>
+        </ul>
+        <p style="margin-top:0.8rem; color:#9aa8d9;">👉 <a href="lesson11.html" style="color:#f5c542;">Click here to go to Lesson 11 →</a></p>
+    </div>
+
+    <!-- ===== NAVIGATION BUTTONS ===== -->
+    <div class="btn-group">
+        <a href="index.html" class="btn btn-secondary">🏠 Homepage</a>
+        <a href="lesson9.html" class="btn btn-secondary">⬅️ Previous Lesson</a>
+        <a href="lesson11.html" class="btn">➡️ Next Lesson</a>
+    </div>
+
+    <!-- ===== FOOTER ===== -->
+    <div class="footer">
+        <p>💻 <strong>C++ Coding Adventure</strong> · Grade 9 · Lesson 10</p>
+        <p style="font-size:0.8rem; color:#4f6199;">Keep coding, keep learning! 🚀</p>
+    </div>
+
+</div>
+
+<!-- ===== COPY FUNCTION ===== -->
+<script>
+    function copyCode(button) {
+        const codeBlock = button.parentElement;
+        const codeText = codeBlock.innerText.replace('📋 Copy', '').trim();
+        navigator.clipboard.writeText(codeText).then(() => {
+            const original = button.textContent;
+            button.textContent = '✅ Copied!';
+            setTimeout(() => {
+                button.textContent = original;
+            }, 2000);
+        }).catch(() => {
+            alert('Please select and copy the code manually.');
+        });
+    }
+</script>
+
+</body>
+</html>
