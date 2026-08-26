@@ -170,7 +170,7 @@
         .topics-table td {
             padding: 0.8rem 1rem;
             border-bottom: 1px solid #28315a;
-            vertical-align: top;
+            vertical-align: middle;
         }
 
         .topics-table tr:hover td {
@@ -184,6 +184,41 @@
             border-radius: 30px;
             font-size: 0.8rem;
             font-weight: 600;
+        }
+
+        .page-link {
+            display: inline-block;
+            background: #0f1629;
+            color: #7b93d6;
+            padding: 0.2rem 1rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-family: 'Courier New', monospace;
+            border: 1px solid #2a3457;
+            text-decoration: none;
+            transition: 0.2s;
+            white-space: nowrap;
+        }
+
+        .page-link:hover {
+            background: #f5a623;
+            color: #0b0e1a;
+            border-color: #f5a623;
+            transform: scale(1.05);
+        }
+
+        .page-link::before {
+            content: "🔗 ";
+        }
+
+        .page-link i {
+            font-style: normal;
+            font-size: 0.65rem;
+            color: #4f6199;
+        }
+
+        .page-link:hover i {
+            color: #0b0e1a;
         }
 
         /* ===== TOOLS + FINAL PROJECT ===== */
@@ -405,6 +440,121 @@
                 flex-direction: column;
                 gap: 0.8rem;
             }
+
+            .page-link {
+                font-size: 0.65rem;
+                padding: 0.1rem 0.6rem;
+            }
+        }
+
+        /* ===== TOPIC INDEX ===== */
+        .topic-index {
+            margin: 2rem 0 1rem 0;
+            padding: 1.5rem;
+            background: #0f1629;
+            border-radius: 1rem;
+            border: 1px solid #2a3457;
+        }
+
+        .topic-index h3 {
+            color: #f5c542;
+            margin-bottom: 0.8rem;
+        }
+
+        .topic-index-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.5rem 1.5rem;
+        }
+
+        .topic-index-grid a {
+            color: #9aa8d9;
+            text-decoration: none;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            padding: 0.2rem 0;
+            border-bottom: 1px solid transparent;
+            transition: 0.2s;
+        }
+
+        .topic-index-grid a:hover {
+            color: #f5c542;
+            border-bottom-color: #f5a623;
+        }
+
+        .topic-index-grid a::before {
+            content: "📄 ";
+        }
+
+        /* ===== PROGRESS TRACKER ===== */
+        .progress-tracker {
+            background: #0f1629;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border: 1px solid #2a3457;
+        }
+
+        .progress-tracker h3 {
+            color: #f5c542;
+            margin-bottom: 0.8rem;
+        }
+
+        .progress-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 0.5rem;
+        }
+
+        .progress-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #6b7db3;
+            font-size: 0.85rem;
+            padding: 0.3rem 0.5rem;
+            border-radius: 6px;
+            background: #141a2b;
+        }
+
+        .progress-item .checkbox {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            border: 2px solid #3b4780;
+            border-radius: 4px;
+            background: #0b0e1a;
+            flex-shrink: 0;
+        }
+
+        .progress-item.done .checkbox {
+            background: #f5a623;
+            border-color: #f5a623;
+            position: relative;
+        }
+
+        .progress-item.done .checkbox::after {
+            content: "✓";
+            color: #0b0e1a;
+            font-weight: 700;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 12px;
+        }
+
+        .progress-item.done {
+            color: #b3c4f0;
+        }
+
+        .progress-item a {
+            color: #7b93d6;
+            text-decoration: none;
+        }
+
+        .progress-item a:hover {
+            color: #f5c542;
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -469,31 +619,133 @@
         </div>
     </div>
 
-    <!-- ===== TOPICS ===== -->
+    <!-- ===== TOPICS TABLE with HTML LINKS ===== -->
     <h2 class="section-title">📚 What You'll Learn</h2>
+    
+    <!-- Quick Index -->
+    <div class="topic-index">
+        <h3>📂 Lesson Pages — Click any link to open the lesson:</h3>
+        <div class="topic-index-grid">
+            <a href="week1_hello.html">week1_hello.html</a>
+            <a href="week2_input_math.html">week2_input_math.html</a>
+            <a href="week3_if_else.html">week3_if_else.html</a>
+            <a href="week4_while_loop.html">week4_while_loop.html</a>
+            <a href="week5_for_loop.html">week5_for_loop.html</a>
+            <a href="week6_arrays.html">week6_arrays.html</a>
+            <a href="week7_functions.html">week7_functions.html</a>
+            <a href="week8_strings.html">week8_strings.html</a>
+            <a href="week9_file_io.html">week9_file_io.html</a>
+            <a href="week10_debugging.html">week10_debugging.html</a>
+            <a href="week11_project_plan.html">week11_project_plan.html</a>
+            <a href="week12_final_game.html">week12_final_game.html</a>
+        </div>
+    </div>
+
     <table class="topics-table">
         <thead>
             <tr>
                 <th>Week</th>
                 <th>Topic</th>
                 <th>What You'll Make</th>
+                <th>Lesson Page</th>
             </tr>
         </thead>
         <tbody>
-            <tr><td><span class="week-badge">1</span></td><td>Hello World &amp; Variables</td><td>Print your name, age, and favorite things</td></tr>
-            <tr><td><span class="week-badge">2</span></td><td>User Input &amp; Math</td><td>BMI calculator or tip calculator</td></tr>
-            <tr><td><span class="week-badge">3</span></td><td>If/Else Decisions</td><td>Fortune Teller or personality quiz</td></tr>
-            <tr><td><span class="week-badge">4</span></td><td>Loops – While</td><td>Countdown Timer</td></tr>
-            <tr><td><span class="week-badge">5</span></td><td>Loops – For</td><td>Times tables and patterns</td></tr>
-            <tr><td><span class="week-badge">6</span></td><td>Arrays / Lists</td><td>Track scores for a game</td></tr>
-            <tr><td><span class="week-badge">7</span></td><td>Functions</td><td>Organize code into reusable blocks</td></tr>
-            <tr><td><span class="week-badge">8</span></td><td>Strings (Text)</td><td>Password strength checker</td></tr>
-            <tr><td><span class="week-badge">9</span></td><td>File I/O</td><td>Save and load high scores</td></tr>
-            <tr><td><span class="week-badge">10</span></td><td>Debugging</td><td>Hunt down and fix bugs</td></tr>
-            <tr><td><span class="week-badge">11</span></td><td>Project Planning</td><td>Design your own text adventure</td></tr>
-            <tr><td><span class="week-badge">12</span></td><td>Final Project</td><td>Build and present your game!</td></tr>
+            <tr>
+                <td><span class="week-badge">1</span></td>
+                <td>Hello World &amp; Variables</td>
+                <td>Print your name, age, and favorite things</td>
+                <td><a href="week1_hello.html" class="page-link">week1_hello.html</a></td>
+            </tr>
+            <tr>
+                <td><span class="week-badge">2</span></td>
+                <td>User Input &amp; Math</td>
+                <td>BMI calculator or tip calculator</td>
+                <td><a href="week2_input_math.html" class="page-link">week2_input_math.html</a></td>
+            </tr>
+            <tr>
+                <td><span class="week-badge">3</span></td>
+                <td>If/Else Decisions</td>
+                <td>Fortune Teller or personality quiz</td>
+                <td><a href="week3_if_else.html" class="page-link">week3_if_else.html</a></td>
+            </tr>
+            <tr>
+                <td><span class="week-badge">4</span></td>
+                <td>Loops – While</td>
+                <td>Countdown Timer</td>
+                <td><a href="week4_while_loop.html" class="page-link">week4_while_loop.html</a></td>
+            </tr>
+            <tr>
+                <td><span class="week-badge">5</span></td>
+                <td>Loops – For</td>
+                <td>Times tables and patterns</td>
+                <td><a href="week5_for_loop.html" class="page-link">week5_for_loop.html</a></td>
+            </tr>
+            <tr>
+                <td><span class="week-badge">6</span></td>
+                <td>Arrays / Lists</td>
+                <td>Track scores for a game</td>
+                <td><a href="week6_arrays.html" class="page-link">week6_arrays.html</a></td>
+            </tr>
+            <tr>
+                <td><span class="week-badge">7</span></td>
+                <td>Functions</td>
+                <td>Organize code into reusable blocks</td>
+                <td><a href="week7_functions.html" class="page-link">week7_functions.html</a></td>
+            </tr>
+            <tr>
+                <td><span class="week-badge">8</span></td>
+                <td>Strings (Text)</td>
+                <td>Password strength checker</td>
+                <td><a href="week8_strings.html" class="page-link">week8_strings.html</a></td>
+            </tr>
+            <tr>
+                <td><span class="week-badge">9</span></td>
+                <td>File I/O</td>
+                <td>Save and load high scores</td>
+                <td><a href="week9_file_io.html" class="page-link">week9_file_io.html</a></td>
+            </tr>
+            <tr>
+                <td><span class="week-badge">10</span></td>
+                <td>Debugging</td>
+                <td>Hunt down and fix bugs</td>
+                <td><a href="week10_debugging.html" class="page-link">week10_debugging.html</a></td>
+            </tr>
+            <tr>
+                <td><span class="week-badge">11</span></td>
+                <td>Project Planning</td>
+                <td>Design your own text adventure</td>
+                <td><a href="week11_project_plan.html" class="page-link">week11_project_plan.html</a></td>
+            </tr>
+            <tr>
+                <td><span class="week-badge">12</span></td>
+                <td>Final Project</td>
+                <td>Build and present your game!</td>
+                <td><a href="week12_final_game.html" class="page-link">week12_final_game.html</a></td>
+            </tr>
         </tbody>
     </table>
+
+    <!-- ===== PROGRESS TRACKER ===== -->
+    <div class="progress-tracker">
+        <h3>✅ Your Progress Tracker</h3>
+        <p style="color:#6b7db3; font-size:0.9rem; margin-bottom:0.8rem;">Click the checkbox when you complete each lesson!</p>
+        <div class="progress-grid">
+            <div class="progress-item"><span class="checkbox"></span> <a href="week1_hello.html">Week 1</a></div>
+            <div class="progress-item"><span class="checkbox"></span> <a href="week2_input_math.html">Week 2</a></div>
+            <div class="progress-item"><span class="checkbox"></span> <a href="week3_if_else.html">Week 3</a></div>
+            <div class="progress-item"><span class="checkbox"></span> <a href="week4_while_loop.html">Week 4</a></div>
+            <div class="progress-item"><span class="checkbox"></span> <a href="week5_for_loop.html">Week 5</a></div>
+            <div class="progress-item"><span class="checkbox"></span> <a href="week6_arrays.html">Week 6</a></div>
+            <div class="progress-item"><span class="checkbox"></span> <a href="week7_functions.html">Week 7</a></div>
+            <div class="progress-item"><span class="checkbox"></span> <a href="week8_strings.html">Week 8</a></div>
+            <div class="progress-item"><span class="checkbox"></span> <a href="week9_file_io.html">Week 9</a></div>
+            <div class="progress-item"><span class="checkbox"></span> <a href="week10_debugging.html">Week 10</a></div>
+            <div class="progress-item"><span class="checkbox"></span> <a href="week11_project_plan.html">Week 11</a></div>
+            <div class="progress-item"><span class="checkbox"></span> <a href="week12_final_game.html">Week 12</a></div>
+        </div>
+        <p style="color:#4f6199; font-size:0.8rem; margin-top:0.8rem;">💡 Tip: In your browser, right-click a checkbox → Inspect → change <code>class="progress-item"</code> to <code>class="progress-item done"</code> to mark it complete!</p>
+    </div>
 
     <!-- ===== TOOLS + FINAL PROJECT ===== -->
     <div class="two-col">
@@ -564,28 +816,38 @@
     <div class="first-task">
         <h3>🚀 Ready to Start? Your First Task</h3>
         <ol style="color:#c8d2f0; margin:0.5rem 0 0.8rem 1.5rem;">
-            <li>Open your online compiler (Replit or similar)</li>
-            <li>Type this code exactly:</li>
+            <li>Click the link for <strong>Week 1</strong> above: <a href="week1_hello.html" style="color:#f5c542;">week1_hello.html</a></li>
+            <li>Follow the lesson and write your first C++ program!</li>
+            <li>Save your code as <strong style="color:#f5c542;">week1_hello.cpp</strong></li>
         </ol>
-        <code>
-#include &lt;iostream&gt;
-using namespace std;
+        <p style="color:#6b7db3; font-size:0.9rem;">💡 Each week has its own lesson page. Just click the links in the table above!</p>
+        <button class="btn" onclick="window.location.href='week1_hello.html'">🚀 Start Week 1 Now!</button>
+    </div>
 
-int main() {
-    cout &lt;&lt; "Hello, World!" &lt;&lt; endl;
-    cout &lt;&lt; "My name is [Your Name]" &lt;&lt; endl;
-    cout &lt;&lt; "I am ready to code!" &lt;&lt; endl;
-    return 0;
-}
-        </code>
-        <p style="color:#b3c4f0;">3. Click <strong>Run</strong> and watch the magic happen!</p>
-        <button class="btn" onclick="alert('🚀 You\'re on your way! Happy coding!')">✨ I'm ready!</button>
+    <!-- ===== FILE NAMING SUMMARY ===== -->
+    <div style="background:#0f1629; border-radius:1rem; padding:1.5rem; margin:1.5rem 0; border:1px solid #2a3457;">
+        <h3 style="color:#f5c542; margin-bottom:0.5rem;">📋 All Lesson Pages</h3>
+        <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(200px,1fr)); gap:0.3rem 1rem;">
+            <a href="week1_hello.html" style="color:#7b93d6; font-family:'Courier New',monospace; font-size:0.85rem; text-decoration:none;">📄 week1_hello.html</a>
+            <a href="week2_input_math.html" style="color:#7b93d6; font-family:'Courier New',monospace; font-size:0.85rem; text-decoration:none;">📄 week2_input_math.html</a>
+            <a href="week3_if_else.html" style="color:#7b93d6; font-family:'Courier New',monospace; font-size:0.85rem; text-decoration:none;">📄 week3_if_else.html</a>
+            <a href="week4_while_loop.html" style="color:#7b93d6; font-family:'Courier New',monospace; font-size:0.85rem; text-decoration:none;">📄 week4_while_loop.html</a>
+            <a href="week5_for_loop.html" style="color:#7b93d6; font-family:'Courier New',monospace; font-size:0.85rem; text-decoration:none;">📄 week5_for_loop.html</a>
+            <a href="week6_arrays.html" style="color:#7b93d6; font-family:'Courier New',monospace; font-size:0.85rem; text-decoration:none;">📄 week6_arrays.html</a>
+            <a href="week7_functions.html" style="color:#7b93d6; font-family:'Courier New',monospace; font-size:0.85rem; text-decoration:none;">📄 week7_functions.html</a>
+            <a href="week8_strings.html" style="color:#7b93d6; font-family:'Courier New',monospace; font-size:0.85rem; text-decoration:none;">📄 week8_strings.html</a>
+            <a href="week9_file_io.html" style="color:#7b93d6; font-family:'Courier New',monospace; font-size:0.85rem; text-decoration:none;">📄 week9_file_io.html</a>
+            <a href="week10_debugging.html" style="color:#7b93d6; font-family:'Courier New',monospace; font-size:0.85rem; text-decoration:none;">📄 week10_debugging.html</a>
+            <a href="week11_project_plan.html" style="color:#7b93d6; font-family:'Courier New',monospace; font-size:0.85rem; text-decoration:none;">📄 week11_project_plan.html</a>
+            <a href="week12_final_game.html" style="color:#7b93d6; font-family:'Courier New',monospace; font-size:0.85rem; text-decoration:none;">📄 week12_final_game.html</a>
+        </div>
+        <p style="color:#6b7db3; font-size:0.85rem; margin-top:0.8rem;">💡 Each link opens a complete lesson page. Create each <strong>.html</strong> file with the lesson content.</p>
     </div>
 
     <!-- ===== FOOTER ===== -->
     <div class="footer">
         <p>💻 <strong>C++ Coding Adventure</strong> · Grade 9</p>
-        <p style="font-size:0.85rem; color:#4f6199;">See you in Week 1! Let's code! 🔥</p>
+        <p style="font-size:0.85rem; color:#4f6199;">Click any lesson above to begin! 🔥</p>
     </div>
 
 </div>
